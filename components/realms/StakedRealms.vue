@@ -48,7 +48,7 @@ export default defineComponent({
           const response = await getOSData(
             userRealms.value.l1.bridgedRealms.slice(
               start.value,
-              start.value + 21
+              start.value + 29
             )
           )
           metaData.value = response.data.assets
