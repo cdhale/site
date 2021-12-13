@@ -15,6 +15,25 @@
     </div>
     <NotificationBar />
     <div class="hidden w-full sm:flex px-4">
+      <NuxtLink
+        class="
+          hover:bg-off-200 hover:text-off-100
+          text-off-200
+          transform
+          duration-200
+          h-20
+          min-w-40
+          p-10
+          flex
+          font-display
+          uppercase
+          text-center
+          rounded-b-2xl
+          text-2xl
+        "
+        to="/"
+        ><span class="self-center text-center w-full">Home</span></NuxtLink
+      >
       <a
         v-for="(link, index) in links"
         :key="index"

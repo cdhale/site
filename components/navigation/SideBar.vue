@@ -145,6 +145,10 @@ export default {
 
     const utilLinks = [
       {
+        page: '/settling#roadmap',
+        title: 'Road map',
+      },
+      {
         page: '/settling',
         title: 'Staking',
       },
