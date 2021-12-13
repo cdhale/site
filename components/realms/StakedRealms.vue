@@ -12,7 +12,7 @@
       <div v-for="realm in metaData" :key="realm.id" class="w-80">
         <RealmCard :id="realm.token_id" :realm="realm" />
       </div>
-      <template v-if="realmsLoading">
+      <template v-if="realmsLoading || loading">
         <Loader
           v-for="(loader, index) in 4"
           :key="'dummy' + index"
@@ -56,10 +56,10 @@ export default defineComponent({
       }
     })
     const fetchMoreRealms = async () => {
-      loading.value = true
       if (start.value + 30 > userRealms.value.l1.wallet.bridgedRealmsHeld) {
         return
       }
+      loading.value = true
       start.value = start.value + 30
       try {
         const realms = userRealms.value.l1.bridgedRealms.slice(
@@ -104,6 +104,7 @@ export default defineComponent({
       activeNetworkId,
       realmsLoading,
       metaData,
+      loading,
     }
   },
 })

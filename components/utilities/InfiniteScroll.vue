@@ -8,7 +8,7 @@
 import { defineComponent, toRefs, watch } from '@vue/composition-api'
 import { onBeforeUnmount, onMounted } from '@nuxtjs/composition-api'
 
-const DEFAULT_LOAD_GAP = 400
+const DEFAULT_LOAD_GAP = 100
 export default defineComponent({
   props: {
     contentChangeKey: {
