@@ -76,7 +76,7 @@
         <a
           target="blank_"
           class="hover:bg-gracy-700 self-center"
-          href="https://github.com/BibliothecaForAdventurers/bibliotheca-webite"
+          href="https://github.com/BibliothecaForAdventurers/main-site"
           ><Github class="w-8 h-8"
         /></a>
         <a
