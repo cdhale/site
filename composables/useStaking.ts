@@ -164,7 +164,7 @@ export function useStaking() {
     try {
       error.stake = null
       loading.stake = true
-      const response = await getJourneyEpoch(useL1Network.value.id)
+      const response = await getJourneyEpoch(useL1Network.value)
       epoch.value = response.toNumber()
     } catch (e) {
       // await showError('Staking Error', e.message, null)
@@ -351,6 +351,7 @@ async function getBalance(network, account) {
 }
 
 async function getJourneyEpoch(network) {
+  console.log('getting epoch')
   const provider = new ethers.providers.JsonRpcProvider(network.url)
   const journeyContractAddress =
     contractAddresses[network.id].journeyContractAddress
@@ -360,6 +361,7 @@ async function getJourneyEpoch(network) {
     provider
   )
   const epoch = await journeyContract.getEpoch()
+  console.log(epoch)
   return epoch
 }
 
