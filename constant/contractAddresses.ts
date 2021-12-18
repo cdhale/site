@@ -6,5 +6,6 @@ export default {
   rinkeby: {
     journeyContractAddress: '0x8ff4549Cb610755507732eA88b9413B625c55b7C',
     lordsTokenAddress: '0x6781dbb93C6BaC8b91bE1c6e3c99dFd98a7b5b88',
+    uniswapV3Pool: '0xe34139463bA50bD61336E0c446Bd8C0867c6fE65',
   },
 }

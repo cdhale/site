@@ -159,6 +159,7 @@ import { useModal } from '~/composables/useModal'
 import { useNetwork, activeNetworkId } from '~/composables/useNetwork'
 import { useRealms } from '~/composables/useRealms'
 import { useStaking } from '~/composables/useStaking'
+import { useIncentive } from '~/composables/useIncentive'
 import JourneySettling from '~/components/modal/JourneySettling.vue'
 import { useWeb3Modal } from '~/composables/useWeb3Modal'
 import LoadingRings from '~/assets/img/loadingRings.svg?inline'
@@ -172,6 +173,7 @@ export default defineComponent({
     const { getWalletRealms, userRealms } = useRealms()
     const { account } = useWeb3()
     const { open } = useWeb3Modal()
+    const { getIncentive, rewardInfo } = useIncentive()
     const { checkForNetworkMismatch, networkMismatch, useL1Network } =
       useNetwork()
     const {
@@ -196,6 +198,7 @@ export default defineComponent({
         }
         await getWalletRealms(account.value)
       }
+      await getIncentive()
       await getClaimableLordsBalance()
       await getEpoch()
       await getTimeToNextEpoch()
@@ -289,6 +292,8 @@ export default defineComponent({
       timeLeft,
       getTotalRealmsStaked,
       totalRealmsStaked,
+      getIncentive,
+      rewardInfo,
     }
   },
 })
