@@ -134,6 +134,15 @@
           >
         </BaseBox>
       </div>
+      <div class="p-2 w-full">
+        <BaseBox>
+          <h1>LORDS/ETH Mining</h1>
+          <div v-if="rewardInfo" class="text-2xl">
+            Lords Claimable {{ parseInt(rewardInfo).toFixed(6) }}
+          </div>
+          <!-- <BButton type="primary">Deposit</BButton> -->
+        </BaseBox>
+      </div>
     </div>
     <div id="faqs" class="container mx-auto sm:w-1/2 my-20">
       <h1 class="text-center">FAQs</h1>
