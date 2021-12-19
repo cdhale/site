@@ -1,33 +1,31 @@
 import { reactive, ref, Ref } from '@nuxtjs/composition-api'
 import { ethers } from 'ethers'
 import { useWeb3 } from '@instadapp/vue-web3'
-import BigNumber from 'bignumber.js'
-import { activeNetwork, useNetwork } from './useNetwork'
-import { useRealms } from './useRealms'
+import { activeNetwork } from './useNetwork'
 import { lpPositionQuery } from './graphql/queries'
 import { useNotification } from '~/composables/useNotification'
 import uniSwapV3PoolAbi from '~/abi/uniSwapV3Pool.json'
 import uniSwapV3PositionManagerAbi from '~/abi/uniswapV3PositionManager.json'
-import { useModal } from '~/composables/useModal'
 import contractAddresses from '~/constant/contractAddresses'
 import { useGraph } from '~/composables/useGraph'
 import { EncodedIncentiveKey } from '~/composables/encoders/encoders'
-const isApproved = ref(false)
+
 const lpPositions = ref()
 const userRewards = ref()
 const userPositions = ref()
-const loading = reactive({
-  claim: false,
-  deposit: false,
-  stake: false,
-  rewards: false,
-})
+
 export function useIncentive() {
+  const loading = reactive({
+    claim: false,
+    deposit: false,
+    stake: false,
+    rewards: false,
+  })
   const { account } = useWeb3()
   const error = reactive({
     stake: null,
   })
-  const { showError, showSuccess } = useNotification()
+  const { showError } = useNotification()
 
   const rewardInfo = ref()
 
@@ -73,7 +71,9 @@ export function useIncentive() {
       await showError(e.message)
     } finally {
       loading.stake = false
+      rewardInfo.value = 0
       await getRewards()
+      await fetchUserPositions()
     }
   }
   const claim = async () => {
@@ -84,7 +84,6 @@ export function useIncentive() {
       await showError(e.message)
     } finally {
       await getRewards()
-      loading.claim = false
     }
   }
   const withdraw = async (tokenId) => {
@@ -105,6 +104,7 @@ export function useIncentive() {
       // await showError(e)
     } finally {
       loading.rewards = false
+      loading.claim = false
     }
   }
 
@@ -152,7 +152,6 @@ const getTuple = (network) => {
 
 async function getRewardInfo(network, tokenId) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
-
   const uniswapV3Pool = contractAddresses[network.id].uniswapV3Pool
   const poolContract = new ethers.Contract(
     uniswapV3Pool,

@@ -29,7 +29,7 @@
       class="flex flex-wrap justify-center text-center container mx-auto"
     >
       <div class="p-2 sm:w-1/2 w-full">
-        <BaseBox>
+        <BaseBox class="h-80">
           <h1 class="text-center">Your Unstaked Realms</h1>
           <p>
             You need to be staked for an entire epoch to be entitled to your
@@ -54,7 +54,7 @@
         </BaseBox>
       </div>
       <div class="p-2 sm:w-1/2 w-full">
-        <BaseBox>
+        <BaseBox class="h-80">
           <h1>Your Staked Realms</h1>
           <p class="text-6xl my-auto">
             {{ bridgedRealms || 0 }}
@@ -76,7 +76,7 @@
         </BaseBox>
       </div>
       <div class="p-2 sm:w-1/2 w-full">
-        <BaseBox>
+        <BaseBox class="h-80">
           <h1>Your Lords Available To Claim</h1>
           <p>You will earn 625 per Realm per full epoch staked</p>
           <p class="text-6xl mx-auto my-auto">
@@ -104,7 +104,7 @@
         </BaseBox>
       </div>
       <div class="p-2 sm:w-1/2 w-full">
-        <BaseBox>
+        <BaseBox class="h-80">
           <h1>Current Epoch</h1>
           <p>An epoch is 1 week</p>
           <p class="text-6xl text-center my-auto">{{ epoch }}</p>
@@ -144,7 +144,7 @@
             <div class="flex mx-auto justify-center space-x-4 mt-4">
               <BButton
                 :loading="loadingIncentive.claim"
-                type="primary"
+                type="settling"
                 @click="claim()"
                 >Claim</BButton
               >

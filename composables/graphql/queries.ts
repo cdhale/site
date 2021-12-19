@@ -186,7 +186,7 @@ const lpPositionQuery = gql`
       owner
       staked
       oldOwner
-      incentivePotisions {
+      incentivePositions {
         id
         active
       }

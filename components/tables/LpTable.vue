@@ -24,29 +24,27 @@
     </td>
     <td class="w-full flex space-x-4 justify-center p-2">
       <BButton
-        v-if="!position.incentivePotisions.length"
+        v-if="!position.incentivePositions.length"
         :loading="loading.deposit"
-        type="primary"
+        type="settling"
         @click="deposit(position.tokenId)"
         >Deposit</BButton
       >
       <BButton
-        v-if="rewardInfo"
         :loading="loading.stake"
-        type="primary"
+        type="settling"
         @click="unstake(position.tokenId)"
         >Unstake</BButton
       >
       <BButton
-        v-else
         :loading="loading.stake"
-        type="primary"
+        type="settling"
         @click="stake(position.tokenId)"
         >Stake</BButton
       >
       <BButton
         :loading="loading.stake"
-        type="primary"
+        type="settling"
         @click="withdraw(position.tokenId)"
         >Withdraw</BButton
       >
@@ -77,6 +75,9 @@ export default defineComponent({
     onMounted(async () => {
       if (props.position.staked) {
         await getRewardsByToken(props.position.tokenId)
+        window.setInterval(async () => {
+          await getRewardsByToken(props.position.tokenId)
+        }, 10000)
       }
     })
 
