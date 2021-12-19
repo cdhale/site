@@ -142,8 +142,18 @@
             <div>Claimable LORDS</div>
             <span class="text-3xl">{{ userRewards }}</span>
             <div class="flex mx-auto justify-center space-x-4 mt-4">
-              <BButton type="primary" @click="claim()">Claim</BButton>
-              <BButton type="primary" @click="deposit(11645)">deposit</BButton>
+              <BButton
+                :loading="loadingIncentive.claim"
+                type="primary"
+                @click="claim()"
+                >Claim</BButton
+              >
+              <BButton
+                :loading="loadingIncentive.deposit"
+                type="primary"
+                @click="deposit(11645)"
+                >deposit</BButton
+              >
             </div>
           </div>
           <div class="mt-8 mx-auto w-full flex">
@@ -161,24 +171,6 @@
                   :key="position.id"
                   :position="position"
                 />
-                <!-- <tr v-for="position in userPositions" :key="position.id">
-                  <td class="w-1/3 text-xl p-2">{{ position.tokenId }}</td>
-                  <td class="w-1/3 text-xll p-2">
-                    <span>{{ getRewardsByToken(position.tokenId) }}</span>
-                  </td>
-                  <td class="w-full flex space-x-4 justify-center p-2">
-                    <BButton
-                      v-if="rewardInfo"
-                      type="primary"
-                      @click="unstake(11645)"
-                      >Unstake</BButton
-                    >
-                    <BButton v-else type="primary" @click="stake(11645)"
-                      >Stake</BButton
-                    >
-                    <BButton type="primary">Withdraw</BButton>
-                  </td>
-                </tr> -->
               </tbody>
             </table>
           </div>
@@ -224,19 +216,17 @@ export default defineComponent({
     const { account } = useWeb3()
     const { open } = useWeb3Modal()
     const {
-      getRewardsByToken,
       rewardInfo,
       lpPositions,
       getLp,
       withdraw,
-      unstake,
       deposit,
       getRewards,
       userRewards,
       claim,
-      stake,
       fetchUserPositions,
       userPositions,
+      loading: loadingIncentive,
     } = useIncentive()
     const { checkForNetworkMismatch, networkMismatch, useL1Network } =
       useNetwork()
@@ -264,7 +254,6 @@ export default defineComponent({
       }
 
       await getRewards()
-      await getLp()
 
       await getClaimableLordsBalance()
       await getEpoch()
@@ -361,19 +350,17 @@ export default defineComponent({
       timeLeft,
       getTotalRealmsStaked,
       totalRealmsStaked,
-      getRewardsByToken,
       rewardInfo,
       lpPositions,
       getLp,
       withdraw,
-      unstake,
       deposit,
       getRewards,
       userRewards,
       claim,
-      stake,
       fetchUserPositions,
       userPositions,
+      loadingIncentive,
     }
   },
 })

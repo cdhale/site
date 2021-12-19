@@ -7,14 +7,24 @@
     <td class="w-full flex space-x-4 justify-center p-2">
       <BButton
         v-if="rewardInfo"
+        :loading="loading.stake"
         type="primary"
         @click="unstake(position.tokenId)"
         >Unstake</BButton
       >
-      <BButton v-else type="primary" @click="stake(position.tokenId)"
+      <BButton
+        v-else
+        :loading="loading.stake"
+        type="primary"
+        @click="stake(position.tokenId)"
         >Stake</BButton
       >
-      <BButton type="primary">Withdraw</BButton>
+      <BButton
+        :loading="loading.stake"
+        type="primary"
+        @click="withdraw(position.tokenId)"
+        >Withdraw</BButton
+      >
     </td>
   </tr>
 </template>
@@ -29,7 +39,8 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { getRewardsByToken, rewardInfo, unstake, stake } = useIncentive()
+    const { getRewardsByToken, rewardInfo, unstake, stake, withdraw, loading } =
+      useIncentive()
 
     onMounted(async () => {
       if (props.position.staked) {
@@ -41,6 +52,8 @@ export default defineComponent({
       rewardInfo,
       unstake,
       stake,
+      withdraw,
+      loading,
     }
   },
 })

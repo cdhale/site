@@ -16,27 +16,25 @@ const isApproved = ref(false)
 const lpPositions = ref()
 const userRewards = ref()
 const userPositions = ref()
+const loading = reactive({
+  claim: false,
+  deposit: false,
+  stake: false,
+  rewards: false,
+})
 export function useIncentive() {
-  const { close } = useModal()
   const { account } = useWeb3()
-  const { getWalletRealms, userRealms } = useRealms()
-  const { useL1Network } = useNetwork()
   const error = reactive({
     stake: null,
   })
   const { showError, showSuccess } = useNotification()
-  const loading = reactive({
-    stake: false,
-    lords: false,
-    approve: false,
-  })
+
   const rewardInfo = ref()
 
   const getRewardsByToken = async (tokenId) => {
     try {
       rewardInfo.value = await getRewardInfo(activeNetwork.value, tokenId)
     } catch (e) {
-      // await showError('Staking Error', e.message, null)
       error.stake = e.message
     } finally {
       loading.stake = false
@@ -44,33 +42,23 @@ export function useIncentive() {
   }
 
   const deposit = async (tokenId) => {
+    loading.deposit = true
     try {
       await depositLp(activeNetwork.value, account, tokenId)
     } catch (e) {
-      // await showError('Staking Error', e.message, null)
-      console.log(e)
+      await showError(e.message)
       error.stake = e.message
     } finally {
-      loading.stake = false
-    }
-  }
-
-  const getLp = async () => {
-    try {
-      lpPositions.value = await getLPPositions(activeNetwork.value, account)
-    } catch (e) {
-      // await showError('Staking Error', e.message, null)
-      error.stake = e.message
-    } finally {
-      loading.stake = false
+      loading.deposit = false
     }
   }
 
   const stake = async (tokenId) => {
+    loading.stake = true
     try {
       return await stakeToken(activeNetwork.value, tokenId)
     } catch (e) {
-      // await showError('Staking Error', e.message, null)
+      await showError(e.message)
       error.stake = e.message
     } finally {
       loading.stake = false
@@ -78,46 +66,45 @@ export function useIncentive() {
   }
 
   const unstake = async (tokenId) => {
+    loading.stake = true
     try {
       return await unstakeToken(activeNetwork.value, tokenId)
     } catch (e) {
-      // await showError('Staking Error', e.message, null)
-      console.log(e)
-      error.stake = e.message
+      await showError(e.message)
     } finally {
       loading.stake = false
       await getRewards()
     }
   }
   const claim = async () => {
+    loading.claim = true
     try {
       return await claimReward(activeNetwork.value, account)
     } catch (e) {
-      // await showError('Staking Error', e.message, null)
-      error.stake = e.message
+      await showError(e.message)
     } finally {
       await getRewards()
-      loading.stake = false
+      loading.claim = false
     }
   }
   const withdraw = async (tokenId) => {
+    loading.stake = true
     try {
       return await withdrawToken(activeNetwork.value, account.value, tokenId)
     } catch (e) {
-      // await showError('Staking Error', e.message, null)
-      error.stake = e.message
+      await showError(e.message)
     } finally {
       loading.stake = false
     }
   }
   const getRewards = async () => {
+    loading.rewards = true
     try {
       userRewards.value = await rewards(activeNetwork.value, account.value)
     } catch (e) {
-      console.log(e)
-      error.stake = e.message
+      // await showError(e)
     } finally {
-      loading.stake = false
+      loading.rewards = false
     }
   }
 
@@ -134,7 +121,6 @@ export function useIncentive() {
     } catch (e) {
       console.log(e)
     }
-    return {}
   }
 
   return {
@@ -142,7 +128,6 @@ export function useIncentive() {
     rewardInfo,
     deposit,
     lpPositions,
-    getLp,
     withdraw,
     unstake,
     getRewards,
@@ -151,6 +136,7 @@ export function useIncentive() {
     stake,
     fetchUserPositions,
     userPositions,
+    loading,
   }
 }
 
@@ -190,7 +176,7 @@ async function depositLp(network, account, tokenId) {
     signer
   )
 
-  const deposit = await positionManager[
+  return await positionManager[
     'safeTransferFrom(address,address,uint256,bytes)'
   ](
     account.value,
@@ -198,27 +184,6 @@ async function depositLp(network, account, tokenId) {
     tokenId,
     EncodedIncentiveKey()
   )
-
-  await deposit.wait()
-
-  return deposit
-}
-
-async function getLPPositions(network, account) {
-  const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const uniSwapV3PositionManager =
-    contractAddresses[network.id].uniswapV3PositionManager
-  const positionManager = new ethers.Contract(
-    uniSwapV3PositionManager,
-    uniSwapV3PositionManagerAbi,
-    provider
-  )
-
-  const balance = await positionManager.balanceOf(account.value)
-
-  const tokenIds = await positionManager.tokenOfOwnerByIndex(account.value, 0)
-
-  return tokenIds
 }
 
 async function unstakeToken(network, tokenId) {
@@ -231,9 +196,7 @@ async function unstakeToken(network, tokenId) {
     signer
   )
 
-  const unstake = await poolContract.unstakeToken(getTuple(network), tokenId)
-
-  return await unstake.wait()
+  return await poolContract.unstakeToken(getTuple(network), tokenId)
 }
 
 async function stakeToken(network, tokenId) {
@@ -246,44 +209,33 @@ async function stakeToken(network, tokenId) {
     signer
   )
 
-  const unstake = await poolContract.stakeToken(getTuple(network), tokenId)
-
-  return await unstake.wait()
+  return await poolContract.stakeToken(getTuple(network), tokenId)
 }
 async function claimReward(network, account) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const uniswapV3Pool = contractAddresses[network.id].uniswapV3Pool
   const lordsToken = contractAddresses[network.id].lordsTokenAddress
   const signer = provider.getSigner()
-  console.log(signer)
   const poolContract = new ethers.Contract(
     uniswapV3Pool,
     uniSwapV3PoolAbi,
     signer
   )
 
-  const claim = await poolContract.claimReward(lordsToken, account.value, 0)
-
-  return await claim.wait()
+  return await poolContract.claimReward(lordsToken, account.value, 0)
 }
 
 async function withdrawToken(network, account, tokenId) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const uniswapV3Pool = contractAddresses[network.id].uniswapV3Pool
+  const signer = provider.getSigner()
   const poolContract = new ethers.Contract(
     uniswapV3Pool,
     uniSwapV3PoolAbi,
-    provider
+    signer
   )
 
-  const withdraw = await poolContract.withdrawToken(
-    tokenId,
-    account.value,
-    '0x'
-  )
-  await withdraw.wait()
-
-  return withdraw
+  return await poolContract.withdrawToken(tokenId, account, '0x')
 }
 
 async function rewards(network, account) {
