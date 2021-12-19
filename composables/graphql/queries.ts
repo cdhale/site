@@ -177,6 +177,18 @@ const messageHasExecutedQuery = gql`
     }
   }
 `
+
+const lpPositionQuery = gql`
+  query lpPositionQuery($address: String) {
+    positions(where: { owner: $address }) {
+      id
+      tokenId
+      owner
+      staked
+    }
+  }
+`
+
 export {
   getRealms,
   mintedRealmsQuery,
@@ -187,4 +199,5 @@ export {
   messageHasExecutedQuery,
   getResourceListQuery,
   getResourceBalancesQuery,
+  lpPositionQuery,
 }

@@ -168,6 +168,7 @@ export default {
     '~/components/utilities',
     '~/components/market',
     '~/components/realms',
+    '~/components/tables',
   ],
   buildModules: [
     '@nuxtjs/eslint-module',

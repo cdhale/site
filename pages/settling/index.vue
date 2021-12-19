@@ -136,11 +136,52 @@
       </div>
       <div class="p-2 w-full">
         <BaseBox>
-          <h1>LORDS/ETH Mining</h1>
-          <div v-if="rewardInfo" class="text-2xl">
-            Lords Claimable {{ parseInt(rewardInfo).toFixed(6) }}
+          <h1>LORDS - ETH</h1>
+          <p class="text-2xl">1,000,000 LORDS available over 6 weeks.</p>
+          <div class="font-display my-4">
+            <div>Claimable LORDS</div>
+            <span class="text-3xl">{{ userRewards }}</span>
+            <div class="flex mx-auto justify-center space-x-4 mt-4">
+              <BButton type="primary" @click="claim()">Claim</BButton>
+              <BButton type="primary" @click="deposit(11645)">deposit</BButton>
+            </div>
           </div>
-          <!-- <BButton type="primary">Deposit</BButton> -->
+          <div class="mt-8 mx-auto w-full flex">
+            <table class="table-auto mx-auto w-full">
+              <thead>
+                <tr class="text-center font-display text-2xl">
+                  <th>LP Token ID</th>
+                  <th>Rewards</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <LpTable
+                  v-for="position in userPositions"
+                  :key="position.id"
+                  :position="position"
+                />
+                <!-- <tr v-for="position in userPositions" :key="position.id">
+                  <td class="w-1/3 text-xl p-2">{{ position.tokenId }}</td>
+                  <td class="w-1/3 text-xll p-2">
+                    <span>{{ getRewardsByToken(position.tokenId) }}</span>
+                  </td>
+                  <td class="w-full flex space-x-4 justify-center p-2">
+                    <BButton
+                      v-if="rewardInfo"
+                      type="primary"
+                      @click="unstake(11645)"
+                      >Unstake</BButton
+                    >
+                    <BButton v-else type="primary" @click="stake(11645)"
+                      >Stake</BButton
+                    >
+                    <BButton type="primary">Withdraw</BButton>
+                  </td>
+                </tr> -->
+              </tbody>
+            </table>
+          </div>
         </BaseBox>
       </div>
     </div>
@@ -182,7 +223,21 @@ export default defineComponent({
     const { getWalletRealms, userRealms } = useRealms()
     const { account } = useWeb3()
     const { open } = useWeb3Modal()
-    const { getIncentive, rewardInfo } = useIncentive()
+    const {
+      getRewardsByToken,
+      rewardInfo,
+      lpPositions,
+      getLp,
+      withdraw,
+      unstake,
+      deposit,
+      getRewards,
+      userRewards,
+      claim,
+      stake,
+      fetchUserPositions,
+      userPositions,
+    } = useIncentive()
     const { checkForNetworkMismatch, networkMismatch, useL1Network } =
       useNetwork()
     const {
@@ -207,7 +262,10 @@ export default defineComponent({
         }
         await getWalletRealms(account.value)
       }
-      await getIncentive()
+
+      await getRewards()
+      await getLp()
+
       await getClaimableLordsBalance()
       await getEpoch()
       await getTimeToNextEpoch()
@@ -233,6 +291,8 @@ export default defineComponent({
       account,
       async (val) => {
         if (val) {
+          await getRewards()
+          await fetchUserPositions()
           await getClaimableLordsBalance()
           await getWalletRealms(account.value)
           await getTotalRealmsStaked()
@@ -301,8 +361,19 @@ export default defineComponent({
       timeLeft,
       getTotalRealmsStaked,
       totalRealmsStaked,
-      getIncentive,
+      getRewardsByToken,
       rewardInfo,
+      lpPositions,
+      getLp,
+      withdraw,
+      unstake,
+      deposit,
+      getRewards,
+      userRewards,
+      claim,
+      stake,
+      fetchUserPositions,
+      userPositions,
     }
   },
 })

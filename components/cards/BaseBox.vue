@@ -4,7 +4,7 @@
       p-8
       border-4 border-off-200
       bg-off-100
-      h-80
+      min-h-80
       mb-2
       flex-col flex
       border-double
