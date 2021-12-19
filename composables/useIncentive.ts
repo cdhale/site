@@ -180,7 +180,7 @@ async function depositLp(network, account, tokenId) {
     'safeTransferFrom(address,address,uint256,bytes)'
   ](
     account.value,
-    '0xe34139463ba50bd61336e0c446bd8c0867c6fe65',
+    contractAddresses[network.id].uniswapV3Pool,
     tokenId,
     EncodedIncentiveKey()
   )

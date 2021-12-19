@@ -185,6 +185,11 @@ const lpPositionQuery = gql`
       tokenId
       owner
       staked
+      oldOwner
+      incentivePotisions {
+        id
+        active
+      }
     }
   }
 `

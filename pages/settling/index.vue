@@ -148,19 +148,13 @@
                 @click="claim()"
                 >Claim</BButton
               >
-              <BButton
-                :loading="loadingIncentive.deposit"
-                type="primary"
-                @click="deposit(11645)"
-                >deposit</BButton
-              >
             </div>
           </div>
           <div class="mt-8 mx-auto w-full flex">
-            <table class="table-auto mx-auto w-full">
+            <table class="table-auto mx-auto w-full py-4">
               <thead>
-                <tr class="text-center font-display text-2xl">
-                  <th>LP Token ID</th>
+                <tr class="text-center font-display text-2xl pt-4">
+                  <th class="pt-4">LP Token ID</th>
                   <th>Rewards</th>
                   <th>Actions</th>
                 </tr>
