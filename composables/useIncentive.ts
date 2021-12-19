@@ -25,8 +25,13 @@ export function useIncentive() {
   const error = reactive({
     stake: null,
   })
+<<<<<<< HEAD
   const { showError } = useNotification()
 
+=======
+  const { showError, showSuccess } = useNotification()
+  const { useL1Network } = useNetwork()
+>>>>>>> 6541e4e48... update staker address + graph fixes
   const rewardInfo = ref()
 
   const getRewardsByToken = async (tokenId) => {
@@ -112,11 +117,12 @@ export function useIncentive() {
   const { gqlRequest } = useGraph()
 
   const fetchUserPositions = async () => {
+    const stakerUrl = useL1Network.value.id + 'Staker'
     try {
       const positions = await gqlRequest(
         lpPositionQuery,
         { address: account.value },
-        'mainnetStaking'
+        stakerUrl
       )
       userPositions.value = positions.positions
     } catch (e) {

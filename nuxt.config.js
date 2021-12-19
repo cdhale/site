@@ -91,8 +91,14 @@ export default {
   },
   graphql: {
     clients: {
-      mainnetStaking: {
-        endpoint: process.env.GRAPH_API_STAKING
+      rinkebyStaker: {
+        endpoint: process.env.GRAPH_API_STAKER_RINKEBY
+          ? process.env.GRAPH_API_STAKER_RINKEBY
+          : 'http://localhost:1337/graphql',
+        options: {},
+      },
+      mainnetStaker: {
+        endpoint: process.env.GRAPH_API_STAKER
           ? process.env.GRAPH_API_STAKING
           : 'http://localhost:1337/graphql',
         options: {},
