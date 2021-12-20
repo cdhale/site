@@ -154,7 +154,8 @@
             <table class="table-auto mx-auto w-full py-4">
               <thead>
                 <tr class="text-center font-display text-2xl pt-4">
-                  <th class="pt-4">LP Token ID</th>
+                  <th>LP Token ID</th>
+                  <th>Status</th>
                   <th>Rewards</th>
                   <th>Actions</th>
                 </tr>
@@ -169,6 +170,7 @@
                   v-for="position in userPositions.depositedPositions"
                   :key="position.id"
                   :position="position"
+                  deposited
                 />
               </tbody>
             </table>

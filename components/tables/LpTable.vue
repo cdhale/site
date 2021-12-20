@@ -20,15 +20,26 @@
         border-4 border-double border-off-200
       "
     >
+      {{ status }}
+    </td>
+    <td
+      class="
+        w-1/3
+        text-xl
+        p-2
+        font-semibold
+        border-4 border-double border-off-200
+      "
+    >
       <span>{{ rewardInfo ? rewardInfo : 0 }}</span>
     </td>
     <td class="w-full flex space-x-4 justify-center p-2">
       <BButton
-        v-if="!position.incentivePositions.length"
+        v-if="!deposited"
         :loading="loading.deposit"
         type="settling"
         @click="deposit(position.tokenId)"
-        >Deposit</BButton
+        >Deposit & Stake</BButton
       >
       <BButton
         v-if="position.staked"
@@ -38,13 +49,18 @@
         >Unstake / Claim</BButton
       >
       <BButton
+<<<<<<< HEAD
         v-else
+=======
+        v-if="deposited & !position.staked"
+>>>>>>> 4e0f811... fix LP table
         :loading="loading.stake"
         type="settling"
         @click="stake(position.tokenId)"
         >Stake</BButton
       >
       <BButton
+        v-if="deposited && !position.staked"
         :loading="loading.stake"
         type="settling"
         @click="withdraw(position.tokenId)"
@@ -54,13 +70,17 @@
   </tr>
 </template>
 <script>
-import { defineComponent, onMounted } from '@vue/composition-api'
+import { defineComponent, onMounted, computed } from '@vue/composition-api'
 import { useIncentive } from '~/composables/useIncentive'
 export default defineComponent({
   props: {
     position: {
       type: Object,
       required: true,
+    },
+    deposited: {
+      type: Boolean,
+      required: false,
     },
   },
   setup(props) {
@@ -73,6 +93,16 @@ export default defineComponent({
       loading,
       deposit,
     } = useIncentive()
+
+    const status = computed(() => {
+      if (props.position.staked) {
+        return 'staked'
+      } else if (props.deposited) {
+        return 'deposited'
+      } else {
+        return 'held'
+      }
+    })
 
     onMounted(async () => {
       if (props.position.staked) {
@@ -90,6 +120,7 @@ export default defineComponent({
       withdraw,
       loading,
       deposit,
+      status,
     }
   },
 })
