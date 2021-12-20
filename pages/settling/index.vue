@@ -159,9 +159,14 @@
                   <th>Actions</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody v-if="userPositions">
                 <LpTable
-                  v-for="position in userPositions"
+                  v-for="position in userPositions.positions"
+                  :key="position.id"
+                  :position="position"
+                />
+                <LpTable
+                  v-for="position in userPositions.depositedPositions"
                   :key="position.id"
                   :position="position"
                 />

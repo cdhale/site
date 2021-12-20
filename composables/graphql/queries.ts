@@ -191,6 +191,17 @@ const lpPositionQuery = gql`
         active
       }
     }
+    depositedPositions: positions(where: { oldOwner: $address }) {
+      id
+      tokenId
+      owner
+      staked
+      oldOwner
+      incentivePositions {
+        id
+        active
+      }
+    }
   }
 `
 

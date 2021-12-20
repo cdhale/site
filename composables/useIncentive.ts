@@ -1,7 +1,7 @@
 import { reactive, ref, Ref } from '@nuxtjs/composition-api'
 import { ethers } from 'ethers'
 import { useWeb3 } from '@instadapp/vue-web3'
-import { activeNetwork } from './useNetwork'
+import { activeNetwork, useNetwork } from './useNetwork'
 import { lpPositionQuery } from './graphql/queries'
 import { useNotification } from '~/composables/useNotification'
 import uniSwapV3PoolAbi from '~/abi/uniSwapV3Pool.json'
@@ -124,7 +124,7 @@ export function useIncentive() {
         { address: account.value },
         stakerUrl
       )
-      userPositions.value = positions.positions
+      userPositions.value = positions
     } catch (e) {
       console.log(e)
     }
