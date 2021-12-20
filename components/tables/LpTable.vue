@@ -31,12 +31,14 @@
         >Deposit</BButton
       >
       <BButton
+        v-if="position.staked"
         :loading="loading.stake"
         type="settling"
         @click="unstake(position.tokenId)"
-        >Unstake</BButton
+        >Unstake / Claim</BButton
       >
       <BButton
+        v-else
         :loading="loading.stake"
         type="settling"
         @click="stake(position.tokenId)"
@@ -77,7 +79,7 @@ export default defineComponent({
         await getRewardsByToken(props.position.tokenId)
         window.setInterval(async () => {
           await getRewardsByToken(props.position.tokenId)
-        }, 10000)
+        }, 20000)
       }
     })
 

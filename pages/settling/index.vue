@@ -139,7 +139,7 @@
           <h1>LORDS - ETH</h1>
           <p class="text-2xl">1,000,000 LORDS available over 6 weeks.</p>
           <div class="font-display my-4">
-            <div>Claimable LORDS</div>
+            <h3>Claimable LORDS</h3>
             <span class="text-3xl">{{ userRewards }}</span>
             <div class="flex mx-auto justify-center space-x-4 mt-4">
               <BButton
