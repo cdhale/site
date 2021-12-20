@@ -162,15 +162,9 @@
               </thead>
               <tbody v-if="userPositions">
                 <LpTable
-                  v-for="position in userPositions.positions"
+                  v-for="position in userPositions"
                   :key="position.id"
                   :position="position"
-                />
-                <LpTable
-                  v-for="position in userPositions.depositedPositions"
-                  :key="position.id"
-                  :position="position"
-                  deposited
                 />
               </tbody>
             </table>

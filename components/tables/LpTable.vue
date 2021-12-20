@@ -72,15 +72,14 @@
 <script>
 import { defineComponent, onMounted, computed } from '@vue/composition-api'
 import { useIncentive } from '~/composables/useIncentive'
+import { useNetwork } from '~/composables/useNetwork'
+import contractAddresses from '~/constant/contractAddresses'
+
 export default defineComponent({
   props: {
     position: {
       type: Object,
       required: true,
-    },
-    deposited: {
-      type: Boolean,
-      required: false,
     },
   },
   setup(props) {
@@ -93,11 +92,20 @@ export default defineComponent({
       loading,
       deposit,
     } = useIncentive()
+    const { useL1Network } = useNetwork()
+    const lordsToken = contractAddresses[useL1Network.value.id].uniswapV3Pool
+
+    const deposited = computed(
+      () =>
+        props.position.owner === lordsToken.toLowerCase() ||
+        props.position.owner === lordsToken ||
+        props.position.owner === '0x0000000000000000000000000000000000000000'
+    )
 
     const status = computed(() => {
       if (props.position.staked) {
         return 'staked'
-      } else if (props.deposited) {
+      } else if (deposited.value) {
         return 'deposited'
       } else {
         return 'held'
@@ -115,6 +123,7 @@ export default defineComponent({
 
     return {
       rewardInfo,
+      deposited,
       unstake,
       stake,
       withdraw,

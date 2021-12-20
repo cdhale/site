@@ -47,14 +47,12 @@ export function useIncentive() {
   const deposit = async (tokenId) => {
     loading.deposit = true
     try {
-      await depositLp(activeNetwork.value, account, tokenId)
+      const tx = await depositLp(activeNetwork.value, account, tokenId)
+      updateUserPosition(tokenId, tx)
     } catch (e) {
       await showError(e.message)
       error.stake = e.message
     } finally {
-      setTimeout(async () => {
-        await fetchUserPositions()
-      }, 4500)
       loading.deposit = false
     }
   }
@@ -62,14 +60,12 @@ export function useIncentive() {
   const stake = async (tokenId) => {
     loading.stake = true
     try {
-      return await stakeToken(activeNetwork.value, tokenId)
+      const tx = await stakeToken(activeNetwork.value, tokenId)
+      updateUserPosition(tokenId, tx)
     } catch (e) {
       await showError(e.message)
       error.stake = e.message
     } finally {
-      setTimeout(async () => {
-        await fetchUserPositions()
-      }, 4500)
       loading.stake = false
     }
   }
@@ -77,15 +73,14 @@ export function useIncentive() {
   const unstake = async (tokenId) => {
     loading.stake = true
     try {
-      return await unstakeToken(activeNetwork.value, tokenId)
+      const tx = await unstakeToken(activeNetwork.value, tokenId)
+      updateUserPosition(tokenId, tx)
     } catch (e) {
       await showError(e.message)
     } finally {
       rewardInfo.value = 0
       await getRewards()
-      setTimeout(async () => {
-        await fetchUserPositions()
-      }, 4500)
+
       loading.stake = false
     }
   }
@@ -102,13 +97,15 @@ export function useIncentive() {
   const withdraw = async (tokenId) => {
     loading.stake = true
     try {
-      return await withdrawToken(activeNetwork.value, account.value, tokenId)
+      const tx = await withdrawToken(
+        activeNetwork.value,
+        account.value,
+        tokenId
+      )
+      updateUserPosition(tokenId, tx)
     } catch (e) {
       await showError(e.message)
     } finally {
-      setTimeout(async () => {
-        await fetchUserPositions()
-      }, 4500)
       loading.stake = false
     }
   }
@@ -135,10 +132,43 @@ export function useIncentive() {
         { address: account.value },
         stakerUrl
       )
-      userPositions.value = positions
+      userPositions.value = [
+        ...positions.positions,
+        ...positions.depositedPositions,
+      ]
     } catch (e) {
       console.log(e)
     }
+  }
+
+  const updateUserPosition = (tokenId, tx) => {
+    const position = userPositions.value.find(
+      (position) => position.tokenId === tokenId
+    )
+    tx.events.forEach((event) => {
+      if (event.event === 'Transfer') {
+        position.oldOwner = event.args[0]
+        position.owner = event.args[1]
+
+        if (
+          event.args[1] ===
+          contractAddresses[useL1Network.value.id].uniswapV3Pool
+        ) {
+          position.staked = true
+        }
+      }
+      if (event.event === 'TokenStaked') {
+        position.staked = true
+      }
+      if (event.event === 'TokenUnstaked') {
+        position.staked = false
+      }
+      if (event.event === 'DepositTransferred') {
+        if (event.args[2] === '0x0000000000000000000000000000000000000000') {
+          position.owner = event.args[1]
+        }
+      }
+    })
   }
 
   return {
@@ -200,9 +230,9 @@ async function depositLp(network, account, tokenId) {
     tokenId,
     EncodedIncentiveKey()
   )
-  await tx.wait()
+  const receipt = await tx.wait()
 
-  return tx
+  return receipt
 }
 
 async function unstakeToken(network, tokenId) {
@@ -216,9 +246,9 @@ async function unstakeToken(network, tokenId) {
   )
 
   const tx = await poolContract.unstakeToken(getTuple(network), tokenId)
-  await tx.wait()
+  const receipt = await tx.wait()
 
-  return tx
+  return receipt
 }
 
 async function stakeToken(network, tokenId) {
@@ -231,8 +261,8 @@ async function stakeToken(network, tokenId) {
     signer
   )
   const tx = await poolContract.stakeToken(getTuple(network), tokenId)
-  await tx.wait()
-  return tx
+  const receipt = await tx.wait()
+  return receipt
 }
 async function claimReward(network, account) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -246,8 +276,8 @@ async function claimReward(network, account) {
   )
 
   const tx = await poolContract.claimReward(lordsToken, account.value, 0)
-  await tx.wait()
-  return tx
+  const receipt = await tx.wait()
+  return receipt
 }
 
 async function withdrawToken(network, account, tokenId) {
@@ -261,8 +291,8 @@ async function withdrawToken(network, account, tokenId) {
   )
 
   const tx = await poolContract.withdrawToken(tokenId, account, '0x')
-  await tx.wait()
-  return tx
+  const receipt = await tx.wait()
+  return receipt
 }
 
 async function rewards(network, account) {
