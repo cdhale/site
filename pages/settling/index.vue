@@ -97,7 +97,7 @@
             v-else
             class="w-full mt-auto"
             type="settling"
-            :disabled="claimableBalance == '0.0'"
+            :disabled="claimableBalance == '0'"
             @click="claimAllLords"
             >Claim Lords</BButton
           >
