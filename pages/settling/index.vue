@@ -84,7 +84,7 @@
               v-if="loading.lords"
               class="mx-auto fill-none stroke-current text-off-200 w-32"
             />
-            <span v-else>{{ claimableBalance || 0 }}</span>
+            <span v-else>{{ claimableBalance }}</span>
           </p>
           <BButton
             v-if="!account"
@@ -97,7 +97,7 @@
             v-else
             class="w-full mt-auto"
             type="settling"
-            :disabled="claimableBalance == '0'"
+            :disabled="claimableBalance == '0.0'"
             @click="claimAllLords"
             >Claim Lords</BButton
           >
@@ -292,15 +292,36 @@ export default defineComponent({
     const faqs = [
       {
         title: 'What does this staking contract do?',
-        body: 'By boarding the ship now, you can begin to earn $LORDS. Once the StarkNet bridge is complete, your Realms will be available to claim directly on StarkNet. ',
+        body: 'By boarding the ship now, you can begin to earn $LORDS. Once the StarkNet bridge is complete, your Realms will be available to claim directly on StarkNet.',
       },
       {
         title: 'How long do I need to be staked for to be entitled?',
-        body: 'You need to be staked for one entire epoch to be entitled to your $LORDS.',
+        body: 'For each Realm staked per epoch, you will be rewarded with 625x $LORDS.',
+      },
+      {
+        title:
+          'How long do you need to be staked for to be entitled to rewards?',
+        body: 'You need to be staked for one entire epoch (7 days) to be entitled to your $LORDS. For example, if you stake end the end of epoch 2 and remain staked until epoch 4, you will receive the epoch 3 reward. ',
+      },
+      {
+        title: 'Once staked, do you need stake again for future epochs?',
+        body: 'No, once you stake and remained staked, you’ll be entitled to all future epoch rewards (unless you unstake). ',
+      },
+      {
+        title: 'Why can’t I see my Realm(s) in OpenSea after staking?',
+        body: 'Your realms won’t appear in OS while staking as they are transferred into the contract wallet in this process. You can view your staked Realms at your Adventurers page. ',
+      },
+      {
+        title: 'Can I list/sell my Realms on OpenSea while staking?',
+        body: 'No, during staking you can’t list/sell your Realms as they are in the contract wallet. If you wish to list/sell your Realms then you must first unstake them.',
       },
       {
         title: 'How long will the Journey last for?',
         body: 'Until the StarkNet bridge is complete, the Journey will happen for a minimum 10 weeks. You can withdraw when your balance is above 0.',
+      },
+      {
+        title: 'Do you have to claim $LORDS after each epoch?',
+        body: 'No, you can let rewards accrue and claim in bulk to save gas. If you wish to avoid claiming on L1 we will have a solution to migrate your $LORDS to StarkNet and claim there to save further gas.',
       },
       {
         title: 'What are Realms?',
@@ -312,7 +333,7 @@ export default defineComponent({
       },
       {
         title: 'Why is settling all on-chain?',
-        body: 'All game activity will be on-chain, this means no central servers and no central backend. This allows the game assets to be composed and used in other games within the Realmverse, with no reliance on a central entity for their ongoing use. ',
+        body: 'All game activity will be on-chain, this means no central servers and no central backend. This allows the game assets to be composed and used in other games within the Realmverse, with no reliance on a central entity for their ongoing use.',
       },
       {
         title: 'What is StarkNet?',
@@ -320,7 +341,7 @@ export default defineComponent({
       },
       {
         title: 'Community Driven - The Bibliotheca DAO',
-        body: 'Settling of the Realms is goverened by the Realm Lords under the Bibliotheca DAO. Game direction, testing and feedback is all directed by the community. There is core a team of developers building the game, however all code is open source and we encourage outside contributors.',
+        body: 'Settling of the Realms is governed by the Realm Lords under the Bibliotheca DAO. Game direction, testing and feedback are all directed by the community. There is core a team of developers building the game, however all code is open source and we encourage outside contributors.',
       },
       {
         title: 'Can I audit your Contracts?',
