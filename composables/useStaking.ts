@@ -376,7 +376,7 @@ async function getClaimable(network, account) {
   )
 
   const tokenBalances = await journeyContract.lordsAvailable(account)
-  return tokenBalances
+  return ethers.utils.formatEther(tokenBalances)
 }
 
 async function claimAll(network) {
