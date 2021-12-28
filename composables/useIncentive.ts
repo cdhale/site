@@ -192,8 +192,8 @@ const getTuple = (network) => {
   return {
     rewardToken: contractAddresses[network.id].lordsTokenAddress,
     pool: contractAddresses[network.id].lordsPool,
-    startTime: 1639766563,
-    endTime: 1640630563,
+    startTime: 1640679356,
+    endTime: 1643312097,
     refundee: contractAddresses[network.id].treasury,
   }
 }
@@ -222,6 +222,7 @@ async function depositLp(network, account, tokenId) {
     uniSwapV3PositionManagerAbi,
     signer
   )
+
   const tx = await positionManager[
     'safeTransferFrom(address,address,uint256,bytes)'
   ](

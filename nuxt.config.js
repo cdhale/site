@@ -99,7 +99,7 @@ export default {
       },
       mainnetStaker: {
         endpoint: process.env.GRAPH_API_STAKER
-          ? process.env.GRAPH_API_STAKING
+          ? process.env.GRAPH_API_STAKER
           : 'http://localhost:1337/graphql',
         options: {},
       },
