@@ -124,7 +124,7 @@
       <div class="p-2 w-full">
         <BaseBox>
           <h1>Total Realms Staked</h1>
-          <span class="text-6xl flex mx-auto">
+          <span class="text-2xl sm:text-6xl flex mx-auto">
             <LoadingRings
               v-if="!totalRealmsStaked"
               class="fill-none stroke-current text-off-200 self-center"
@@ -134,11 +134,14 @@
           >
         </BaseBox>
       </div>
-      <div class="p-2 w-full">
+      <div class="hidden sm:block p-2 w-full">
         <BaseBox>
-          <h1>LORDS - ETH</h1>
-          <p class="text-2xl">1,000,000 LORDS available over 6 weeks.</p>
-          <div class="font-display my-4">
+          <h1>The Kings LP Rewards.</h1>
+          <p class="text-2xl">
+            Provide your UniSwap V3 position and be rewarded in LORDS. <br />
+            300,000 LORDS available over 30 days.
+          </p>
+          <div v-if="userRewards != '0.0'" class="font-display my-6">
             <h3>Claimable LORDS</h3>
             <span class="text-3xl">{{ userRewards }}</span>
             <div class="flex mx-auto justify-center space-x-4 mt-4">
@@ -156,7 +159,7 @@
                 <tr class="text-center font-display text-2xl pt-4">
                   <th>LP Token ID</th>
                   <th>Status</th>
-                  <th>Rewards</th>
+                  <th>LORDS</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -169,6 +172,10 @@
               </tbody>
             </table>
           </div>
+          <p class="my-4">
+            To claim the Lords, first unstake your position, then click the
+            Claim button.
+          </p>
         </BaseBox>
       </div>
     </div>
