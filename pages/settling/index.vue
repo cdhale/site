@@ -136,7 +136,7 @@
       </div>
       <div class="hidden sm:block p-2 w-full">
         <BaseBox>
-          <h1>The Kings' LP Rewards.</h1>
+          <h1>The Kings' LP Rewards</h1>
           <p class="text-2xl">
             Provide your UniSwap V3 position and be rewarded in LORDS. <br />
             300,000 LORDS available over 30 days.
