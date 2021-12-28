@@ -172,6 +172,9 @@
               </tbody>
             </table>
           </div>
+          <div v-else class="my-6">
+            <p class="text-3xl">You do not have any LP positions.</p>
+          </div>
           <p v-if="userPositions" class="my-4">
             To claim the Lords, first unstake your position, then click the
             Claim button.
