@@ -153,7 +153,7 @@
               >
             </div>
           </div>
-          <div class="mt-8 mx-auto w-full flex">
+          <div v-if="userPositions" class="mt-8 mx-auto w-full flex">
             <table class="table-auto mx-auto w-full py-4">
               <thead>
                 <tr class="text-center font-display text-2xl pt-4">
@@ -163,7 +163,7 @@
                   <th>Actions</th>
                 </tr>
               </thead>
-              <tbody v-if="userPositions">
+              <tbody>
                 <LpTable
                   v-for="position in userPositions"
                   :key="position.id"
@@ -172,7 +172,7 @@
               </tbody>
             </table>
           </div>
-          <p class="my-4">
+          <p v-if="userPositions" class="my-4">
             To claim the Lords, first unstake your position, then click the
             Claim button.
           </p>
