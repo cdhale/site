@@ -124,7 +124,7 @@ export default defineComponent({
         prodTime: 'Early Q2 2022',
         title: 'Minigame on Starknet Alpha',
         description:
-          'Minigame on Starknet Alpha will be released. This will be an entirely on-chain experience and will require Lords to play. This game will be similar to Capture the Flag.',
+          'Mini tower defence game on Starknet Alpha will be released. This will be an entirely on-chain experience and will require Lords to play. ',
         active: 'true',
       },
       {
