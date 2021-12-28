@@ -153,7 +153,7 @@
               >
             </div>
           </div>
-          <div v-if="userPositions" class="mt-8 mx-auto w-full flex">
+          <div v-if="userPositions.length" class="mt-8 mx-auto w-full flex">
             <table class="table-auto mx-auto w-full py-4">
               <thead>
                 <tr class="text-center font-display text-2xl pt-4">
@@ -175,7 +175,7 @@
           <div v-else class="my-6">
             <p class="text-3xl">You do not have any LP positions.</p>
           </div>
-          <p v-if="userPositions" class="my-4">
+          <p v-if="userPositions.length" class="my-4">
             To claim the Lords, first unstake your position, then click the
             Claim button.
           </p>
