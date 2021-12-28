@@ -141,6 +141,10 @@
             Provide your UniSwap V3 position and be rewarded in LORDS. <br />
             300,000 LORDS available over 30 days.
           </p>
+          <p>
+            IMPORTANT NOTE: You will only earn rewards if your Position is
+            within range.
+          </p>
           <div v-if="userRewards != '0.0'" class="font-display my-6">
             <h3>Claimable LORDS</h3>
             <span class="text-3xl">{{ userRewards }}</span>
