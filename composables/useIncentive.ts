@@ -228,7 +228,7 @@ async function depositLp(network, account, tokenId) {
     account.value,
     contractAddresses[network.id].uniswapV3Pool,
     tokenId,
-    EncodedIncentiveKey()
+    EncodedIncentiveKey(network)
   )
   const receipt = await tx.wait()
 
