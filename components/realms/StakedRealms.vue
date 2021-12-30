@@ -89,7 +89,7 @@ export default defineComponent({
         .join('')
         .slice(0, -1)
 
-      return await axios.get(baseAssetAddress + mapped, {
+      return await axios.get(baseAssetAddress + mapped + '&limit=50', {
         headers: {
           'X-API-KEY': process.env.OPENSEA,
         },
