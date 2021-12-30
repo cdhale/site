@@ -18,7 +18,7 @@ const claimableBalance = ref()
 const isApproved = ref(false)
 export function useStaking() {
   const { close } = useModal()
-  const { account } = useWeb3()
+  const { account, library } = useWeb3()
   const { getWalletRealms, userRealms } = useRealms()
   const { useL1Network } = useNetwork()
   const error = reactive({
@@ -36,7 +36,11 @@ export function useStaking() {
 
   const getApproved = async () => {
     try {
-      const response = await getApproval(account.value, activeNetwork.value.id)
+      const response = await getApproval(
+        account.value,
+        activeNetwork.value.id,
+        library
+      )
 
       if (response) {
         isApproved.value = true
@@ -53,7 +57,8 @@ export function useStaking() {
       loading.approve = true
       const response = await setApprovalForAllRealms(
         account.value,
-        activeNetwork.value.id
+        activeNetwork.value.id,
+        library
       )
 
       if (response) {
@@ -71,8 +76,12 @@ export function useStaking() {
       error.stake = null
       loading.stake = true
 
-      await setApprovalForAllRealms(account.value, activeNetwork.value.id)
-      const realmsStaked = await stake(realmIds, useL1Network.value.id)
+      await setApprovalForAllRealms(
+        account.value,
+        activeNetwork.value.id,
+        library
+      )
+      const realmsStaked = await stake(realmIds, useL1Network.value.id, library)
       const convertedRealms = realmsStaked.map((x) => {
         return x.toString()
       })
@@ -192,7 +201,7 @@ export function useStaking() {
     try {
       error.stake = null
       loading.lords = true
-      await claimAll(useL1Network.value.id)
+      await claimAll(useL1Network.value.id, library)
       showSuccess('Transaction Complete', 'All Lords claimed')
     } catch (e) {
       await showError('Claiming Error')
@@ -207,7 +216,7 @@ export function useStaking() {
     try {
       error.stake = null
       loading.stake = true
-      await unStakeAndExit(activeNetwork.value.id, realmIds)
+      await unStakeAndExit(activeNetwork.value.id, realmIds, library)
       return setTimeout(() => {
         getWalletRealms()
       }, 4500)
@@ -268,9 +277,8 @@ async function getTimeUntilEpoch(network) {
   return t
 }
 
-async function stake(realmIds, network) {
-  const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const signer = provider.getSigner()
+async function stake(realmIds, network, library) {
+  const signer = library.value.getSigner()
 
   const journeyContractAddress =
     contractAddresses[network].journeyContractAddress
@@ -287,12 +295,11 @@ async function stake(realmIds, network) {
   return event.args[0]
 }
 // TODO: make generic
-async function getApproval(owner, network) {
+async function getApproval(owner, network, library) {
   const realmsAddress = erc721tokens[activeNetwork.value.id].realms.address
   const journeyContractAddress =
     contractAddresses[network].journeyContractAddress
-  const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const signer = provider.getSigner()
+  const signer = library.value.getSigner()
   const realmsContract = new ethers.Contract(
     realmsAddress,
     lootRealmsABI,
@@ -309,11 +316,10 @@ async function getApproval(owner, network) {
   }
 }
 
-async function setApprovalForAllRealms(owner, network) {
+async function setApprovalForAllRealms(owner, network, library) {
   const realmsAddress = erc721tokens[activeNetwork.value.id].realms.address
 
-  const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const signer = provider.getSigner()
+  const signer = library.value.getSigner()
   const realmsContract = new ethers.Contract(
     realmsAddress,
     lootRealmsABI,
@@ -379,9 +385,9 @@ async function getClaimable(network, account) {
   return ethers.utils.formatEther(tokenBalances)
 }
 
-async function claimAll(network) {
-  const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const signer = provider.getSigner()
+async function claimAll(network, library) {
+  const signer = library.value.getSigner()
+
   const journeyContractAddress =
     contractAddresses[network].journeyContractAddress
 
@@ -397,9 +403,9 @@ async function claimAll(network) {
 
   return withdraw
 }
-async function unStakeAndExit(network, realmIds) {
-  const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const signer = provider.getSigner()
+async function unStakeAndExit(network, realmIds, library) {
+  const signer = library.value.getSigner()
+
   const journeyContractAddress =
     contractAddresses[network].journeyContractAddress
   const journeyContract = new ethers.Contract(

@@ -19,7 +19,7 @@ const POLLING_INTERVAL = 12000
 
 const RPC_URLS: { [chainId: number]: string } = {
   1: `https://mainnet.infura.io/v3/${process.env.INFURA_ID}`,
-  4: 'https://rinkeby-light.eth.linkpool.io',
+  4: `https://rinkeby.infura.io/v3/${process.env.INFURA_ID}`,
   421611: 'https://rinkeby.arbitrum.io/rpc',
   42161: 'https://arb1.arbitrum.io/rpc',
   1337: 'http://127.0.0.1:8545/',
@@ -36,8 +36,7 @@ export const walletlink = new WalletLinkConnector({
 }) */
 
 export const walletconnect = new WalletConnectConnector({
-  rpc: { 1: RPC_URLS[1] },
-  qrcode: true,
+  infuraId: process.env.INFURA_ID,
 })
 export const portis = new PortisConnector({
   dAppId: process.env.PORTIS_ID as string,

@@ -34,7 +34,7 @@ export function useMint() {
 
   const loadingModal = ref(false)
   const { times, plus, ensureValue } = useBigNumber()
-  const { provider, account, activate } = useWeb3()
+  const { provider, account, activate, library } = useWeb3()
   const { open } = useWeb3Modal()
   const { gqlRequest } = useGraph()
   const mintedRealmIds = ref([])
@@ -78,7 +78,8 @@ export function useMint() {
       result.mint = await mintToken(
         account.value,
         activeNetwork.value.id,
-        lootId
+        lootId,
+        library
       )
     } catch (e) {
       error.mint = e.message
@@ -148,20 +149,23 @@ export function useMint() {
   }
 }
 
-async function mintToken(owner, network, lootId) {
-  const provider = new ethers.providers.Web3Provider(window.ethereum)
+async function mintToken(owner, network, lootId, library) {
+  console.log(library.value.getSigner())
+  console.log(network)
   const realmsAddress = erc721tokens[network].realms.address
-  const signer = provider.getSigner()
-
+  const signer = library.value.getSigner()
+  console.log(signer)
   const tokenContract = new ethers.Contract(realmsAddress, realmsABI, signer)
+  console.log(tokenContract)
   const overrides = {
     // To convert Ether to Wei:
     value: ethers.utils.parseEther('0.1'),
   }
   const mint = await tokenContract.mint(lootId, overrides)
-  await mint.wait()
-
-  return mint
+  console.log(mint)
+  const tx = await mint.wait()
+  console.log(tx)
+  return tx
 }
 
 async function multiMintToken(owner, network, lootIds) {
