@@ -26,10 +26,15 @@
       <h2>
         <NuxtLink to="/"><Book class="w-16 h-16 mx-auto sm:mt-12" /></NuxtLink>
       </h2>
-      <span class="text-center font-semibold text-2xl"
-        ><span class="text-yellow-400">${{ lordsPrice.toFixed(4) }}</span>
-        $LORDS</span
-      >
+      <span class="text-center font-semibold text-2xl">
+        <span class="text-yellow-400">${{ (lordsPrice || 0).toFixed(4) }}</span>
+        $LORDS
+      </span>
+
+      <span class="text-center font-semibold text-2xl">
+        <span class="text-yellow-400">${{ goldPrice }}</span>
+        $AGLD
+      </span>
 
       <nav class="flex flex-col p-2 capitalize mt-8">
         <h4 class="mt-8 uppercase text-off-200 tracking-wide pl-4">
@@ -106,7 +111,7 @@
 <script>
 import { onMounted } from '@vue/composition-api'
 import { useWeb3 } from '@instadapp/vue-web3'
-import { useUiState, useLordsPrice } from '~/composables'
+import { useUiState, useLordsPrice, usePrice } from '~/composables'
 import Book from '~/assets/img/book-open.svg?inline'
 import Close from '~/assets/img/x-square.svg?inline'
 import Github from '~/assets/img/github.svg?inline'
@@ -127,6 +132,7 @@ export default {
     const { account } = useWeb3()
     const { toggleSideBar, sideBarOpen } = useUiState()
     const { lordsPrice, getLordsPrice } = useLordsPrice()
+    const { goldPrice, getGoldPrice } = usePrice()
 
     const assetLinks = [
       {
@@ -172,14 +178,17 @@ export default {
 
     onMounted(() => {
       getLordsPrice()
+      getGoldPrice()
       window.setInterval(() => {
         getLordsPrice()
+        getGoldPrice()
       }, 20000)
     })
 
     return {
       toggleSideBar,
       sideBarOpen,
+      goldPrice,
       lordsPrice,
       getLordsPrice,
       assetLinks,
