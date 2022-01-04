@@ -27,7 +27,8 @@
         <NuxtLink to="/"><Book class="w-16 h-16 mx-auto sm:mt-12" /></NuxtLink>
       </h2>
       <span class="text-center font-semibold text-2xl"
-        ><span class="text-yellow-400">${{ goldPrice }}</span> $AGLD</span
+        ><span class="text-yellow-400">${{ lordsPrice.toFixed(4) }}</span>
+        $LORDS</span
       >
 
       <nav class="flex flex-col p-2 capitalize mt-8">
@@ -105,7 +106,7 @@
 <script>
 import { onMounted } from '@vue/composition-api'
 import { useWeb3 } from '@instadapp/vue-web3'
-import { useUiState, usePrice } from '~/composables'
+import { useUiState, useLordsPrice } from '~/composables'
 import Book from '~/assets/img/book-open.svg?inline'
 import Close from '~/assets/img/x-square.svg?inline'
 import Github from '~/assets/img/github.svg?inline'
@@ -125,7 +126,7 @@ export default {
   setup() {
     const { account } = useWeb3()
     const { toggleSideBar, sideBarOpen } = useUiState()
-    const { goldPrice, getGoldPrice } = usePrice()
+    const { lordsPrice, getLordsPrice } = useLordsPrice()
 
     const assetLinks = [
       {
@@ -170,17 +171,17 @@ export default {
     ]
 
     onMounted(() => {
-      getGoldPrice()
+      getLordsPrice()
       window.setInterval(() => {
-        getGoldPrice()
+        getLordsPrice()
       }, 20000)
     })
 
     return {
       toggleSideBar,
       sideBarOpen,
-      goldPrice,
-      getGoldPrice,
+      lordsPrice,
+      getLordsPrice,
       assetLinks,
       utilLinks,
       adventureLinks,
