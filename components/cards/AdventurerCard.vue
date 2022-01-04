@@ -50,13 +50,13 @@ export default defineComponent({
     },
   },
   setup(props, context) {
-    const { shortenHash, returnEns, ensName } = useFormatting()
+    const { shortenHash /* , returnEns */, ensName } = useFormatting()
     const navigate = () => {
       context.root.$router.push(`/adventurer/${props.adventurer.address}`)
     }
 
     onMounted(async () => {
-      await returnEns(props.adventurer.address)
+      // await returnEns(props.adventurer.address)
     })
     return {
       shortenHash,
