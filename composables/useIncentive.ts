@@ -25,13 +25,8 @@ export function useIncentive() {
   const error = reactive({
     stake: null,
   })
-<<<<<<< HEAD
-  const { showError } = useNotification()
-
-=======
   const { showError, showSuccess } = useNotification()
   const { useL1Network } = useNetwork()
->>>>>>> 6541e4e48... update staker address + graph fixes
   const rewardInfo = ref()
 
   const getRewardsByToken = async (tokenId) => {

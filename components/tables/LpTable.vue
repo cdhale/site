@@ -49,11 +49,7 @@
         >Unstake / Claim</BButton
       >
       <BButton
-<<<<<<< HEAD
-        v-else
-=======
         v-if="deposited & !position.staked"
->>>>>>> 4e0f811... fix LP table
         :loading="loading.stake"
         type="settling"
         @click="stake(position.tokenId)"
