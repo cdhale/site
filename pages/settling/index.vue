@@ -318,7 +318,7 @@ export default defineComponent({
       {
         title:
           'How long do you need to be staked for to be entitled to rewards?',
-        body: 'You need to be staked for one entire epoch (7 days) to be entitled to your $LORDS. For example, if you stake end the end of epoch 2 and remain staked until epoch 4, you will receive the epoch 3 reward. ',
+        body: 'You need to be staked for one entire epoch (7 days) to be entitled to your $LORDS. For example, if you stake at the end of epoch 2 and remain staked until epoch 4, you will receive the epoch 3 reward. ',
       },
       {
         title: 'Once staked, do you need stake again for future epochs?',
