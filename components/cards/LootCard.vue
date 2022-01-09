@@ -57,6 +57,7 @@
           duration-150
           underline
         "
+        @click="navigate"
       >
         See on Opensea
       </span>
