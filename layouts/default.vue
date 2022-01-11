@@ -17,12 +17,15 @@
     </div>
     <NotificationBar />
     <SideBar class="fixed sm:relative w-80 min-h-screen" />
+
     <div class="w-full">
-      <AccountButton />
+      <!-- <AccountButton /> -->
+      <StarkAccountButton />
       <Modal />
 
       <Nuxt keep-alive class="p-3 sm:p-8" />
     </div>
+    <WalletSideBar class="fixed w-80 min-h-screen" />
   </div>
 </template>
 <script>
@@ -31,10 +34,12 @@ import { useWeb3 } from '@instadapp/vue-web3'
 import { useUiState } from '~/composables'
 import { useConnect } from '~/composables/useConnect'
 import Book from '~/assets/img/book-open.svg?inline'
+import StarkAccountButton from '~/components/web3/StarkAccountButton.vue'
 
 export default defineComponent({
   components: {
     Book,
+    StarkAccountButton,
   },
   fetchOnServer: false,
   setup() {

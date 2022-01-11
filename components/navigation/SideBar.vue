@@ -57,6 +57,15 @@
           @click.native="toggleSideBar"
           >{{ link.title }}</BButton
         >
+        <h4 class="mt-8 uppercase text-off-200 tracking-wide pl-4">Trade</h4>
+        <BButton
+          v-for="link in bazaarLinks"
+          :key="link.title"
+          type="navLink"
+          :to="link.page"
+          @click.native="toggleSideBar"
+          >{{ link.title }}</BButton
+        >
         <h4 class="mt-8 uppercase text-off-200 tracking-wide pl-4">
           Utilities
         </h4>
@@ -168,7 +177,12 @@ export default {
         title: 'Realm Resources',
       },
     ]
-
+    const bazaarLinks = [
+      {
+        page: '/marketplace',
+        title: 'StarkNet NFT Bazaar',
+      },
+    ]
     const adventureLinks = [
       {
         page: '/adventurer',
@@ -195,6 +209,7 @@ export default {
       utilLinks,
       adventureLinks,
       account,
+      bazaarLinks,
     }
   },
 }

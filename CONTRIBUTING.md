@@ -44,4 +44,4 @@ To keep the code base of our repository neat and tidy, we apply a set of rules t
 - `eslint` is king
 - Favor micro library over swiss army knives (rimraf, ncp vs. fs-extra) - Just in case you really need one :)
 - Be awesome
-- Ask questions!
+

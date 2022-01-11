@@ -6,6 +6,7 @@ Vue.use(VueCompositionAPI)
 
 const state = reactive({
   sideBarOpen: false,
+  walletSideBarOpen: false,
 })
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -15,9 +16,16 @@ const useUiState = () => {
     state.sideBarOpen = !state.sideBarOpen
   }
 
+  const walletSideBarOpen = computed(() => state.walletSideBarOpen)
+  const toggleWalletSideBar = () => {
+    state.walletSideBarOpen = !state.walletSideBarOpen
+  }
+
   return {
     sideBarOpen,
     toggleSideBar,
+    walletSideBarOpen,
+    toggleWalletSideBar,
   }
 }
 
