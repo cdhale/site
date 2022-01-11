@@ -88,7 +88,7 @@
 
     <div class="p-4">
       <div v-if="type === 'sell'" class="mt-auto">
-        <div class="mt-auto">
+        <div v-if="!tokenTrades[id].id" class="mt-auto">
           <input
             id="mintId"
             v-model="sellPrice"
@@ -125,6 +125,17 @@
             <span>Sell Realm</span>
           </BButton>
         </div>
+        <div v-else class="mt-auto">
+          <p>Listed For: {{ tokenTrades[id].price }} $LORDS</p>
+          <BButton
+            :loading="loadingMarket.trade"
+            class="w-full"
+            type="primary"
+            @click="sellRealm()"
+          >
+            <span>Edit Listing</span>
+          </BButton>
+        </div>
       </div>
       <div v-else>
         <BButton
@@ -158,7 +169,7 @@ export default defineComponent({
       default: null,
     },
     id: {
-      type: String,
+      type: Object,
       required: true,
     },
     stake: {
@@ -179,7 +190,12 @@ export default defineComponent({
     const { shortenHash } = useFormatting()
     const { intRoundFloor } = useBigNumber()
     const { loading, stakeRealms } = useStaking()
-    const { openTrade, loading: loadingMarket } = useMarketplace()
+    const {
+      openTrade,
+      loading: loadingMarket,
+      getTradeByToken,
+      tokenTrades,
+    } = useMarketplace()
     const { showComponent } = useModal()
 
     const sellPrice = ref()
@@ -209,6 +225,8 @@ export default defineComponent({
       })
     }
     onMounted(async () => {
+      getTradeByToken(props.id)
+
       if (!props.realm) {
         try {
           const { data } = await axios.get(
@@ -244,11 +262,12 @@ export default defineComponent({
     }
     const tradesSortedByPrice = computed(() => {
       const tradesSorted = props.trades
-      return tradesSorted.sort(function (a, b) {
+      return tradesSorted?.sort(function (a, b) {
         return parseInt(a.price - b.price)
       })
     })
     return {
+      tokenTrades,
       tradesSortedByPrice,
       openTrade,
       sellRealm,

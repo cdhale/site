@@ -178,7 +178,6 @@ export function useStarknet() {
   const getRealmOwner = async (id) => {
     loading.realmOwner = true
     const realmsTokenAddress = starknetAddresses[networkId.value].realms.address
-    console.log(getUint256CalldataFromBN(id))
     try {
       const { result } = await starknet.value.provider.callContract({
         contract_address: realmsTokenAddress, // to (erc20 contract)
@@ -189,7 +188,6 @@ export function useStarknet() {
       })
       return result[0]
     } catch (e) {
-      console.log('error here')
       console.log(e)
     } finally {
       loading.realmOwner = false

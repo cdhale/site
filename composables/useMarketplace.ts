@@ -62,7 +62,6 @@ export function useMarketplace() {
           operator: number.toBN(marketplaceAddress).toString(),
         }),
       })
-      console.log(result)
       if (result[0].toString() === '0x1') {
         isNFTApproved.realms = true
       }
@@ -203,7 +202,8 @@ export function useMarketplace() {
         entry_point_selector: stark.getSelectorFromName('get_trade_counter'), // selector (mint)
         calldata: [],
       })
-      tradeCounter.value = toBN(result[0]).toString()
+      console.log(result)
+      tradeCounter.value = (parseInt(result[0]) - 1).toString()
     } catch (e) {
       console.log(e)
     }
@@ -213,6 +213,7 @@ export function useMarketplace() {
     loading.trade = true
     const marketplaceAddress =
       starknetAddresses[networkId.value].marketplace.address
+    const realmsTokenAddress = starknetAddresses[networkId.value].realms.address
 
     // checks that enable succeeded
     if (starknet.value.isConnected === false) {
@@ -223,6 +224,7 @@ export function useMarketplace() {
         marketplaceAddress, // to (erc20 contract)
         stark.getSelectorFromName('open_trade'), // selector (mint)
         compileCalldata({
+          _token_contract: realmsTokenAddress,
           _token_id: getUint256CalldataFromBN(id), // receiver (self)
           _price: price.toString(),
           _expiration: '919191919',
@@ -276,12 +278,13 @@ export function useMarketplace() {
       })
 
       trades.value.push({
-        item: toBN(result[0]).toString(),
+        contract: result[0].toString(),
+        item: toBN(result[1]),
         id: idx.toString(),
-        expiration: toBN(result[2]).toString(),
-        price: toBN(result[3]).toString(),
-        poster: result[4].toString(),
-        status: toBN(result[5]).toString(),
+        expiration: toBN(result[3]).toString(),
+        price: toBN(result[4]).toString(),
+        poster: result[5].toString(),
+        status: toBN(result[6]).toString(),
       })
     } catch (e) {
       console.log(e)
@@ -293,11 +296,13 @@ export function useMarketplace() {
     loading.getBook = true
     const marketplaceAddress =
       starknetAddresses[networkId.value].marketplace.address
+    const realmsTokenAddress = starknetAddresses[networkId.value].realms.address
 
     // checks that enable succeeded
     if (starknet.value.isConnected === false) {
       console.log('Wallet Not connected')
     }
+    console.log(tokenId)
     try {
       const { result } = await starknet.value.provider.callContract({
         contract_address: marketplaceAddress, // to (erc20 contract)
@@ -305,17 +310,19 @@ export function useMarketplace() {
           'get_open_trade_by_token'
         ), // selector (mint)
         calldata: compileCalldata({
+          _token_contract: realmsTokenAddress,
           _token_id: getUint256CalldataFromBN(tokenId),
         }),
       })
 
       tokenTrades.value[tokenId] = {
-        item: toBN(result[0]).toString(),
-        id: tokenId.toString(),
-        expiration: toBN(result[2]).toString(),
-        price: toBN(result[3]).toString(),
-        poster: result[4].toString(),
-        status: toBN(result[5]).toString(),
+        contract: result[0].toString(),
+        item: toBN(result[1]),
+        expiration: toBN(result[3]).toString(),
+        price: toBN(result[4]).toString(),
+        poster: result[5].toString(),
+        status: toBN(result[6]).toString(),
+        id: toBN(result[7]).toString(),
       }
     } catch (e) {
       console.log(e)
@@ -331,7 +338,9 @@ export function useMarketplace() {
     setApproveLordsForMarketplace,
     setApproveRealmsForMarketplace,
     trades,
+    tokenTrades,
     openTrade,
+    getTradeByToken,
     executeTrade,
     getTrade,
     getTradeCounter,

@@ -46,13 +46,18 @@
   </div>
 </template>
 <script>
-import { defineComponent, onMounted, computed } from '@vue/composition-api'
-import { useArgent } from '~/composables/useArgent'
+import {
+  defineComponent,
+  onMounted,
+  computed,
+  watch,
+} from '@vue/composition-api'
 import { useMarketplace } from '~/composables/useMarketplace'
 // import LoadingRings from '~/assets/img/loadingRings.svg?inline'
 import MarketplaceRealmCard from '~/components/cards/MarketplaceRealmCard.vue'
 import { useModal } from '~/composables/useModal'
 import MarketplaceSetup from '~/components/modal/MarketplaceSetup.vue'
+import { useArgent } from '~/composables/useArgent'
 
 export default defineComponent({
   components: {
@@ -60,15 +65,13 @@ export default defineComponent({
     MarketplaceRealmCard,
   },
   setup() {
-    const { activate, starknet } = useArgent()
     const { showComponent } = useModal()
-
+    const { account } = useArgent()
     const {
       trades,
       getTrade,
       setApproveRealmsForMarketplace,
       setApproveLordsForMarketplace,
-      getApprovals,
       isApproved,
       loading,
       getTradeCounter,
@@ -76,22 +79,23 @@ export default defineComponent({
       lordsAllowances,
     } = useMarketplace()
     onMounted(async () => {
-      await activate()
       await fetchMarketplaceData()
     })
 
     const fetchMarketplaceData = async () => {
-      await getTradeCounter()
-      trades.value = []
-      for (
-        let tradeIdx = parseInt(tradeCounter.value) - 1;
-        tradeIdx >= 0;
-        tradeIdx--
-      ) {
-        getTrade(tradeIdx)
+      if (account.value.length) {
+        console.log(account.value)
+        console.log('getting market data')
+        await getTradeCounter()
+        trades.value = []
+        for (
+          let tradeIdx = parseInt(tradeCounter.value);
+          tradeIdx > 0;
+          tradeIdx--
+        ) {
+          getTrade(tradeIdx)
+        }
       }
-
-      getApprovals()
     }
     const showMarketplaceSetup = () => {
       showComponent(MarketplaceSetup)
@@ -114,10 +118,15 @@ export default defineComponent({
       }
       return null
     })
+    watch(account, () => {
+      console.log('fetching logged in user resources')
+      if (!trades.value?.length) {
+        fetchMarketplaceData()
+      }
+    })
     return {
       tradesByRealm,
       lordsAllowances,
-      starknet,
       showMarketplaceSetup,
       setApproveRealmsForMarketplace,
       realmsWithOpenTrades,

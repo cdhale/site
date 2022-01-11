@@ -19,7 +19,6 @@
         <StarkTransactions class="mr-4" />
         <BButton
           v-if="!show"
-          type="button"
           class="
             border-double border-4
             rounded
@@ -47,7 +46,6 @@
         </BButton>
         <BButton
           v-else
-          type="button"
           class="
             border
             rounded
@@ -66,6 +64,7 @@
           aria-haspopup="listbox"
           aria-expanded="true"
           aria-labelledby="listbox-label"
+          @click="deactivate"
         >
           <span> disconnect? </span>
         </BButton>
@@ -75,7 +74,7 @@
     <BButton
       v-else
       :type="type === 'settling' ? 'settling' : 'primary'"
-      @click="activateStarknet"
+      @click="activate"
     >
       Connect to StarkNet
     </BButton>
@@ -90,8 +89,6 @@ import { useFormatting } from '~/composables/useFormatting'
 import Helm from '~/assets/img/helm.svg?inline'
 import { useArgent } from '~/composables/useArgent'
 import StarkNet from '~/assets/icons/starknet.svg?inline'
-import { useStarknet } from '~/composables/useStarknet'
-import { useMarketplace } from '~/composables/useMarketplace'
 
 export default defineComponent({
   components: {
@@ -106,40 +103,23 @@ export default defineComponent({
     },
   },
   setup() {
-    const { account, active, activate, deactivate, starknet } = useArgent()
-    const { getApprovals } = useMarketplace()
+    const { account, active, deactivate, activate, starknet } = useArgent()
 
     const { shortenHash } = useFormatting()
     const show = ref(false)
-    const {
-      getLordsTotalSupply,
-      getLordsBalance,
-      getOwnersTokens,
-      getRealmsBalance,
-    } = useStarknet()
 
     const hide = () => {
       show.value = false
     }
-    const activateStarknet = async () => {
-      await activate()
-      fetchLordsBalance()
-    }
-    const fetchLordsBalance = () => {
-      getOwnersTokens()
-      getRealmsBalance()
-      getLordsBalance()
-      getLordsTotalSupply()
-      getApprovals()
-    }
+
     return {
       show,
       hide,
       account,
-      activateStarknet,
       starknet,
       deactivate,
       active,
+      activate,
       /* deactivate, */
       shortenHash,
     }

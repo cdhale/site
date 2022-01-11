@@ -6,7 +6,7 @@
 
     <h2 class="mt-4">Your Realms ({{ numberOfRealms }})</h2>
     <div class="flex flex-wrap w-full">
-      <div v-for="realm in starkRealms" :key="realm" class="w-80">
+      <div v-for="realm in starkRealms" :key="realm.id" class="w-80">
         <MarketplaceRealmCard :id="realm.low.toString()" type="sell" />
       </div>
     </div>
@@ -41,7 +41,6 @@ export default defineComponent({
 
     const { transactions } = useStarkTransactions()
     onMounted(async () => {
-      await fetchLordsBalance()
       await getOwnersTokens()
     })
     const random = (max) => {

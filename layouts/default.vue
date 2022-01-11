@@ -33,8 +33,12 @@ import { defineComponent, watch } from '@nuxtjs/composition-api'
 import { useWeb3 } from '@instadapp/vue-web3'
 import { useUiState } from '~/composables'
 import { useConnect } from '~/composables/useConnect'
+import { useStarkConnect } from '~/composables/useStarkConnect'
 import Book from '~/assets/img/book-open.svg?inline'
 import StarkAccountButton from '~/components/web3/StarkAccountButton.vue'
+import { useArgent } from '~/composables/useArgent'
+import { useMarketplace } from '~/composables/useMarketplace'
+import { useStarknet } from '~/composables/useStarknet'
 
 export default defineComponent({
   components: {
@@ -44,13 +48,29 @@ export default defineComponent({
   fetchOnServer: false,
   setup() {
     const { account } = useWeb3()
+    const { account: starkAccount } = useArgent()
     const { toggleSideBar, sideBarOpen } = useUiState()
-    useConnect()
+    const {
+      getLordsBalance,
+      getRealmsBalance,
+      getOwnersTokens,
+      getLordsTotalSupply,
+    } = useStarknet()
+    const { getApprovals } = useMarketplace()
 
+    useConnect()
+    useStarkConnect()
     watch(account, () => {
       console.log('fetching logged in user resources')
     })
-
+    watch(starkAccount, () => {
+      console.log('fetching logged in user resources')
+      getOwnersTokens()
+      getRealmsBalance()
+      getLordsBalance()
+      getLordsTotalSupply()
+      getApprovals()
+    })
     return {
       toggleSideBar,
       sideBarOpen,

@@ -10,7 +10,6 @@ export function useArgent() {
   // check if wallet extension is installed and initialized. Shows a modal prompting the user to download
   // ArgentX otherwise.
   const activate = async () => {
-    console.log('got here')
     try {
       starknet.value = getStarknet({ showModal: true })
       account.value = await starknet.value.enable() // may throws when no extension is detected
@@ -30,9 +29,8 @@ export function useArgent() {
   }
 
   const addToken = async (address: string): Promise<void> => {
-    const starknet = getStarknet()
-    await starknet.enable()
-    await starknet.request({
+    await starknet.value.enable()
+    await starknet.value.request({
       type: 'wallet_watchAsset',
       params: {
         type: 'ERC20',

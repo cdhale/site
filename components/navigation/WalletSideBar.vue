@@ -204,7 +204,6 @@
   </div>
 </template>
 <script>
-import { onMounted } from '@nuxtjs/composition-api'
 import { useLordsPrice, useUiState } from '~/composables'
 import Close from '~/assets/img/x-square.svg?inline'
 import { useStarknet } from '~/composables/useStarknet'
@@ -228,10 +227,8 @@ export default {
       mintRealm,
       numberOfRealms,
       getRealmsBalance,
-      getOwnersTokens,
-      getLordsTotalSupply,
     } = useStarknet()
-    const { lordsAllowances, setApproveLordsForRealms, loading, getApprovals } =
+    const { lordsAllowances, setApproveLordsForRealms, loading } =
       useMarketplace()
     const { lordsPrice } = useLordsPrice()
     const { toggleWalletSideBar, walletSideBarOpen } = useUiState()
@@ -244,18 +241,6 @@ export default {
       const id = random(8000)
       console.log(id)
       await mintRealm(id)
-    }
-
-    onMounted(() => {
-      getApprovals()
-      fetchLordsBalance()
-    })
-
-    const fetchLordsBalance = () => {
-      getOwnersTokens()
-      getRealmsBalance()
-      getLordsBalance()
-      getLordsTotalSupply()
     }
 
     return {

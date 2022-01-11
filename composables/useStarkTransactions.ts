@@ -31,7 +31,7 @@ export class Transaction {
 }
 
 export function useStarkTransactions() {
-  const { starknet, account, networkId } = useArgent()
+  const { starknet, account, networkId, waitForTransaction } = useArgent()
 
   const add = (tx: Transaction) => {
     console.log(tx)
@@ -46,9 +46,8 @@ export function useStarkTransactions() {
   const getStatus = async (transaction) => {
     if (transaction.refreshing || !starknet.value?.provider) return
     transaction.refreshing = true
-    const status = (
-      await starknet.value.provider.getTransactionStatus(transaction.hash)
-    ).tx_status
+    const tx = await waitForTransaction(transaction.hash)
+    console.log(tx)
     if (
       status === 'PENDING' ||
       status === 'RECEIVED' ||

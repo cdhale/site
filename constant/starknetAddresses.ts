@@ -27,7 +27,7 @@ export default {
     marketplace: {
       name: 'Bibliotheca Marketplace',
       address:
-        '0x01123db1cc72a091d5d7b56e2b3494574d309f119cf32622f3e7c1931138191a',
+        '0x06662f4ec27b1bd21f21087a094f1e6cb50429ca50434186ffaef9dd2a136adf',
     },
   },
 }

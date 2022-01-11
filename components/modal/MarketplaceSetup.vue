@@ -53,13 +53,6 @@
       @click="setApproveLordsForMarketplace()"
       >Set Lords Approval For Trade
     </BButton>
-    <BButton
-      :loading="loadingStark.mint"
-      type="settling"
-      class="mb-2 mr-4"
-      @click="mintRealm()"
-      >Mint Realm</BButton
-    >
   </div>
 </template>
 <script>
@@ -68,7 +61,6 @@ import {
   /* computed,
   ref,
   reactive, */
-  onMounted,
 } from '@vue/composition-api'
 import { useMarketplace } from '~/composables/useMarketplace'
 import { useStarknet } from '~/composables/useStarknet'
@@ -85,7 +77,6 @@ export default defineComponent({
       setApproveRealmsForMarketplace,
       setApproveLordsForMarketplace,
       setApproveLordsForRealms,
-      getApprovals,
       isNFTApproved,
       loading,
       lordsAllowances,
@@ -99,9 +90,6 @@ export default defineComponent({
       loading: loadingStark,
     } = useStarknet()
 
-    onMounted(async () => {
-      await getApprovals()
-    })
     return {
       setApproveRealmsForMarketplace,
       setApproveLordsForMarketplace,

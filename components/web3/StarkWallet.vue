@@ -1,6 +1,5 @@
 <template>
   <BButton
-    v-if="!show"
     class="
       border-double border-4
       rounded
@@ -8,11 +7,8 @@
       px-2
       text-center
       hover:bg-off-200 hover:text-off-100
-    "
-    :class="
-      type === 'settling'
-        ? 'border-off-100 bg-off-200 text-off-100'
-        : 'border-off-200 text-off-200'
+      border-off-200
+      text-off-200
     "
     aria-haspopup="listbox"
     aria-expanded="true"
