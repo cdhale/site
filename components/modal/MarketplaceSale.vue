@@ -41,69 +41,79 @@
         <RealmRarity class="mb-2" :traits="realm.traits" />
       </div>
     </div>
-    <div class="flex justify-between mb-4">
-      <span class="font-bold">List Price:</span>
-      <div class="flex flex-col text-right">
-        <span>{{ sellPrice }} $LORDS</span>
-        <span class="text-sm">${{ (sellPrice * lordsPrice).toFixed(2) }} </span>
-      </div>
+    <div v-if="type == 'edit'">
+      Update Price:
+      <input
+        id="mintId"
+        v-model="editTradePrice"
+        min="1"
+        class="
+          text-center
+          appearance-none
+          rounded-md
+          shadow-sm
+          text-white
+          mb-1
+          leading-tight
+          focus:ring-primary focus:border-primary
+          w-full
+          px-4
+          py-4
+          text-lg
+          transition-all
+          duration-150
+          font-semibold
+          tracking-wide
+          bg-gray-900
+        "
+        type="number"
+        label="Sale Price in LORDS"
+        placeholder="Sale Price in $LORDS"
+      />
+      ${{ (editTradePrice * lordsPrice).toFixed(2) }}
+      <BButton
+        :disabled="editTradePrice == trade.price || editTradePrice == ''"
+        type="settling"
+        class="mb-4 w-full"
+        @click="updateTrade(trade.id, editTradePrice)"
+        >Update Trade
+      </BButton>
+      <BButton
+        type="settling"
+        class="mb-2 w-full"
+        @click="cancelTrade(trade.id)"
+        >Cancel Listing
+      </BButton>
     </div>
+    <div v-else>
+      <div class="flex justify-between mb-4">
+        <span class="font-bold">List Price:</span>
+        <div class="flex flex-col text-right">
+          <span>{{ sellPrice }} $LORDS</span>
+          <span class="text-sm"
+            >${{ (sellPrice * lordsPrice).toFixed(2) }}
+          </span>
+        </div>
+      </div>
 
-    <BButton
-      v-if="!isNFTApproved.realms"
-      :loading="loading.approve"
-      type="settling"
-      class="mb-2 w-full"
-      @click="setApproveRealmsForMarketplace()"
-      >Approve Realms For Trade
-    </BButton>
-    <BButton
-      :loading="loadingStark.mint"
-      type="settling"
-      class="mb-2 w-full"
-      :disabled="!realmOwner || !isNFTApproved.realms"
-      @click="openTrade(realm.token_id, sellPrice)"
-    >
-      Confirm Listing</BButton
-    >
-    <!-- <BButton
-      :loading="loadingStark.mint"
-      type="settling"
-      class="mb-2 mr-4"
-      @click="mintToken('100')"
-      >Get 100 Lords</BButton
-    >
-    <BButton
-      v-if="!lordsAllowances.realms"
-      :loading="loading.approve"
-      type="settling"
-      class="mb-2 mr-4"
-      @click="setApproveLordsForRealms()"
-      >Set Approval Realms to Spend Lords</BButton
-    >
-    <BButton
-      v-if="!isNFTApproved.realms"
-      :loading="loading.approve"
-      type="settling"
-      class="mb-2 mr-4"
-      @click="setApproveRealmsForMarketplace()"
-      >Set Realms Approval For Trade</BButton
-    >
-    <BButton
-      v-if="!lordsAllowances.marketplace"
-      :loading="loading.approve"
-      type="settling"
-      class="mb-2 mr-4"
-      @click="setApproveLordsForMarketplace()"
-      >Set Lords Approval For Trade
-    </BButton>
-    <BButton
-      :loading="loadingStark.mint"
-      type="settling"
-      class="mb-2 mr-4"
-      @click="mintRealm()"
-      >Mint Realm</BButton
-    >-->
+      <BButton
+        v-if="!isNFTApproved.realms"
+        :loading="loading.approve"
+        type="settling"
+        class="mb-2 w-full"
+        @click="setApproveRealmsForMarketplace()"
+        >Approve Realms For Trade
+      </BButton>
+      <BButton
+        :loading="loadingStark.mint"
+        type="settling"
+        class="mb-2 w-full"
+        :disabled="!realmOwner || !isNFTApproved.realms"
+        @click="openTrade(realm.token_id, sellPrice)"
+      >
+        Confirm Listing</BButton
+      >
+    </div>
   </div>
 </template>
 <script>
@@ -132,8 +142,13 @@ export default defineComponent({
       required: false,
       default: null,
     },
-    trades: {
+    trade: {
       type: Array,
+      default: null,
+    },
+    type: {
+      type: String,
+      required: false,
       default: null,
     },
   },
@@ -145,6 +160,8 @@ export default defineComponent({
       isNFTApproved,
       loading,
       openTrade,
+      updateTrade,
+      cancelTrade,
     } = useMarketplace()
     const { lordsPrice } = useLordsPrice()
     const { shortenHash } = useFormatting()
@@ -157,6 +174,7 @@ export default defineComponent({
       loading: loadingStark,
     } = useStarknet()
     const realmOwner = ref()
+    const editTradePrice = ref(props.trade.price)
 
     onMounted(async () => {
       if (!isNFTApproved.realms) {
@@ -167,6 +185,8 @@ export default defineComponent({
     return {
       setApproveRealmsForMarketplace,
       openTrade,
+      updateTrade,
+      cancelTrade,
       isNFTApproved,
       realmOwner,
       loading,
@@ -177,6 +197,7 @@ export default defineComponent({
       lordsPrice,
       loadingStark,
       shortenHash,
+      editTradePrice,
     }
   },
 })

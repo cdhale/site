@@ -88,7 +88,18 @@
 
     <div class="p-4">
       <div v-if="type === 'sell'" class="mt-auto">
-        <div v-if="!tokenTrades[id].id" class="mt-auto">
+        <div v-if="realmHasOpenTrade" class="mt-auto">
+          <p class="text-lg mb-2">Listed For: {{ tradePrice || 0 }} $LORDS</p>
+          <BButton
+            :loading="loadingMarket.trade"
+            class="w-full"
+            type="primary"
+            @click="editRealmTrade()"
+          >
+            <span>Edit Listing</span>
+          </BButton>
+        </div>
+        <div v-else class="mt-auto">
           <input
             id="mintId"
             v-model="sellPrice"
@@ -125,17 +136,6 @@
             <span>Sell Realm</span>
           </BButton>
         </div>
-        <div v-else class="mt-auto">
-          <p>Listed For: {{ tokenTrades[id].price }} $LORDS</p>
-          <BButton
-            :loading="loadingMarket.trade"
-            class="w-full"
-            type="primary"
-            @click="sellRealm()"
-          >
-            <span>Edit Listing</span>
-          </BButton>
-        </div>
       </div>
       <div v-else>
         <BButton
@@ -155,10 +155,8 @@ import { defineComponent, onMounted, ref, computed } from '@vue/composition-api'
 import axios from 'axios'
 import MarketplacePurchase from '../modal/MarketplacePurchase.vue'
 import MarketplaceSale from '../modal/MarketplaceSale.vue'
-
 import { useFormatting } from '~/composables/useFormatting'
 import { useBigNumber } from '~/composables/useBigNumber'
-import { useStaking } from '~/composables/useStaking'
 import { useMarketplace } from '~/composables/useMarketplace'
 import { useModal } from '~/composables/useModal'
 export default defineComponent({
@@ -169,7 +167,7 @@ export default defineComponent({
       default: null,
     },
     id: {
-      type: Object,
+      type: [Object, String],
       required: true,
     },
     stake: {
@@ -189,7 +187,6 @@ export default defineComponent({
   setup(props, context) {
     const { shortenHash } = useFormatting()
     const { intRoundFloor } = useBigNumber()
-    const { loading, stakeRealms } = useStaking()
     const {
       openTrade,
       loading: loadingMarket,
@@ -197,7 +194,7 @@ export default defineComponent({
       tokenTrades,
     } = useMarketplace()
     const { showComponent } = useModal()
-
+    const tradeSetup = ref()
     const sellPrice = ref()
     const realmResponse = ref()
     const navigate = () => {
@@ -224,8 +221,17 @@ export default defineComponent({
         trades: props.trades,
       })
     }
+    const editRealmTrade = () => {
+      showComponent(MarketplaceSale, {
+        type: 'edit',
+        realm: displayedRealm.value,
+        trade: tokenTrades.value[props.id],
+      })
+    }
+
     onMounted(async () => {
-      getTradeByToken(props.id)
+      // Not sure why this has to be await and first .. but doesnt work otherwise
+      await getTradeByToken(props.id)
 
       if (!props.realm) {
         try {
@@ -251,15 +257,16 @@ export default defineComponent({
     const order = (traits) => {
       return traits?.find((resource) => resource.trait_type === 'Order')
     }
-    const stakeRealmPop = async (id) => {
-      try {
-        await stakeRealms([id])
-      } catch (e) {
-        console.log(e)
-      } finally {
-        context.emit('realmSettled', id)
-      }
-    }
+
+    const realmHasOpenTrade = computed(() => {
+      return (
+        tokenTrades.value[props.id] && tokenTrades.value[props.id]?.id !== '0'
+      )
+    })
+    const tradePrice = computed(() => {
+      return tokenTrades.value[props.id].price
+    })
+
     const tradesSortedByPrice = computed(() => {
       const tradesSorted = props.trades
       return tradesSorted?.sort(function (a, b) {
@@ -268,15 +275,17 @@ export default defineComponent({
     })
     return {
       tokenTrades,
+      realmHasOpenTrade,
+      editRealmTrade,
       tradesSortedByPrice,
       openTrade,
       sellRealm,
       buyRealm,
       sellPrice,
-      loading,
+      tradePrice,
+      tradeSetup,
       displayedRealm,
       realmResponse,
-      stakeRealmPop,
       shortenHash,
       navigate,
       resources,

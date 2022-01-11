@@ -259,6 +259,52 @@ export function useMarketplace() {
     add(new Transaction(tx.transaction_hash, 'execute_trade'))
     loading.trade = false
   }
+
+  const updateTrade = async (id, price) => {
+    loading.trade = true
+    const marketplaceAddress =
+      starknetAddresses[networkId.value].marketplace.address
+
+    // checks that enable succeeded
+    if (starknet.value.isConnected === false) {
+      console.log('Wallet Not connected')
+    }
+
+    const tx = await starknet.value.signer.invokeFunction(
+      marketplaceAddress, // to (erc20 contract)
+      stark.getSelectorFromName('update_price'), // selector (mint)
+      compileCalldata({
+        _trade: id,
+        _price: price,
+      })
+    )
+
+    add(new Transaction(tx.transaction_hash, 'update_trade'))
+    loading.trade = false
+  }
+
+  const cancelTrade = async (id) => {
+    loading.trade = true
+    const marketplaceAddress =
+      starknetAddresses[networkId.value].marketplace.address
+
+    // checks that enable succeeded
+    if (starknet.value.isConnected === false) {
+      console.log('Wallet Not connected')
+    }
+
+    const tx = await starknet.value.signer.invokeFunction(
+      marketplaceAddress, // to (erc20 contract)
+      stark.getSelectorFromName('cancel_trade'), // selector (mint)
+      compileCalldata({
+        _trade: id,
+      })
+    )
+
+    add(new Transaction(tx.transaction_hash, 'cancel_trade'))
+    loading.trade = false
+  }
+
   const getTrade = async (idx) => {
     loading.getBook = true
     const marketplaceAddress =
@@ -330,6 +376,7 @@ export function useMarketplace() {
       loading.getBook = false
     }
   }
+
   return {
     getApprovals,
     isNFTApproved,
@@ -340,6 +387,8 @@ export function useMarketplace() {
     trades,
     tokenTrades,
     openTrade,
+    cancelTrade,
+    updateTrade,
     getTradeByToken,
     executeTrade,
     getTrade,
