@@ -101,14 +101,19 @@ export default defineComponent({
       showComponent(MarketplaceSetup)
     }
 
+    const openTrades = computed(() => {
+      return trades.value.filter((trade) => {
+        return trade.status === '0'
+      })
+    })
     const tradesByRealm = (item) => {
       return trades.value.filter((trade) => {
         return trade.item === item
       })
     }
     const realmsWithOpenTrades = computed(() => {
-      if (trades.value?.length) {
-        return trades.value
+      if (openTrades.value?.length) {
+        return openTrades.value
           .map((trade) => {
             return trade.item
           })
@@ -126,6 +131,7 @@ export default defineComponent({
     })
     return {
       tradesByRealm,
+      openTrades,
       lordsAllowances,
       showMarketplaceSetup,
       setApproveRealmsForMarketplace,

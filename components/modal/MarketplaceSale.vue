@@ -174,7 +174,11 @@ export default defineComponent({
       loading: loadingStark,
     } = useStarknet()
     const realmOwner = ref()
-    const editTradePrice = ref(props.trade.price)
+    const editTradePrice = ref()
+
+    if (props.trade) {
+      editTradePrice.value = props.trade.price
+    }
 
     onMounted(async () => {
       if (!isNFTApproved.realms) {
