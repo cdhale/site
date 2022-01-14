@@ -68,16 +68,55 @@
           @click.native="toggleSideBar"
           >{{ link.title }}</BButton
         >
+
+        <h4 class="mt-8 uppercase text-off-200 tracking-wide pl-4">
+          Knowledge base
+        </h4>
+        <BButton
+          type="navLink"
+          class="text-left"
+          href="https://snapshot.org/#/council.bibliotheca.eth"
+          @click.native="toggleSideBar"
+          >DAO</BButton
+        >
+        <BButton
+          type="navLink"
+          class="text-left"
+          href="https://forum.bibliothecaforloot.com/"
+          @click.native="toggleSideBar"
+          >Realms Resources</BButton
+        >
+        <BButton
+          type="navLink"
+          class="text-left"
+          href="https://forum.bibliothecaforloot.com/"
+          @click.native="toggleSideBar"
+          >White Paper & Docs</BButton
+        >
+        <h4 class="mt-8 uppercase text-off-200 tracking-wide pl-4">
+          Governance
+        </h4>
+        <BButton
+          type="navLink"
+          class="text-left"
+          href="https://snapshot.org/#/council.bibliotheca.eth"
+          @click.native="toggleSideBar"
+          >Snapshot</BButton
+        >
+        <BButton
+          type="navLink"
+          class="text-left"
+          href="https://forum.bibliothecaforloot.com/"
+          @click.native="toggleSideBar"
+          >Forum</BButton
+        >
       </nav>
 
       <div
         class="mt-auto flex flex-wrap py-10 justify-between px-4 text-off-200"
       >
         <div class="w-full text-center text-xl pb-5 hover:underline">
-          <a href="https://docs.bibliothecaforloot.com/">Help Docs</a>
-        </div>
-        <div class="w-full text-center text-xl pb-5 hover:underline">
-          <a href="https://forum.bibliothecaforloot.com/">Forum</a>
+          <a href="https://docs.bibliothecaforloot.com/">Docs</a>
         </div>
         <a
           target="blank_"
@@ -143,11 +182,6 @@ export default {
         page: '/realms',
         title: 'Realms',
       },
-
-      {
-        page: '/manas',
-        title: 'Genesis Mana',
-      },
     ]
 
     const utilLinks = [
@@ -158,14 +192,6 @@ export default {
       {
         page: '/settling',
         title: 'Staking',
-      },
-      {
-        page: '/claim',
-        title: 'Claims & Mints',
-      },
-      {
-        page: '/realms/resources',
-        title: 'Realm Resources',
       },
     ]
 

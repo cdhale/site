@@ -1,8 +1,9 @@
 import EventEmitter from 'events'
 const type = 'website'
 const url = 'https://bibliothecaforloot.com'
-const title = 'Bibliotheca (for Loot)'
-const description = 'Graphing the Lootverse to allow adventurers to explore.'
+const title = 'Bibliotheca DAO'
+const description =
+  'Custodions of an open source permissionless gaming ecosystem built on a L2 Zero-Knowledge rollup.'
 const mainImage =
   'https://i.ibb.co/fMq60gr/Screenshot-from-2021-09-11-11-45-23.png'
 EventEmitter.defaultMaxListeners = 20
@@ -62,7 +63,7 @@ const meta = [
 export default {
   ssr: true,
   head: {
-    title: 'Loot Bibliotheca (for Adventurers)',
+    title: 'Bibliotheca DAO',
     htmlAttrs: {
       lang: 'en',
     },
