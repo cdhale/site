@@ -14,7 +14,7 @@
 
         <div class="p-4 text-center">
           <p class="sm:text-3xl font-semibold text-gray-300">
-            An open source permissionless gaming ecosystem built on a StarkNet;
+            An open source permissionless gaming ecosystem built on StarkNet;
             a <span class="text-off-200">L2 Zero-Knowledge</span> rollup.
           </p>
         </div>
@@ -56,7 +56,7 @@
           <p class="sm:text-3xl sm:w-2/3 mx-auto">
             Settling of the Realms is the first game of the Realmverse, and is
             the economic pillar that lays the foundation for an ever expanding
-            on-chain economy. The game is centered around 3 core tenets. Realms,
+            on-chain economy. The game is centered around 3 core tenets: Realms,
             $LORDS and Resources.
           </p>
         </div>
@@ -112,7 +112,7 @@
             $LORDS is your liquidity in and out of the game. You need it to
             transact on all the marketplaces and all assets are denominated in
             it. The only way to get $LORDS is either by Settling your Realm or
-            buy purchasing on Uniswap.
+            purchasing on Uniswap.
           </p>
           <div class="flex mt-8 space-x-2">
             <BButton
@@ -151,7 +151,7 @@
           </h1>
           <p class="sm:text-3xl">
             Resources are the composable assets of the Realmverse, they are
-            found with varing rarity. They begin to generate when you settle
+            found with varing rarity. They begin to generate when you Settle
             your Realm and are required for all purchases and crafting within
             the world.
           </p>
