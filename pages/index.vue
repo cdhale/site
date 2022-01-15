@@ -14,8 +14,8 @@
 
         <div class="p-4 text-center">
           <p class="sm:text-3xl font-semibold text-gray-300">
-            An open source permissionless gaming ecosystem built on StarkNet;
-            a <span class="text-off-200">L2 Zero-Knowledge</span> rollup.
+            An open source permissionless gaming ecosystem built on StarkNet; a
+            <span class="text-off-200">L2 Zero-Knowledge</span> rollup.
           </p>
         </div>
       </div>
@@ -111,7 +111,7 @@
           <p class="sm:text-3xl">
             $LORDS is your liquidity in and out of the game. You need it to
             transact on all the marketplaces and all assets are denominated in
-            it. The only way to get $LORDS is either by Settling your Realm or
+            it. The way to get $LORDS is either by Settling your Realm or
             purchasing on Uniswap.
           </p>
           <div class="flex mt-8 space-x-2">
@@ -150,10 +150,9 @@
             Resources
           </h1>
           <p class="sm:text-3xl">
-            Resources are the composable assets of the Realmverse, they are
-            found with varing rarity. They begin to generate when you Settle
-            your Realm and are required for all purchases and crafting within
-            the world.
+            Resources are the composable assets of the Realmverse. When settled,
+            Realms generate one or more of 22 resources, which have varying
+            rarity are required for all purchases and crafting within the world.
           </p>
           <div class="flex mt-8">
             <BButton to="/realms/resources" class="text-xs" type="primary"
