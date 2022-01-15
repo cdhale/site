@@ -75,21 +75,21 @@
         <BButton
           type="navLink"
           class="text-left"
-          href="https://snapshot.org/#/council.bibliotheca.eth"
+          href="https://bibliotheca-for-loot.notion.site/Bibliotheca-DAO-Foundational-Principles-1d226a06414f40bc92f85a8036c74d52"
           @click.native="toggleSideBar"
           >DAO</BButton
         >
         <BButton
           type="navLink"
           class="text-left"
-          href="https://forum.bibliothecaforloot.com/"
+          to="/realms/resources"
           @click.native="toggleSideBar"
           >Realms Resources</BButton
         >
         <BButton
           type="navLink"
           class="text-left"
-          href="https://forum.bibliothecaforloot.com/"
+          href="https://docs.bibliothecaforloot.com/"
           @click.native="toggleSideBar"
           >White Paper & Docs</BButton
         >
