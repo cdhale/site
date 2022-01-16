@@ -1,6 +1,6 @@
 import EventEmitter from 'events'
 const type = 'website'
-const url = 'https://bibliothecaforloot.com'
+const url = 'https://bibliothecadao.xyz'
 const title = 'Bibliotheca DAO'
 const description =
   'Custodians of an open source permissionless gaming ecosystem built on a L2 Zero-Knowledge rollup.'

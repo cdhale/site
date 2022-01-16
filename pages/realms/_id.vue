@@ -114,7 +114,12 @@ export default defineComponent({
       const response = await axios.get(
         'https://api.opensea.io/api/v1/asset/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d/' +
           id +
-          '/?force_update=true'
+          '/?force_update=true',
+        {
+          headers: {
+            'X-API-KEY': process.env.OPENSEA,
+          },
+        }
       )
       openSeaData.value = response.data
     })
