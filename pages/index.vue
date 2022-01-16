@@ -152,7 +152,8 @@
           <p class="sm:text-3xl">
             Resources are the composable assets of the Realmverse. When settled,
             Realms generate one or more of 22 resources, which have varying
-            rarity are required for all purchases and crafting within the world.
+            rarity and are required for all purchases and crafting within the
+            world.
           </p>
           <div class="flex mt-8">
             <BButton to="/realms/resources" class="text-xs" type="primary"
