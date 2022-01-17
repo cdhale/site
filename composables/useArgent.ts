@@ -101,7 +101,7 @@ export function useArgent() {
   }
 
   const waitForTransaction = async (hash) => {
-    await getStarknet().provider.waitForTx(hash)
+    return await starknet.value.provider.waitForTx(hash)
   }
 
   const handleUpdate = (update) => {

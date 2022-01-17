@@ -46,8 +46,10 @@ export function useStarkTransactions() {
   const getStatus = async (transaction) => {
     if (transaction.refreshing || !starknet.value?.provider) return
     transaction.refreshing = true
-    const tx = await waitForTransaction(transaction.hash)
-    console.log(tx)
+    const status = (
+      await starknet.value?.provider.getTransactionStatus(transaction.hash)
+    ).tx_status
+    console.log(status)
     if (
       status === 'PENDING' ||
       status === 'RECEIVED' ||

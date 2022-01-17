@@ -29,8 +29,20 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="transaction in transactions" :key="transaction.hash">
-          <td class="p-2">{{ transaction.status }}</td>
+        <tr
+          v-for="transaction in displayedTransactions"
+          :key="transaction.hash"
+        >
+          <td class="p-2 pl-4">
+            <div
+              class="flex justify-center"
+              v-if="transaction.status === 'PENDING'"
+            >
+              <LoadingRings class="w-7 h-7 mr-2" />
+              {{ transaction.status }}
+            </div>
+            <span v-else>{{ transaction.status }}</span>
+          </td>
           <td class="p-2">
             <a
               target="blank_"
@@ -46,18 +58,27 @@
   </div>
 </template>
 <script>
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, computed } from '@vue/composition-api'
 import { useStarkTransactions } from '~/composables/useStarkTransactions'
 import { useArgent } from '~/composables/useArgent'
+import LoadingRings from '~/assets/img/loadingRings.svg?inline'
 import { useFormatting } from '~/composables/useFormatting'
+
 export default defineComponent({
+  components: {
+    LoadingRings,
+  },
   setup() {
     const { transactions } = useStarkTransactions()
     const { shortenHash } = useFormatting()
     const { getExplorerUrlBase } = useArgent()
 
+    const displayedTransactions = computed(() => {
+      return [...transactions.value].reverse()
+    })
     return {
       transactions,
+      displayedTransactions,
       shortenHash,
       getExplorerUrlBase,
     }
