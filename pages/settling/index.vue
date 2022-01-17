@@ -101,6 +101,11 @@
             @click="claimAllLords"
             >Claim Lords</BButton
           >
+          <div class="w-full mt-2">
+            <span class="cursor-pointer hover:underline" @click="isLordsAdded"
+              >Add LORDS to MetaMask</span
+            >
+          </div>
         </BaseBox>
       </div>
       <div class="p-2 sm:w-1/2 w-full">
@@ -253,6 +258,7 @@ export default defineComponent({
       timeLeft,
       getTotalRealmsStaked,
       totalRealmsStaked,
+      isLordsAdded,
     } = useStaking()
     const { showComponent } = useModal()
 
@@ -271,6 +277,7 @@ export default defineComponent({
       await getEpoch()
       await getTimeToNextEpoch()
       await getTotalRealmsStaked()
+      // await isLordsAdded()
     })
     const stakeRealms = () => {
       showComponent(JourneySettling, {
@@ -394,6 +401,7 @@ export default defineComponent({
       fetchUserPositions,
       userPositions,
       loadingIncentive,
+      isLordsAdded,
     }
   },
 })

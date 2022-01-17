@@ -66,17 +66,26 @@
           >Stake All Realms</BButton
         >
       </div>
-      <div v-else class="flex space-x-4">
-        <BButton
-          :disabled="!multiMintIds.length"
-          class="mt-5"
-          type="settling"
-          @click="unstakeSelectedUserRealms"
-          >Unstake Selected</BButton
-        >
-        <BButton class="mt-5" type="settling" @click="unstakeUserRealms"
-          >Unstake All Realms</BButton
-        >
+      <div v-else>
+        <div class="font-semibold">
+          NOTE: Any unclaimed LORDS will be claimed when unstaking. Click
+          <span class="underline cursor-pointer" @click="isLordsAdded"
+            >here</span
+          >
+          to add LORDS to metamask.
+        </div>
+        <div class="flex space-x-4">
+          <BButton
+            :disabled="!multiMintIds.length"
+            class="mt-5"
+            type="settling"
+            @click="unstakeSelectedUserRealms"
+            >Unstake Selected</BButton
+          >
+          <BButton class="mt-5" type="settling" @click="unstakeUserRealms"
+            >Unstake All Realms</BButton
+          >
+        </div>
       </div>
     </div>
     <div v-else-if="!userRealmIds.length">No Realms Available</div>
@@ -112,8 +121,15 @@ export default defineComponent({
 
   setup(props) {
     const multiMintIds = ref([])
-    const { stakeRealms, loading, unstake, isApproved, getApproved, approve } =
-      useStaking()
+    const {
+      stakeRealms,
+      loading,
+      unstake,
+      isApproved,
+      getApproved,
+      approve,
+      isLordsAdded,
+    } = useStaking()
     const { userRealms, userRealmsl1 } = useRealms()
     const step = reactive({
       chooseRealms: true,
@@ -160,6 +176,7 @@ export default defineComponent({
       unstakeUserRealms,
       unstakeSelectedUserRealms,
       addIds,
+      isLordsAdded,
       userRealms,
       userRealmsl1,
       userRealmIds,

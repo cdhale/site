@@ -241,6 +241,27 @@ export function useStaking() {
     }
   }
 
+  const isLordsAdded = async () => {
+    try {
+      // wasAdded is a boolean. Like any RPC method, an error may be thrown.
+      const wasAdded = await window.ethereum.request({
+        method: 'wallet_watchAsset',
+        params: {
+          // @ts-ignore: Unreachable code error
+          type: 'ERC20', // Initially only supports ERC20, but eventually more!
+          options: {
+            address: contractAddresses[useL1Network.value.id].lordsTokenAddress, // The address that the token is at.
+            symbol: 'LORDS', // A ticker symbol or shorthand, up to 5 chars.
+            decimals: 18, // The number of decimals in the token
+            image: 'https://bibliothecadao.xyz/lords-icon.png', // A string url of the token logo
+          },
+        },
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return {
     stakeRealms,
     claimAllLords,
@@ -261,6 +282,7 @@ export function useStaking() {
     result,
     timeLeft,
     unstake,
+    isLordsAdded,
   }
 }
 
