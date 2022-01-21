@@ -24,7 +24,7 @@ export function useAdventurer() {
     const { wallet } = await gqlRequest(
       getl1Adventurer,
       { address },
-      useL1Network.value.id
+      'ecosystem'
     )
     adventurer.l1 = wallet
   }

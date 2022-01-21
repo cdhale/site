@@ -11,14 +11,27 @@ import { useWeb3 } from '@instadapp/vue-web3'
 import { buildSRealmsWhere } from './graphql/helpers/search'
 import { useNetwork, activeNetwork } from './useNetwork'
 import { getRealmsQuery } from './graphql/queries'
+import type { Realm, Wallet } from './types'
 import { useWeb3Modal } from '~/composables/useWeb3Modal'
 import { useGraph } from '~/composables/useGraph'
+
 export enum Layers {
   l1,
   l2,
 }
-const userRealms = reactive({
-  l1: null,
+export type layerRealms = {
+  l1: {
+    wallet: Wallet
+    realms: [Realm]
+    bridgedRealms: [Realm]
+  }
+}
+const userRealms = reactive<layerRealms>({
+  l1: {
+    wallet: null,
+    realms: null,
+    bridgedRealms: null,
+  },
 })
 
 export function useRealms() {
@@ -31,7 +44,13 @@ export function useRealms() {
   const { useL1Network } = useNetwork()
   const { open } = useWeb3Modal()
 
-  const realms = ref()
+  const realms = reactive({
+    l1: {
+      wallet: null,
+      realms: null,
+      bridgedRealms: null,
+    },
+  })
 
   const fetchRealms = async (params) => {
     const { wallet, realms, bridgedRealms } = await gqlRequest(
@@ -47,7 +66,7 @@ export function useRealms() {
       error.getWalletRealms = null
       loading.value = true
 
-      realms.value = await fetchRealms(params)
+      realms.l1 = await fetchRealms(params)
     } catch (e) {
       console.log(e)
     } finally {
@@ -108,6 +127,6 @@ export function useRealms() {
     error,
     loading,
     userRealms: computed(() => userRealms),
-    realms,
+    realms: computed(() => realms),
   }
 }

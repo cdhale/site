@@ -9,10 +9,10 @@
         >
       </p>
     </div>
-    <div v-if="!realmsLoading" class="flex flex-wrap">
+    <div v-if="!realmsLoading && realms" class="flex flex-wrap">
       <RealmCard
-        v-for="realm in metaData"
-        :id="realm.token_id"
+        v-for="realm in realms.l1.realms"
+        :id="realm.tokenId"
         :key="realm.id"
         :realm="realm"
         class="w-80"
@@ -25,35 +25,43 @@
   </div>
 </template>
 <script>
-import { defineComponent, onMounted, ref, computed } from '@vue/composition-api'
+import {
+  defineComponent,
+  onMounted,
+  ref,
+  computed,
+  useFetch,
+} from '@nuxtjs/composition-api'
 import axios from 'axios'
 import { useRealms } from '~/composables/useRealms'
-import { useStaking } from '~/composables/useStaking'
 import { useNetwork } from '~/composables/useNetwork'
 export default defineComponent({
   setup(props, context) {
     const { address } = context.root.$route.params
-    const { getWalletRealms, userRealms, loading: realmsLoading } = useRealms()
+    const { getRealms, realms, loading: realmsLoading } = useRealms()
     const { activeNetworkId } = useNetwork()
-    const { stakeRealm, loading, error, result } = useStaking()
 
     const metaData = ref()
 
+    const { fetch } = useFetch(async () => {
+      await getRealms({ address })
+    })
+
     onMounted(async () => {
       try {
-        await getWalletRealms(address)
+        fetch()
       } catch (e) {
         console.log(e)
       } finally {
-        if (userRealms.value.l1?.realms.length) {
-          const realms = userRealms.value.l1.realms.slice(0, 30)
-          const response = await getOSData(realms)
+        if (realms.value && realms.value.l1?.realms) {
+          const realmsData = realms.value.l1.realms.slice(0, 30)
+          const response = await getOSData(realmsData)
           metaData.value = response.data.assets
         }
       }
     })
     const numberRealms = computed(() => {
-      return userRealms.value.l1?.wallet?.realmsHeld
+      return realms.value.l1?.wallet?.realmsHeld
     })
 
     const baseAssetAddress =
@@ -82,12 +90,8 @@ export default defineComponent({
     }
 
     return {
-      userRealms,
+      realms,
       activeNetworkId,
-      stakeRealm,
-      loading,
-      error,
-      result,
       realmsLoading,
       metaData,
       popFromArray,

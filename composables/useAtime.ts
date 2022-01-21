@@ -33,9 +33,9 @@ export function useAtime() {
     console.log('checking if realm minted atims')
     await getWalletRealms()
     if (userRealms.value.l1) {
-      const symbols = userRealms.value.l1.filter(
+      /* const symbols = userRealms.value.l1.realms.filter(
         (realm) => realm.atimeClaime === false
-      )
+      ) */
     }
     return [{ id: 1 }, { id: 2 }]
   }

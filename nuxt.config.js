@@ -7,6 +7,30 @@ const description =
 const mainImage =
   'https://i.ibb.co/fMq60gr/Screenshot-from-2021-09-11-11-45-23.png'
 EventEmitter.defaultMaxListeners = 20
+const graphqlClients = {
+  realms: {
+    endpoint:
+      'https://api.thegraph.com/subgraphs/name/redbeardeth/realms-rinkeby',
+  },
+  staker: {
+    endpoint: process.env.GRAPH_API_STAKER
+      ? process.env.GRAPH_API_STAKER
+      : 'http://localhost:1337/graphql',
+    options: {},
+  },
+  ecosystem: {
+    endpoint: process.env.GRAPH_API
+      ? process.env.GRAPH_API
+      : 'http://localhost:1337/graphql',
+    options: {},
+  },
+}
+if (process.env.ACTIVE_NETWORKS.includes('rinkeby')) {
+  graphqlClients.staker.endpoint = process.env.GRAPH_API_STAKER_RINKEBY
+  graphqlClients.ecosystem.endpoint = process.env.GRAPH_API_RINKEBY
+  graphqlClients.realms.endpoint =
+    'https://api.thegraph.com/subgraphs/name/redbeardeth/realms-rinkeby'
+}
 const meta = [
   {
     hid: 'description',
@@ -91,75 +115,7 @@ export default {
     background: 'black',
   },
   graphql: {
-    clients: {
-      rinkebyStaker: {
-        endpoint: process.env.GRAPH_API_STAKER_RINKEBY
-          ? process.env.GRAPH_API_STAKER_RINKEBY
-          : 'http://localhost:1337/graphql',
-        options: {},
-      },
-      mainnetStaker: {
-        endpoint: process.env.GRAPH_API_STAKER
-          ? process.env.GRAPH_API_STAKER
-          : 'http://localhost:1337/graphql',
-        options: {},
-      },
-      mainnet: {
-        endpoint: process.env.GRAPH_API
-          ? process.env.GRAPH_API
-          : 'http://localhost:1337/graphql',
-        options: {},
-      },
-      rinkeby: {
-        endpoint: process.env.GRAPH_API_RINKEBY
-          ? process.env.GRAPH_API_RINKEBY
-          : 'http://localhost:1337/graphql',
-        options: {},
-      },
-      /* arbitrum: {
-        endpoint: process.env.GRAPH_API_RINKEBY
-          ? process.env.GRAPH_API_RINKEBY
-          : 'http://localhost:1337/graphql',
-        options: {},
-      }, */
-      arbitrumRinkeby: {
-        endpoint: process.env.GRAPH_API_ARB_RINKEBY
-          ? process.env.GRAPH_API_ARB_RINKEBY
-          : 'http://localhost:1337/graphql',
-        options: {},
-      },
-      L1Mainnetlient: {
-        endpoint:
-          'https://api.thegraph.com/subgraphs/name/fredlacs/arb-bridge-eth',
-      },
-
-      L2Mainnetlient: {
-        endpoint:
-          'https://api.thegraph.com/subgraphs/name/fredlacs/arb-builtins',
-      },
-
-      L1RinkebyClient: {
-        endpoint:
-          'https://api.thegraph.com/subgraphs/name/fredlacs/arb-bridge-eth-rinkeby',
-      },
-
-      L2RinkebyClient: {
-        endpoint:
-          'https://api.thegraph.com/subgraphs/name/fredlacs/arb-builtins-rinkeby',
-      },
-      L2GatewaysRinkebyClient: {
-        endpoint:
-          'https://api.thegraph.com/subgraphs/name/redbeardeth/arb-bridge-rinkeby',
-      },
-      arbitrumRinkebyResources: {
-        endpoint:
-          'https://api.thegraph.com/subgraphs/name/redbeardeth/arb-rink-1155',
-      },
-      realms: {
-        endpoint:
-          'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms',
-      },
-    },
+    clients: graphqlClients,
     options: {},
     useFetchPolyfill: true,
     includeNodeModules: true,

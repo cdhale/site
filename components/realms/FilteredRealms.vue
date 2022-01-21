@@ -287,7 +287,7 @@ export default defineComponent({
       console.log('fetching')
       if (props.type === 'all') {
         await getRealms(filters.value)
-        displayedRealms.value = realms.value
+        displayedRealms.value = realms.value.l1
       } else {
         await getWalletRealms(filters.value)
         displayedRealms.value = userRealms.value

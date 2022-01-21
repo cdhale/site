@@ -7,6 +7,7 @@ import { ManaFragment } from './fragments/mana'
 import { GAdventurerFragment } from './fragments/gadventurer'
 
 const getRealmsQuery = gql`
+  ${RealmFragment}
   query usersRealms(
     $address: String
     $resources: [Int]
@@ -25,17 +26,7 @@ const getRealmsQuery = gql`
         order_in: $orders
       }
     ) {
-      id
-      resourceIds
-      order
-      wonder
-      cities
-      harbours
-      rivers
-      regions
-      name
-      rarityScore
-      rarityRank
+      ...RealmData
       currentOwner {
         address
         joined
@@ -43,6 +34,7 @@ const getRealmsQuery = gql`
     }
     bridgedRealms: realms(where: { bridgedOwner: $address }) {
       id
+      ...RealmData
     }
     wallet(id: $address) {
       realmsHeld
@@ -75,7 +67,6 @@ const getResourceBalancesQuery = gql`
 
 const getl1Adventurer = gql`
   ${WalletFragment}
-  ${RealmFragment}
   ${BagFragment}
   ${defaultLoot}
   ${ManaFragment}
@@ -87,10 +78,12 @@ const getl1Adventurer = gql`
       realmsHeld
       bridgedRealmsHeld
       bridgedRealms(first: 30) {
-        ...RealmData
+        id
+        tokenURI
       }
       realms(first: 30) {
-        ...RealmData
+        id
+        tokenURI
       }
       bagsHeld
       bags(first: 30) {

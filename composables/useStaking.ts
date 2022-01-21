@@ -90,9 +90,9 @@ export function useStaking() {
         for (let j = 0; j < realms.length; j++) {
           if (realms[j].id === convertedRealms[i]) {
             realms.splice(j, 1)
+            userRealms.value.l1.bridgedRealms.push(realms[j])
           }
         }
-        userRealms.value.l1.bridgedRealms.push({ id: convertedRealms[i] })
       }
       userRealms.value.l1.realms = realms
       userRealms.value.l1.wallet.bridgedRealmsHeld =
