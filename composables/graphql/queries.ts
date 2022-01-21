@@ -6,11 +6,36 @@ import { BagFragment, defaultLoot } from './fragments/loot'
 import { ManaFragment } from './fragments/mana'
 import { GAdventurerFragment } from './fragments/gadventurer'
 
-const getRealms = gql`
-  query usersRealms($address: String) {
-    realms(first: 100, where: { currentOwner: $address }) {
+const getRealmsQuery = gql`
+  query usersRealms(
+    $address: String
+    $resources: [Int]
+    $orders: [String]
+    $first: Int
+    $skip: Int
+    $orderBy: String
+    $orderDirection: String
+  ) {
+    realms(
+      first: 100
+      orderBy: $orderBy
+      where: {
+        currentOwner_contains: $address
+        resourceIds_contains: $resources
+        order_in: $orders
+      }
+    ) {
       id
-      tokenURI
+      resourceIds
+      order
+      wonder
+      cities
+      harbours
+      rivers
+      regions
+      name
+      rarityScore
+      rarityRank
       currentOwner {
         address
         joined
@@ -31,7 +56,6 @@ const getResourceListQuery = gql`
     resources(first: 25) {
       id
       name
-      stakedRealms
       totalRealms
     }
   }
@@ -133,50 +157,6 @@ const mintedRealmsQuery = gql`
     }
   }
 `
-const lastOutboxEntryQuery = gql`
-  query lastOutboxEntry {
-    outboxEntries(orderBy: outboxEntryIndex, orderDirection: desc, first: 1) {
-      outboxEntryIndex
-    }
-  }
-`
-const getWithdrawalsQuery = gql`
-  query getWithdrawalsQuery($sender: String, $fromBlock: Int, $toBlock: Int) {
-    withdrawals(
-      where: {
-        from: $sender
-        l2BlockNum_gte: $fromBlock
-        l2BlockNum_lt: $toBlock
-      }
-      orderBy: l2BlockNum
-      orderDirection: desc
-    ) {
-      l2ToL1Event {
-        id
-        caller
-        destination
-        batchNumber
-        indexInBatch
-        arbBlockNum
-        ethBlockNum
-        timestamp
-        callvalue
-        data
-      }
-      realmId
-    }
-  }
-`
-const messageHasExecutedQuery = gql`
-  query messageHasExecutedQuery(
-    $path: Int
-    batchHexString: String
-  ) {
-    outboxOutputs(where: {path: $path, outboxEntry: $batchHexString, spent:true }) {
-      id,
-    }
-  }
-`
 
 const lpPositionQuery = gql`
   query lpPositionQuery($address: String) {
@@ -206,13 +186,10 @@ const lpPositionQuery = gql`
 `
 
 export {
-  getRealms,
+  getRealmsQuery,
   mintedRealmsQuery,
   getl1Adventurer,
   getl2Adventurer,
-  lastOutboxEntryQuery,
-  getWithdrawalsQuery,
-  messageHasExecutedQuery,
   getResourceListQuery,
   getResourceBalancesQuery,
   lpPositionQuery,

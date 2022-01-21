@@ -37,7 +37,7 @@
     </div>
 
     <div class="flex justify-center mt-4 sm:mt-6">
-      <BButton type="primary" class="px-8" @click="switchAndClose">
+      <BButton type="secondary" class="px-8" @click="switchAndClose">
         Switch to {{ activeNetwork.displayName }}
       </BButton>
     </div>

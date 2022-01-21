@@ -1,6 +1,7 @@
 <template>
   <span
-    :class="getColour(resource.value)"
+    v-if="getResource"
+    :class="getResource.colourClass"
     class="
       px-4
       py-1
@@ -12,26 +13,26 @@
       shadow-2xl
       border-2 border-double
     "
-    >{{ resource.value }}
+    >{{ getResource.trait }}
     <slot />
   </span>
 </template>
 <script>
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, computed } from '@vue/composition-api'
 import { resources } from '@/composables/utils/resourceColours'
 export default defineComponent({
   props: {
-    resource: {
-      type: Object,
+    resourceId: {
+      type: Number,
       required: true,
     },
   },
   setup(props) {
-    const getColour = (value) => {
-      return resources.find((c) => c.trait === value).colourClass
-    }
+    const getResource = computed(() => {
+      return resources.find((c) => c.id === props.resourceId)
+    })
     return {
-      getColour,
+      getResource,
     }
   },
 })

@@ -40,7 +40,7 @@ export default defineComponent({
     const start = ref(0)
     onMounted(async () => {
       try {
-        await getWalletRealms(address, 'l1')
+        await getWalletRealms(address)
       } catch (e) {
         console.log(e)
       } finally {
@@ -76,7 +76,7 @@ export default defineComponent({
       }
     }
     const bridgedRealms = computed(() => {
-      return userRealms.value.l1?.wallet.bridgedRealmsHeld
+      return userRealms.value.l1?.wallet?.bridgedRealmsHeld
     })
     const baseAssetAddress =
       'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&'

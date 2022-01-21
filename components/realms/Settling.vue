@@ -41,7 +41,7 @@ export default defineComponent({
 
     onMounted(async () => {
       try {
-        await getWalletRealms(address, 'l1')
+        await getWalletRealms(address)
       } catch (e) {
         console.log(e)
       } finally {
@@ -53,7 +53,7 @@ export default defineComponent({
       }
     })
     const numberRealms = computed(() => {
-      return userRealms.value.l1?.wallet.realmsHeld
+      return userRealms.value.l1?.wallet?.realmsHeld
     })
 
     const baseAssetAddress =

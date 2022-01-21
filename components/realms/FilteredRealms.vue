@@ -81,7 +81,7 @@
         <span
           v-for="(filter, i) in activeFilters.orders"
           :key="'orders-' + i"
-          :style="'background: ' + getOrderById(filter).colour"
+          :style="'background: ' + getOrderByName(filter).colour"
           class="
             px-4
             py-1
@@ -96,7 +96,7 @@
           "
           @click="removeFilter('orders', filter)"
         >
-          Order of {{ getOrderById(filter).name }}
+          Order of {{ getOrderByName(filter).name }}
           <button class="bg-transparent hover">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -119,8 +119,8 @@
           <BButton
             v-for="(data, index) in orderByData"
             :key="index"
-            type="primary"
-            :class="{ 'bg-black text-red-300': data.data === orderBy }"
+            :type="data.data === orderBy ? 'primary' : 'outline'"
+            :class="{ 'bg-black !text-red-300': data.data === orderBy }"
             class="
               px-2
               py-2
@@ -136,34 +136,21 @@
             {{ data.name }}
           </BButton>
         </div>
-        <div class="">
-          <BButton
-            type="primary"
-            class="
-              px-2
-              py-2
-              hover:bg-black
-              rounded
-              capitalize
-              hover:text-red-300
-              mb-2
-              mr-2
-            "
-            @click="flipAll = !flipAll"
-            >Flip All</BButton
-          >
-        </div>
       </div>
 
       <div v-if="$fetchState.pending || loading" class="flex flex-wrap mt-6">
         <Loader v-for="(loader, index) in 6" :key="index" class="mr-3 mb-3" />
       </div>
-      <div v-else class="flex flex-wrap w-full">
-        <StakedRealm
-          v-for="realm in displayedSRealms"
+      <div
+        v-else-if="displayedRealms && displayedRealms.realms.length"
+        class="flex flex-wrap w-full"
+      >
+        <RealmCard
+          v-for="realm in displayedRealms.realms"
+          :id="realm.id"
           :key="realm.id"
-          :flipped="flipAll"
           :realm="realm"
+          class="w-80"
         />
       </div>
 
@@ -192,7 +179,7 @@ import { resources as resourcesList } from '@/composables/utils/resourceColours'
 import { gaOrders } from '~/composables/utils/ordersData'
 
 export default defineComponent({
-  name: 'FilteredSRealms',
+  name: 'FilteredRealms',
   fetchOnServer: false,
   props: {
     type: {
@@ -202,7 +189,7 @@ export default defineComponent({
   },
   setup(props, context) {
     const { shortenHash } = useFormatting()
-    const { getSRealms, sRealms, loading, userSRealms, getUserSRealms } =
+    const { userRealms, realms, loading, getRealms, getWalletRealms } =
       useRealms()
 
     const adventurer = ref(null)
@@ -210,26 +197,22 @@ export default defineComponent({
     const search = ref()
     const openSeaData = ref()
 
-    const displayedSRealms = ref()
+    const displayedRealms = ref()
     const filtersOpen = ref(false)
     const first = ref(8)
-    const orderBy = ref()
+    const orderBy = ref('tokenId')
     const skip = ref(0)
     const resourcesFilter = ref()
     const ordersFilter = ref()
     const orderDirection = ref()
     const orderByData = [
       {
-        data: 'rarityScore',
+        data: 'tokenId',
+        name: 'Token ID',
+      },
+      {
+        data: 'rarityRank',
         name: 'rarity',
-      },
-      {
-        data: 'ageSettled',
-        name: 'last staked',
-      },
-      {
-        data: 'raidAttacks',
-        name: 'Number of Raids',
       },
     ]
     const filterByData = [
@@ -243,10 +226,15 @@ export default defineComponent({
       },
     ]
     const getResource = (id) => {
+      console.log(id)
       return resourcesList.find((c) => c.id === id)
     }
     const getOrderById = (id) => {
+      console.log(id)
       return gaOrders.find((a) => id === a.id)
+    }
+    const getOrderByName = (name) => {
+      return gaOrders.find((a) => name === a.name)
     }
     const filters = computed(() => {
       return {
@@ -264,7 +252,9 @@ export default defineComponent({
         orders: ordersFilter.value,
       }
     })
+
     const filterEmit = async (checked) => {
+      console.log(checked)
       ordersFilter.value = checked.orders
       resourcesFilter.value = checked.resources
       console.log(checked)
@@ -296,17 +286,17 @@ export default defineComponent({
     const { fetch } = useFetch(async () => {
       console.log('fetching')
       if (props.type === 'all') {
-        await getSRealms(filters)
-        displayedSRealms.value = sRealms.value
+        await getRealms(filters.value)
+        displayedRealms.value = realms.value
       } else {
-        await getUserSRealms(filters)
-        displayedSRealms.value = userSRealms.value
+        await getWalletRealms(filters.value)
+        displayedRealms.value = userRealms.value
       }
     })
 
     const submitSearch = async () => {
       if (search.value > 0 && search.value <= 8000) {
-        await getSRealms(filters)
+        await getRealms(filters.value)
       }
     }
 
@@ -315,13 +305,11 @@ export default defineComponent({
       skip.value = skip.value + 8
       try {
         if (props.type === 'all') {
-          await getSRealms(filters)
-          displayedSRealms.value = displayedSRealms.value.concat(sRealms.value)
+          await getRealms(filters.value)
+          displayedRealms.value = displayedRealms.value.concat(realms.value)
         } else {
-          await getUserSRealms(filters)
-          displayedSRealms.value = displayedSRealms.value.concat(
-            userSRealms.value
-          )
+          await getWalletRealms(filters.value)
+          displayedRealms.value = displayedRealms.value.concat(userRealms.value)
         }
       } catch (e) {
         console.log(e)
@@ -331,8 +319,9 @@ export default defineComponent({
     const flipAll = ref(false)
 
     return {
+      getOrderByName,
       flipAll,
-      userSRealms,
+      getWalletRealms,
       activeFilters,
       removeFilter,
       resourcesFilter,
@@ -348,13 +337,13 @@ export default defineComponent({
       getOrderById,
       submitSearch,
       search,
-      displayedSRealms,
+      displayedRealms,
       fetchMoreRealms,
       orderByData,
       setOrderBy,
       filterByData,
       orderBy,
-      sRealms,
+      realms,
       filtersOpen,
     }
   },

@@ -3,10 +3,9 @@
     <div>
       <h1>Realms</h1>
 
-      <FilteredRealms />
+      <FilteredRealms type="all" />
     </div>
   </section>
 </template>
 
-<script>
-</script>
+<script></script>

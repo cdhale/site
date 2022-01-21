@@ -4,7 +4,7 @@
       v-if="order"
       class="rounded w-full px-4 py-2"
       :style="'background:' + getOrder.colour"
-      >{{ order }}</span
+      >Order of {{ order }}</span
     >
     <span
       v-if="orderId"

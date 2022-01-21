@@ -29,15 +29,11 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref, useFetch } from '@nuxtjs/composition-api'
-import { useWeb3 } from '@instadapp/vue-web3'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import { useConnect } from '~/composables/useConnect'
-import { useRealms } from '~/composables/useRealms'
 export default defineComponent({
   setup() {
-    const { account } = useWeb3()
     const { isAddressPage } = useConnect()
-    const { getWalletRealms, userRealms } = useRealms()
 
     const menuLinks = ref([
       {
@@ -53,16 +49,11 @@ export default defineComponent({
     const currentTab = (tab) => {
       activeTab.value = tab
     }
-    useFetch(async () => {
-      if (account.value) {
-        await getWalletRealms()
-      }
-    })
+
     return {
       menuLinks,
       currentTab,
       activeTab,
-      userRealms,
       isAddressPage,
     }
   },

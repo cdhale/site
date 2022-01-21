@@ -155,6 +155,10 @@ export default {
         endpoint:
           'https://api.thegraph.com/subgraphs/name/redbeardeth/arb-rink-1155',
       },
+      realms: {
+        endpoint:
+          'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms',
+      },
     },
     options: {},
     useFetchPolyfill: true,
