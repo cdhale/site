@@ -18,7 +18,8 @@ const getRealmsQuery = gql`
     $orderDirection: String
   ) {
     realms(
-      first: 100
+      first: $first
+      skip: $skip
       orderBy: $orderBy
       where: {
         currentOwner_contains: $address

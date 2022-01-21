@@ -138,12 +138,11 @@
         </div>
       </div>
 
-      <div v-if="$fetchState.pending || loading" class="flex flex-wrap mt-6">
-        <Loader v-for="(loader, index) in 6" :key="index" class="mr-3 mb-3" />
-      </div>
-      <div
-        v-else-if="displayedRealms && displayedRealms.realms.length"
+      <InfiniteScroll
+        v-if="!$fetchState.pending && displayedRealms.realms"
         class="flex flex-wrap w-full"
+        :content-change-key="displayedRealms.realms.length"
+        @fetchNextBlock="fetchMoreRealms"
       >
         <RealmCard
           v-for="realm in displayedRealms.realms"
@@ -152,15 +151,16 @@
           :realm="realm"
           class="w-80"
         />
-      </div>
-
-      <div>
-        <button
-          class="bg-black rounded px-4 py-2 hover:bg-gray-700"
-          @click="fetchMoreRealms"
-        >
-          {{ loading ? 'loading' : 'Load More Realms' }}
-        </button>
+        <template v-if="loading">
+          <Loader
+            v-for="(loader, index) in 4"
+            :key="'dummy' + index"
+            class="mr-3 mb-3"
+          />
+        </template>
+      </InfiniteScroll>
+      <div v-else class="flex flex-wrap mt-6">
+        <Loader v-for="(loader, index) in 6" :key="index" class="mr-3 mb-3" />
       </div>
     </div>
   </section>
@@ -306,10 +306,14 @@ export default defineComponent({
       try {
         if (props.type === 'all') {
           await getRealms(filters.value)
-          displayedRealms.value = displayedRealms.value.concat(realms.value)
+          displayedRealms.value.realms = displayedRealms.value.realms.concat(
+            realms.value.l1.realms
+          )
         } else {
           await getWalletRealms(filters.value)
-          displayedRealms.value = displayedRealms.value.concat(userRealms.value)
+          displayedRealms.value.realms = displayedRealms.value.realms.concat(
+            userRealms.value.realms
+          )
         }
       } catch (e) {
         console.log(e)
