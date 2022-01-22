@@ -21,8 +21,8 @@
       </div>
       <RealmRarity
         class="absolute top-10 right-10"
-        :rarityScore="realm.rarityScore"
-        :rarityRank="realm.rarityRank"
+        :rarity-score="realm.rarityScore"
+        :rarity-rank="realm.rarityRank"
       />
     </div>
     <div class="p-4 pb-0">

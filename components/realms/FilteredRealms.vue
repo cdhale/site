@@ -27,6 +27,8 @@
             hover:text-red-300
             mb-2
             mr-2
+            text-xs
+            sm:text-base
           "
           @click="filtersOpen = !filtersOpen"
           >Open Filters +</BButton
@@ -83,7 +85,8 @@
             px-4
             py-1
             rounded-md
-            text-sm
+            text-xs
+            sm:text-sm
             mb-1
             mr-2
             bg-opacity-75
@@ -112,7 +115,7 @@
       </div>
       <div v-else></div>
       <div class="flex flex-wrap sm:space-x-3 my-3 justify-between">
-        <div class="flex flex-grow">
+        <div class="flex flex-wrap">
           <span class="pr-4 self-center">Order By:</span>
           <BButton
             v-for="(data, index) in orderByData"
@@ -127,6 +130,8 @@
               capitalize
               hover:text-red-300
               mr-2
+              mb-1
+              sm:mb-0
             "
             @click="setOrderBy(data)"
           >
