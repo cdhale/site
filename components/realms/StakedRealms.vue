@@ -1,9 +1,11 @@
 <template>
   <div class="container">
     <div>
-      <h2>Staked Realms ({{ bridgedRealms }})</h2>
+      <h2>Staked Realms ({{ bridgedRealms || 0 }})</h2>
     </div>
-    <InfiniteScroll
+    <FilteredRealms type="staked" />
+
+    <!--<InfiniteScroll
       v-if="!realmsLoading"
       class="flex flex-wrap w-full"
       :content-change-key="metaData.length"
@@ -26,97 +28,22 @@
     </InfiniteScroll>
     <div v-else>
       <Loader />
-    </div>
+    </div>-->
   </div>
 </template>
 <script>
-import {
-  defineComponent,
-  onMounted,
-  ref,
-  computed,
-  useFetch,
-} from '@nuxtjs/composition-api'
-import axios from 'axios'
+import { defineComponent, computed } from '@nuxtjs/composition-api'
 import { useRealms } from '~/composables/useRealms'
-import { useNetwork } from '~/composables/useNetwork'
 export default defineComponent({
   setup(props, context) {
-    const { address } = context.root.$route.params
-    const { getRealms, realms, loading: realmsLoading } = useRealms()
-    const { activeNetworkId } = useNetwork()
-    const loading = ref(false)
-    const metaData = ref([])
-    const start = ref(0)
+    const { userRealms } = useRealms()
 
-    const { fetch } = useFetch(async () => {
-      await getRealms({ address })
-    })
-
-    onMounted(async () => {
-      try {
-        fetch()
-      } catch (e) {
-        console.log(e)
-      } finally {
-        if (realms.value.l1?.bridgedRealms?.length) {
-          const response = await getOSData(
-            realms.value.l1.bridgedRealms.slice(start.value, start.value + 29)
-          )
-          metaData.value = response.data.assets
-        }
-      }
-    })
-    const fetchMoreRealms = async () => {
-      if (start.value + 30 > realms.value.l1.wallet.bridgedRealmsHeld) {
-        return
-      }
-      loading.value = true
-      start.value = start.value + 30
-      try {
-        const moreRealms = realms.value.l1.bridgedRealms.slice(
-          start.value,
-          start.value + 30
-        )
-        const response = await getOSData(moreRealms)
-        const newRealms = response.data.assets
-        metaData.value = metaData.value.concat(newRealms)
-      } catch (e) {
-        console.log(e)
-      } finally {
-        loading.value = false
-      }
-    }
     const bridgedRealms = computed(() => {
-      return realms.value.l1?.wallet?.bridgedRealmsHeld
+      return userRealms.value.l1?.wallet?.bridgedRealmsHeld
     })
-    const baseAssetAddress =
-      'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&'
-
-    const getOSData = async (ids) => {
-      const mapped = ids
-        .map((bag) => {
-          return 'token_ids=' + bag.id + '&'
-        })
-        .join('')
-        .slice(0, -1)
-
-      return await axios.get(baseAssetAddress + mapped + '&limit=50', {
-        headers: {
-          'X-API-KEY': process.env.OPENSEA,
-        },
-      })
-    }
 
     return {
-      realms,
-      start,
-      fetchMoreRealms,
       bridgedRealms,
-      activeNetworkId,
-      realmsLoading,
-      metaData,
-      loading,
     }
   },
 })

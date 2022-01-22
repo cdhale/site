@@ -38,6 +38,30 @@
         <Close class="w-6 h-6" />
       </button>
     </div>
+    <form
+      class="flex mt-4 mb-2 space-x-2 w-full"
+      method="POST"
+      @submit.prevent="submitSearch"
+    >
+      <input
+        v-model="search"
+        placeholder="realm id"
+        class="
+          bg-black
+          rounded-2xl
+          px-4
+          text-xl
+          border-4 border-double border-off-200
+          sm:w-3/4
+        "
+        type="text"
+      />
+      <div class="sm:w-auto self-center">
+        <BButton class="mt-2 sm:mt-0 sm:px-4 w-full text-white" type="primary"
+          ><Search class="white w-6 h-6"
+        /></BButton>
+      </div>
+    </form>
 
     <div class="mt-4 border-t border-gray-200">
       <div
@@ -184,10 +208,13 @@ import { onMounted, ref, toRefs, watch } from '@vue/composition-api'
 import Close from '~/assets/img/x-square.svg?inline'
 import { useResources } from '~/composables/useResources'
 import { gaOrders } from '~/composables/utils/ordersData'
+import Search from '~/assets/img/search.svg?inline'
+
 export default {
   name: 'Filters',
   components: {
     Close,
+    Search,
   },
   props: {
     filtersOpen: {
@@ -226,6 +253,14 @@ export default {
       },
     ])
     const openFilter = ref(null)
+
+    const search = ref()
+
+    const submitSearch = () => {
+      if (search.value > 0 && search.value <= 8000) {
+        context.root.$router.push(`/realms/${search.value}`)
+      }
+    }
 
     const checked = ref({
       user: { resources: [], orders: [] },
@@ -278,6 +313,8 @@ export default {
     })
 
     return {
+      search,
+      submitSearch,
       resourcesRef,
       resourceList,
       filtersRef,

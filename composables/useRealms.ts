@@ -74,14 +74,13 @@ export function useRealms() {
     }
   }
 
-  const getWalletRealms = async (address?: null) => {
+  const getWalletRealms = async (filters?) => {
     try {
       error.getWalletRealms = null
       loading.value = true
 
-      const userAddress = address || account.value
-
-      userRealms.l1 = await fetchRealms({ address })
+      console.log('getting wallet' + filters.address)
+      userRealms.l1 = await fetchRealms(filters)
     } catch (e) {
       console.log(e)
     } finally {

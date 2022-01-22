@@ -34,7 +34,17 @@ const getRealmsQuery = gql`
         joined
       }
     }
-    bridgedRealms: realms(where: { bridgedOwner: $address }) {
+    bridgedRealms: realms(
+      first: $first
+      skip: $skip
+      orderBy: $orderBy
+      orderDirection: $orderDirection
+      where: {
+        bridgedOwner: $address
+        resourceIds_contains: $resources
+        order_in: $orders
+      }
+    ) {
       id
       ...RealmData
     }

@@ -160,15 +160,14 @@
           </div>
         </div>
       </div>
-
       <InfiniteScroll
-        v-if="!$fetchState.pending && displayedRealms"
+        v-if="!$fetchState.pending && displayedRealms && displayedRealms.length"
         class="flex flex-wrap w-full"
-        :content-change-key="displayedRealms.realms.length"
+        :content-change-key="displayedRealms.length"
         @fetchNextBlock="fetchMoreRealms"
       >
         <RealmCard
-          v-for="realm in displayedRealms.realms"
+          v-for="realm in displayedRealms"
           :id="realm.id"
           :key="realm.id"
           :realm="realm"
@@ -182,7 +181,11 @@
           />
         </template>
       </InfiniteScroll>
-      <div v-else class="flex flex-wrap mt-6">
+
+      <div
+        v-else-if="loading || $fetchState.pending"
+        class="flex flex-wrap mt-6"
+      >
         <Loader
           v-for="(loader, index) in 6"
           :key="index"
@@ -199,9 +202,7 @@ import {
   ref,
   useFetch,
   computed,
-  onMounted,
 } from '@nuxtjs/composition-api'
-import axios from 'axios'
 import { useFormatting } from '~/composables/useFormatting'
 import { useRealms } from '~/composables/useRealms'
 import { resources as resourcesList } from '@/composables/utils/resourceColours'
@@ -226,12 +227,12 @@ export default defineComponent({
     const { shortenHash } = useFormatting()
     const { userRealms, realms, loading, getRealms, getWalletRealms } =
       useRealms()
-
+    const { address } = context.root.$route.params
     const adventurer = ref(null)
     const usersGold = ref(null)
     const search = ref()
+    const filterAddress = ref(address)
     const openSeaData = ref()
-
     const displayedRealms = ref()
     const filtersOpen = ref(false)
     const first = ref(16)
@@ -265,11 +266,9 @@ export default defineComponent({
       },
     ]
     const getResource = (id) => {
-      console.log(id)
       return resourcesList.find((c) => c.id === id)
     }
     const getOrderById = (id) => {
-      console.log(id)
       return gaOrders.find((a) => id === a.id)
     }
     const getOrderByName = (name) => {
@@ -283,6 +282,7 @@ export default defineComponent({
         resources: resourcesFilter.value,
         orders: ordersFilter.value,
         orderDirection: orderDirection.value,
+        address: filterAddress.value,
       }
     })
     const activeFilters = computed(() => {
@@ -293,14 +293,11 @@ export default defineComponent({
     })
     // const realmOsData = compu
     const filterEmit = async (checked) => {
-      console.log(checked)
       ordersFilter.value = checked.orders
       resourcesFilter.value = checked.resources
-      console.log(checked)
       await fetch()
     }
     const removeFilter = async (type, filter) => {
-      console.log(filter)
       if (type === 'resources') {
         resourcesFilter.value = resourcesFilter.value.filter((value) => {
           return value !== filter
@@ -313,7 +310,6 @@ export default defineComponent({
       await fetch()
     }
     const setOrderBy = async (data) => {
-      console.log(data.data)
       skip.value = 0
       orderBy.value = data.data
       if (['rarityScore', 'raidAttacks'].includes(data.data)) {
@@ -323,17 +319,22 @@ export default defineComponent({
     }
 
     const { fetch } = useFetch(async () => {
-      console.log('fetching')
+      console.log(props.type)
+      if (props.type === 'user') {
+        await getWalletRealms(filters.value)
+        displayedRealms.value = userRealms.value.l1.realms
+      }
+      if (props.type === 'staked') {
+        await getWalletRealms(filters.value)
+        displayedRealms.value = userRealms.value.l1.bridgedRealms
+      }
       if (props.type === 'all') {
         await getRealms(filters.value)
-        displayedRealms.value = realms.value.l1
-      } else {
-        await getWalletRealms(filters.value)
-        displayedRealms.value = userRealms.value
+        displayedRealms.value = realms.value.l1.realms
       }
     })
 
-    const metaData = ref([])
+    /* const metaData = ref([])
     const baseAssetAddress =
       'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&'
 
@@ -353,7 +354,7 @@ export default defineComponent({
     }
 
     onMounted(async () => {
-      try {
+     try {
         await fetch()
         if (displayedRealms.value.realms) {
           const response = await getOSData(displayedRealms.value.realms)
@@ -362,7 +363,7 @@ export default defineComponent({
       } catch (e) {
         console.log(e)
       }
-    })
+    }) */
     const submitSearch = async () => {
       if (search.value > 0 && search.value <= 8000) {
         await getRealms(filters.value)
@@ -373,23 +374,31 @@ export default defineComponent({
       first.value = 16
       skip.value = skip.value + first.value
       try {
+        console.log(props.type)
+        if (props.type === 'user') {
+          await getWalletRealms(filters.value)
+          displayedRealms.value = displayedRealms.value.concat(
+            userRealms.value.l1.realms
+          )
+        }
+        if (props.type === 'staked') {
+          displayedRealms.value = displayedRealms.value.concat(
+            userRealms.value.l1.bridgedRealms
+          )
+        }
         if (props.type === 'all') {
+          console.log('getching more her')
           await getRealms(filters.value)
-          displayedRealms.value.realms = displayedRealms.value.realms.concat(
+          displayedRealms.value = displayedRealms.value.concat(
             realms.value.l1.realms
           )
-          const response = await getOSData(
+          /* const response = await getOSData(
             displayedRealms.value.realms.slice(
               skip.value,
               skip.value + first.value
             )
           )
-          metaData.value = metaData.value.concat(response.data.assets)
-        } else {
-          await getWalletRealms(filters.value)
-          displayedRealms.value.realms = displayedRealms.value.realms.concat(
-            userRealms.value.realms
-          )
+          metaData.value = metaData.value.concat(response.data.assets) */
         }
       } catch (e) {
         console.log(e)
@@ -399,7 +408,7 @@ export default defineComponent({
     const flipAll = ref(false)
 
     return {
-      metaData,
+      userRealms,
       getOrderByName,
       flipAll,
       getWalletRealms,

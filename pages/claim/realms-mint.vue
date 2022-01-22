@@ -345,6 +345,8 @@ export default defineComponent({
       }
     }
     onMounted(() => {
+      getAvailableTokenIds()
+
       cycleIds()
       window.setInterval(() => {
         cycleIds()

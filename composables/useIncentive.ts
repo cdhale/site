@@ -120,12 +120,11 @@ export function useIncentive() {
   const { gqlRequest } = useGraph()
 
   const fetchUserPositions = async () => {
-    const stakerUrl = useL1Network.value.id + 'Staker'
     try {
       const positions = await gqlRequest(
         lpPositionQuery,
         { address: account.value },
-        stakerUrl
+        'staker'
       )
       userPositions.value = [
         ...positions.positions,

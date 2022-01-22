@@ -45,7 +45,6 @@ export default {
     const srcsetImage = computed(() =>
       state.intersected && props.srcset ? props.srcset : false
     )
-    console.log(context)
     // Methods
     const load = () => {
       if (root.value.getAttribute('src') !== props.srcPlaceholder) {
@@ -66,8 +65,6 @@ export default {
             context.emit('intersect')
           }
         }, props.intersectionOptions)
-        console.log(state.observer)
-        console.log(root.value)
         state.observer.observe(root.value)
       }
     })

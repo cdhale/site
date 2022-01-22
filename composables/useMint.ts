@@ -55,7 +55,7 @@ export function useMint() {
         const { realms } = await gqlRequest(
           mintedRealmsQuery,
           { lastID: lastFetchedId },
-          activeNetwork.value.id
+          'realms'
         )
         lastFetchedId = realms[realms.length - 1].id
         mintedRealms = [...mintedRealms, ...realms]

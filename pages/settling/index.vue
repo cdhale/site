@@ -268,7 +268,7 @@ export default defineComponent({
         if (networkMismatch.value) {
           checkForNetworkMismatch()
         }
-        await getWalletRealms(account.value)
+        await getWalletRealms({ address: account.value })
       }
 
       await getRewards()
@@ -302,7 +302,7 @@ export default defineComponent({
           await getRewards()
           await fetchUserPositions()
           await getClaimableLordsBalance()
-          await getWalletRealms(account.value)
+          await getWalletRealms({ address: account.value })
           await getTotalRealmsStaked()
           if (networkMismatch.value) {
             checkForNetworkMismatch()
