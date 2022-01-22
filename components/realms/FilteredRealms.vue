@@ -368,6 +368,8 @@ export default defineComponent({
           )
         }
         if (props.type === 'staked') {
+          await getWalletRealms(filters.value)
+
           displayedRealms.value = displayedRealms.value.concat(
             userRealms.value.l1.bridgedRealms
           )
