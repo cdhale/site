@@ -110,6 +110,7 @@
           </button>
         </span>
       </div>
+      <div v-else></div>
       <div class="flex flex-wrap sm:space-x-3 my-3 justify-between">
         <div class="flex flex-grow">
           <span class="pr-4 self-center">Order By:</span>
