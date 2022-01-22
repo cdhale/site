@@ -14,15 +14,6 @@
         "
         @searchFilter="filterEmit"
       />
-      <!-- <form class="flex sm:w-1/3" method="POST" @submit.prevent="submitSearch">
-        <input
-          v-model="search"
-          placeholder="insert realm id"
-          class="bg-black rounded-2xl px-4 py-2 text-xl w-2/3"
-          type="text"
-        />
-        <BButton class="ml-3" type="primary">find realm</BButton>
-      </form> -->
 
       <div class="flex flex-wrap sm:space-x-3 my-3">
         <BButton
@@ -230,7 +221,6 @@ export default defineComponent({
     const { address } = context.root.$route.params
     const adventurer = ref(null)
     const usersGold = ref(null)
-    const search = ref()
     const filterAddress = ref(address)
     const openSeaData = ref()
     const displayedRealms = ref()
@@ -319,7 +309,6 @@ export default defineComponent({
     }
 
     const { fetch } = useFetch(async () => {
-      console.log(props.type)
       if (props.type === 'user') {
         await getWalletRealms(filters.value)
         displayedRealms.value = userRealms.value.l1.realms
@@ -364,17 +353,11 @@ export default defineComponent({
         console.log(e)
       }
     }) */
-    const submitSearch = async () => {
-      if (search.value > 0 && search.value <= 8000) {
-        await getRealms(filters.value)
-      }
-    }
 
     const fetchMoreRealms = async () => {
       first.value = 16
       skip.value = skip.value + first.value
       try {
-        console.log(props.type)
         if (props.type === 'user') {
           await getWalletRealms(filters.value)
           displayedRealms.value = displayedRealms.value.concat(
@@ -387,7 +370,6 @@ export default defineComponent({
           )
         }
         if (props.type === 'all') {
-          console.log('getching more her')
           await getRealms(filters.value)
           displayedRealms.value = displayedRealms.value.concat(
             realms.value.l1.realms
@@ -427,8 +409,6 @@ export default defineComponent({
       loading,
       getResource,
       getOrderById,
-      submitSearch,
-      search,
       displayedRealms,
       fetchMoreRealms,
       orderByData,
