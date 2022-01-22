@@ -33,6 +33,13 @@ const userRealms = reactive<layerRealms>({
     bridgedRealms: null,
   },
 })
+const realms = reactive({
+  l1: {
+    wallet: null,
+    realms: null,
+    bridgedRealms: null,
+  },
+})
 
 export function useRealms() {
   const loading = ref(false)
@@ -43,14 +50,6 @@ export function useRealms() {
   const { gqlRequest } = useGraph()
   const { useL1Network } = useNetwork()
   const { open } = useWeb3Modal()
-
-  const realms = reactive({
-    l1: {
-      wallet: null,
-      realms: null,
-      bridgedRealms: null,
-    },
-  })
 
   const fetchRealms = async (params) => {
     const { wallet, realms, bridgedRealms } = await gqlRequest(
