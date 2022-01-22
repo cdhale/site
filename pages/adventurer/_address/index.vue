@@ -89,10 +89,10 @@
         </div>
       </div>
       <div v-if="adventurer.l1.realms.length" id="realms">
-        <div v-if="openSeaData.length">
+        <div v-if="realms.l1.realms.length">
           <h3 class="mt-8">Realms: {{ adventurer.l1.realmsHeld }}</h3>
           <div class="flex flex-wrap w-full">
-            <div v-for="realm in sortedRealms" :key="realm.id" class="w-80">
+            <div v-for="realm in realms.l1.realms" :key="realm.id" class="w-80">
               <RealmCard :id="realm.token_id" :realm="realm" />
             </div>
           </div>
@@ -102,13 +102,13 @@
         </div>
       </div>
       <div v-if="adventurer.l1.bridgedRealms.length" id="realms">
-        <div v-if="openSeaBridgedData.length">
+        <div v-if="realms.l1.bridgedRealms.length">
           <h3 class="mt-8">
             Staked Realms: {{ adventurer.l1.bridgedRealmsHeld }}
           </h3>
           <div class="flex flex-wrap w-full">
             <div
-              v-for="realm in sortedBridgedRealms"
+              v-for="realm in realms.l1.bridgedRealms"
               :key="realm.id"
               class="w-80"
             >
@@ -154,12 +154,12 @@ import {
   useFetch,
   computed,
 } from '@nuxtjs/composition-api'
-import axios from 'axios'
 
 import { useFormatting } from '~/composables/useFormatting'
 import { useAdventurer } from '~/composables/useAdventurer'
 import { useNetwork } from '~/composables/useNetwork'
 import { useRarity } from '~/composables'
+import { useRealms } from '~/composables/useRealms'
 export default defineComponent({
   setup(props, context) {
     const { checkRealmRarity } = useRarity()
@@ -167,67 +167,16 @@ export default defineComponent({
     const { address } = context.root.$route.params
     const { useL1Network } = useNetwork()
     const { getAdventurer, adventurer } = useAdventurer()
-
+    const { getRealms, realms } = useRealms()
     useFetch(async () => {
       await getAdventurer(address, 'l1')
-      await openSeaFetch()
-      console.log(adventurer)
-      console.log('here')
-      await getOSData(adventurer.value.l1.bridgedRealms.slice(0, 30))
+      await getRealms({ address, first: 1000, orderBy: 'rarityRank' })
     })
 
     const openSeaData = ref([])
     const openSeaBridgedData = ref([])
     const loading = ref()
     const offset = ref(0)
-    const openSeaFetch = async (off) => {
-      loading.value = true
-      const numPages = Math.ceil(adventurer.value.l1.realmsHeld / 50)
-
-      for (let page = 0; page < numPages; page++) {
-        try {
-          const response = await axios.get(
-            'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&limit=50&owner=' +
-              address +
-              '&offset=' +
-              page * 50,
-            {
-              headers: {
-                'X-API-KEY': process.env.OPENSEA,
-              },
-            }
-          )
-          openSeaData.value = openSeaData.value.concat(response.data.assets)
-        } catch (e) {
-          console.log(e)
-        } finally {
-          loading.value = false
-        }
-      }
-    }
-    const baseAssetAddress =
-      'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&'
-
-    const getOSData = async (ids) => {
-      const mapped = ids
-        .map((bag) => {
-          return 'token_ids=' + bag.id + '&'
-        })
-        .join('')
-        .slice(0, -1)
-
-      const response = await axios.get(baseAssetAddress + mapped, {
-        headers: {
-          'X-API-KEY': process.env.OPENSEA,
-        },
-      })
-      openSeaBridgedData.value = openSeaBridgedData.value.concat(
-        response.data.assets
-      )
-    }
-    const realmOpenSea = (id) => {
-      return openSeaData.value.find((realm) => realm.token_id === id)
-    }
 
     const rariety = ref(null)
 
@@ -251,6 +200,7 @@ export default defineComponent({
     })
     return {
       useL1Network,
+      realms,
       openSeaBridgedData,
       sortedBridgedRealms,
       adventurer,
@@ -258,7 +208,6 @@ export default defineComponent({
       shortenHash,
       openSeaData,
       loading,
-      realmOpenSea,
       rariety,
       lootRariety,
       sortedRealms,
