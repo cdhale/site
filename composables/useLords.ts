@@ -21,7 +21,7 @@ export function useLords() {
   const {
     partnerNetwork,
     activeNetworkId,
-    useL2Network,
+    useL1Network,
     checkForNetworkMismatch,
   } = useNetwork()
 
@@ -63,7 +63,7 @@ export function useLords() {
     try {
       error.lords = null
       loading.lords = true
-      worldAge.value = await getAge(account, useL2Network.value, realmId)
+      worldAge.value = await getAge(account, useL1Network.value, realmId)
     } catch (e) {
       if (e.data) {
         await showError(e.data.message)
@@ -78,7 +78,7 @@ export function useLords() {
     try {
       error.lords = null
       loading.lords = true
-      goldBalance.value = await getGoldBalance(account, useL2Network.value)
+      goldBalance.value = await getGoldBalance(account, useL1Network.value)
     } catch (e) {
       console.log(e)
       error.lords = e.data.message
@@ -92,7 +92,7 @@ export function useLords() {
     try {
       error.lords = null
       loading.lords = true
-      timeNextAge.value = await timeToNextAge(useL2Network.value)
+      timeNextAge.value = await timeToNextAge(useL1Network.value)
     } catch (e) {
       console.log(e)
       error.lords = e.data?.message

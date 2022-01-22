@@ -14,7 +14,7 @@ import { resources } from '~/composables/utils/resourceColours'
 const allUsersResources = reactive({ resources, lords: null })
 export function useResources() {
   const { provider, library, account, active } = useWeb3()
-  const { partnerNetwork, useL1Network, useL2Network } = useNetwork()
+  const { partnerNetwork, useL1Network } = useNetwork()
   const { gqlRequest } = useGraph()
   const { showError } = useNotification()
   const error = reactive({
@@ -39,7 +39,7 @@ export function useResources() {
       const { resources } = await gqlRequest(
         getResourceListQuery,
         null,
-        useL2Network.value.id
+        'realms'
       )
       resourceList.value = resources
     } catch (e) {

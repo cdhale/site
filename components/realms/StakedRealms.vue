@@ -9,8 +9,12 @@
       :content-change-key="metaData.length"
       @fetchNextBlock="fetchMoreRealms"
     >
-      <div v-for="realm in metaData" :key="realm.id" class="w-80">
-        <RealmCard :id="realm.token_id" :realm="realm" />
+      <div
+        v-for="realm in realms.l1.bridgedRealms"
+        :key="realm.id"
+        class="w-80"
+      >
+        <RealmCard :id="realm.tokenId" :realm="realm" />
       </div>
       <template v-if="realmsLoading || loading">
         <Loader
@@ -26,47 +30,55 @@
   </div>
 </template>
 <script>
-import { defineComponent, onMounted, ref, computed } from '@vue/composition-api'
+import {
+  defineComponent,
+  onMounted,
+  ref,
+  computed,
+  useFetch,
+} from '@nuxtjs/composition-api'
 import axios from 'axios'
 import { useRealms } from '~/composables/useRealms'
 import { useNetwork } from '~/composables/useNetwork'
 export default defineComponent({
   setup(props, context) {
     const { address } = context.root.$route.params
-    const { getWalletRealms, userRealms, loading: realmsLoading } = useRealms()
+    const { getRealms, realms, loading: realmsLoading } = useRealms()
     const { activeNetworkId } = useNetwork()
     const loading = ref(false)
     const metaData = ref([])
     const start = ref(0)
+
+    const { fetch } = useFetch(async () => {
+      await getRealms({ address })
+    })
+
     onMounted(async () => {
       try {
-        await getWalletRealms(address, 'l1')
+        fetch()
       } catch (e) {
         console.log(e)
       } finally {
-        if (userRealms.value.l1?.bridgedRealms?.length) {
+        if (realms.value.l1?.bridgedRealms?.length) {
           const response = await getOSData(
-            userRealms.value.l1.bridgedRealms.slice(
-              start.value,
-              start.value + 29
-            )
+            realms.value.l1.bridgedRealms.slice(start.value, start.value + 29)
           )
           metaData.value = response.data.assets
         }
       }
     })
     const fetchMoreRealms = async () => {
-      if (start.value + 30 > userRealms.value.l1.wallet.bridgedRealmsHeld) {
+      if (start.value + 30 > realms.value.l1.wallet.bridgedRealmsHeld) {
         return
       }
       loading.value = true
       start.value = start.value + 30
       try {
-        const realms = userRealms.value.l1.bridgedRealms.slice(
+        const moreRealms = realms.value.l1.bridgedRealms.slice(
           start.value,
           start.value + 30
         )
-        const response = await getOSData(realms)
+        const response = await getOSData(moreRealms)
         const newRealms = response.data.assets
         metaData.value = metaData.value.concat(newRealms)
       } catch (e) {
@@ -76,7 +88,7 @@ export default defineComponent({
       }
     }
     const bridgedRealms = computed(() => {
-      return userRealms.value.l1?.wallet.bridgedRealmsHeld
+      return realms.value.l1?.wallet?.bridgedRealmsHeld
     })
     const baseAssetAddress =
       'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&'
@@ -97,7 +109,7 @@ export default defineComponent({
     }
 
     return {
-      userRealms,
+      realms,
       start,
       fetchMoreRealms,
       bridgedRealms,

@@ -6,11 +6,29 @@ import { BagFragment, defaultLoot } from './fragments/loot'
 import { ManaFragment } from './fragments/mana'
 import { GAdventurerFragment } from './fragments/gadventurer'
 
-const getRealms = gql`
-  query usersRealms($address: String) {
-    realms(first: 100, where: { currentOwner: $address }) {
-      id
-      tokenURI
+const getRealmsQuery = gql`
+  ${RealmFragment}
+  query usersRealms(
+    $address: String
+    $resources: [Int]
+    $orders: [String]
+    $first: Int
+    $skip: Int
+    $orderBy: String
+    $orderDirection: String
+  ) {
+    realms(
+      first: $first
+      skip: $skip
+      orderBy: $orderBy
+      orderDirection: $orderDirection
+      where: {
+        currentOwner_contains: $address
+        resourceIds_contains: $resources
+        order_in: $orders
+      }
+    ) {
+      ...RealmData
       currentOwner {
         address
         joined
@@ -18,6 +36,7 @@ const getRealms = gql`
     }
     bridgedRealms: realms(where: { bridgedOwner: $address }) {
       id
+      ...RealmData
     }
     wallet(id: $address) {
       realmsHeld
@@ -31,7 +50,6 @@ const getResourceListQuery = gql`
     resources(first: 25) {
       id
       name
-      stakedRealms
       totalRealms
     }
   }
@@ -51,7 +69,6 @@ const getResourceBalancesQuery = gql`
 
 const getl1Adventurer = gql`
   ${WalletFragment}
-  ${RealmFragment}
   ${BagFragment}
   ${defaultLoot}
   ${ManaFragment}
@@ -63,10 +80,12 @@ const getl1Adventurer = gql`
       realmsHeld
       bridgedRealmsHeld
       bridgedRealms(first: 30) {
-        ...RealmData
+        id
+        tokenURI
       }
       realms(first: 30) {
-        ...RealmData
+        id
+        tokenURI
       }
       bagsHeld
       bags(first: 30) {
@@ -133,50 +152,6 @@ const mintedRealmsQuery = gql`
     }
   }
 `
-const lastOutboxEntryQuery = gql`
-  query lastOutboxEntry {
-    outboxEntries(orderBy: outboxEntryIndex, orderDirection: desc, first: 1) {
-      outboxEntryIndex
-    }
-  }
-`
-const getWithdrawalsQuery = gql`
-  query getWithdrawalsQuery($sender: String, $fromBlock: Int, $toBlock: Int) {
-    withdrawals(
-      where: {
-        from: $sender
-        l2BlockNum_gte: $fromBlock
-        l2BlockNum_lt: $toBlock
-      }
-      orderBy: l2BlockNum
-      orderDirection: desc
-    ) {
-      l2ToL1Event {
-        id
-        caller
-        destination
-        batchNumber
-        indexInBatch
-        arbBlockNum
-        ethBlockNum
-        timestamp
-        callvalue
-        data
-      }
-      realmId
-    }
-  }
-`
-const messageHasExecutedQuery = gql`
-  query messageHasExecutedQuery(
-    $path: Int
-    batchHexString: String
-  ) {
-    outboxOutputs(where: {path: $path, outboxEntry: $batchHexString, spent:true }) {
-      id,
-    }
-  }
-`
 
 const lpPositionQuery = gql`
   query lpPositionQuery($address: String) {
@@ -206,13 +181,10 @@ const lpPositionQuery = gql`
 `
 
 export {
-  getRealms,
+  getRealmsQuery,
   mintedRealmsQuery,
   getl1Adventurer,
   getl2Adventurer,
-  lastOutboxEntryQuery,
-  getWithdrawalsQuery,
-  messageHasExecutedQuery,
   getResourceListQuery,
   getResourceBalancesQuery,
   lpPositionQuery,

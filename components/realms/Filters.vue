@@ -117,6 +117,27 @@
               "
             >
               <input
+                v-if="section.id === 'orders'"
+                :id="'filter-' + section.id + option.id"
+                v-model="checked[type][section.id]"
+                :value="option.name"
+                :checked="option.checked"
+                type="checkbox"
+                class="
+                  h-4
+                  cursor-pointer
+                  w-4
+                  appearance-none
+                  form-tick
+                  border border-gray-700
+                  rounded-md
+                  checked:bg-red-600 checked:border-transparent
+                  focus:outline-none
+                "
+                @change.prevent="updateResources()"
+              />
+              <input
+                v-else
                 :id="'filter-' + section.id + option.id"
                 v-model="checked[type][section.id]"
                 :value="parseInt(option.id)"

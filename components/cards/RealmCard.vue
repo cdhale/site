@@ -1,40 +1,33 @@
 <template>
   <BaseCard class="hover:bg-off-200 hover:border-black">
-    <div v-if="order(realm.traits)" class="flex text-center p-1">
-      <OrderChip class="w-full rounded-lg" :order="order(realm.traits).value" />
+    <div v-if="realm.order" class="flex text-center p-1">
+      <OrderChip class="w-full rounded-lg" :order="realm.order" />
     </div>
     <div class="relative px-1">
-      <img
-        v-if="realm.image_url"
-        class="
-          rounded-xl
-          w-full
-          border-4 border-off-200 border-double
-          bg-off-100 bg-blend-screen
-        "
-        :src="realm.image_url"
-      />
-      <div
-        v-else
-        class="
-          bg-gray-100
-          text-black
-          p-2
-          rounded
-          flex
-          self-center
-          h-48
-          w-full
-          justify-between
-        "
-      >
-        no image yet
+      <div class="flex self-center h-84">
+        <b-img
+          v-if="realm.id"
+          class="
+            rounded-xl
+            w-full
+            h-84
+            border-4 border-off-200 border-double
+            bg-off-100 bg-blend-screen
+          "
+          :src="
+            'https://d23fdhqc1jb9no.cloudfront.net/_Realms/' + realm.id + '.svg'
+          "
+        />
       </div>
-      <RealmRarity class="absolute top-10 right-10" :traits="realm.traits" />
+      <RealmRarity
+        class="absolute top-10 right-10"
+        :rarityScore="realm.rarityScore"
+        :rarityRank="realm.rarityRank"
+      />
     </div>
-    <div class="p-4">
+    <div class="p-4 pb-0">
       <div
-        v-if="wonder(realm.traits)"
+        v-if="realm.wonder"
         class="
           text-center text-white
           bg-gradient-to-r
@@ -47,30 +40,51 @@
           mb-2
         "
       >
-        {{ wonder(realm.traits).value }}
+        {{ realm.wonder }}
       </div>
       <div class="flex justify-between">
         <h2>{{ realm.name }}</h2>
-        <h3>#{{ realm.token_id }}</h3>
+        <h3>#{{ realm.id }}</h3>
       </div>
-
-      <h6 class="text-off-200 group-hover:text-off-100">
-        Realm sales: {{ realm.num_sales }}
-      </h6>
-      <h6 v-if="realm.last_sale" class="text-off-200">
-        Last sale price:
-        {{ intRoundFloor(realm.last_sale.total_price) / 10 ** 18 }} ETH
-      </h6>
     </div>
     <div class="p-2 flex flex-wrap text-xs">
       <ResourceChip
-        v-for="(resource, index) in resources(realm.traits)"
+        v-for="(resource, index) in realm.resourceIds"
         :key="index"
         class="mr-2 my-1"
-        :resource="resource"
+        :resource-id="resource"
       />
     </div>
-
+    <div class="flex flex-col w-full px-4 text-sm">
+      <span>Regions</span>
+      <div class="w-full bg-gray-200 rounded">
+        <div
+          class="bg-amber-500 h-1"
+          :style="'width: ' + (realm.regions / 7) * 100 + '%'"
+        ></div>
+      </div>
+      <span class="pt-1 text-sm">Cities</span>
+      <div class="w-full bg-gray-200 rounded">
+        <div
+          class="bg-amber-800 h-1"
+          :style="'width: ' + (realm.cities / 21) * 100 + '%'"
+        ></div>
+      </div>
+      <span class="pt-1">Harbors</span>
+      <div class="w-full bg-gray-200 rounded">
+        <div
+          class="bg-blue-600 h-1"
+          :style="'width: ' + (realm.harbours / 35) * 100 + '%'"
+        ></div>
+      </div>
+      <span class="pt-1">Rivers</span>
+      <div class="w-full bg-gray-200 rounded">
+        <div
+          class="bg-blue-400 h-1"
+          :style="'width: ' + (realm.rivers / 60) * 100 + '%'"
+        ></div>
+      </div>
+    </div>
     <div v-if="!stake" class="mt-auto p-4 flex justify-between">
       <span
         class="
@@ -140,17 +154,7 @@ export default defineComponent({
         '_blank'
       )
     }
-    const resources = (traits) => {
-      return traits.filter((resource) => resource.trait_type === 'Resource')
-    }
-    const wonder = (traits) => {
-      return traits.find(
-        (resource) => resource.trait_type === 'Wonder (translated)'
-      )
-    }
-    const order = (traits) => {
-      return traits.find((resource) => resource.trait_type === 'Order')
-    }
+
     const stakeRealmPop = async (id) => {
       try {
         await stakeRealms([id])
@@ -165,11 +169,17 @@ export default defineComponent({
       stakeRealmPop,
       shortenHash,
       navigate,
-      resources,
-      wonder,
-      order,
       intRoundFloor,
     }
   },
 })
 </script>
+<style scoped>
+.v-lazy-image {
+  opacity: 0;
+  transition: opacity 1s;
+}
+.v-lazy-image-loaded {
+  opacity: 1;
+}
+</style>

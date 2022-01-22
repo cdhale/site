@@ -70,7 +70,7 @@ export default defineComponent({
     const loot = ref(null)
 
     useFetch(async () => {
-      const response = await $graphql.mainnet.request(
+      const response = await $graphql.ecosystem.request(
         query.value,
         variables.value
       )

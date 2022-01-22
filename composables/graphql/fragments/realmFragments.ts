@@ -3,7 +3,16 @@ import { gql } from 'graphql-request'
 export const RealmFragment = gql`
   fragment RealmData on Realm {
     id
-    tokenURI
+    resourceIds
+    order
+    wonder
+    cities
+    harbours
+    rivers
+    regions
+    name
+    rarityScore
+    rarityRank
   }
 `
 export const SRealmFragment = gql`
