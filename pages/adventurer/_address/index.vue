@@ -65,11 +65,7 @@
       <div v-if="adventurer.l1.bags.length" id="loot">
         <h3 class="mt-8">Loot: {{ adventurer.l1.bagsHeld }}</h3>
         <div class="flex flex-wrap w-full">
-          <div
-            v-for="(loot, index) in adventurer.l1.bags"
-            :key="index"
-            class="w-80"
-          >
+          <div v-for="(loot, index) in adventurer.l1.bags" :key="index">
             <LootCard is-o-g :loot="loot" />
           </div>
         </div>
@@ -79,11 +75,7 @@
           Genesis Adventurer: {{ adventurer.l1.gAdventurers.length }}
         </h3>
         <div class="flex flex-wrap w-full">
-          <div
-            v-for="(loot, index) in adventurer.l1.gAdventurers"
-            :key="index"
-            class="w-80"
-          >
+          <div v-for="(loot, index) in adventurer.l1.gAdventurers" :key="index">
             <GACard :loot="loot" />
           </div>
         </div>
@@ -92,7 +84,7 @@
         <div v-if="realms.l1.realms.length">
           <h3 class="mt-8">Realms: {{ adventurer.l1.realmsHeld }}</h3>
           <div class="flex flex-wrap w-full">
-            <div v-for="realm in realms.l1.realms" :key="realm.id" class="w-80">
+            <div v-for="realm in realms.l1.realms" :key="realm.id">
               <RealmCard :id="realm.token_id" :realm="realm" />
             </div>
           </div>
@@ -107,11 +99,7 @@
             Staked Realms: {{ adventurer.l1.bridgedRealmsHeld }}
           </h3>
           <div class="flex flex-wrap w-full">
-            <div
-              v-for="realm in realms.l1.bridgedRealms"
-              :key="realm.id"
-              class="w-80"
-            >
+            <div v-for="realm in realms.l1.bridgedRealms" :key="realm.id">
               <RealmCard :id="realm.token_id" :realm="realm" />
             </div>
           </div>
@@ -124,11 +112,7 @@
         <hr />
         <h3 class="mt-8">Mana: {{ adventurer.l1.manas.length }}</h3>
         <div class="flex flex-wrap w-full">
-          <div
-            v-for="(mana, index) in adventurer.l1.manas"
-            :key="index"
-            class="w-80"
-          >
+          <div v-for="(mana, index) in adventurer.l1.manas" :key="index">
             <ManaCard :mana="mana" />
           </div>
         </div>
@@ -137,7 +121,7 @@
         <hr />
         <h3 class="mt-8">mLoot: {{ adventurer.l1.mLootsHeld }}</h3>
         <div class="flex flex-wrap w-full">
-          <div v-for="loot in adventurer.l1.mLoot" :key="loot.id" class="w-80">
+          <div v-for="loot in adventurer.l1.mLoot" :key="loot.id">
             <LootCard :loot="loot" />
           </div>
         </div>

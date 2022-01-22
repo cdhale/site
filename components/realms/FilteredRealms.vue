@@ -168,7 +168,6 @@
           :id="realm.id"
           :key="realm.id"
           :realm="realm"
-          class="w-80"
         />
         <template v-if="loading">
           <Loader

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <div>
       <h2>Staked Realms ({{ bridgedRealms || 0 }})</h2>
     </div>
