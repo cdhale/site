@@ -35,11 +35,19 @@
     <div v-if="!$fetchState.pending">
       <InfiniteScroll
         v-if="!queryLoading"
-        class="flex flex-wrap"
+        class="
+          grid grid-cols-1
+          md:grid-cols-2
+          lg:grid-cols-3
+          xl:grid-cols-4
+          2xl:grid-cols-5
+          gap-4
+          xl:gap-6
+        "
         :content-change-key="loot.length"
         @fetchNextBlock="fetchMore"
       >
-        <div v-for="(l, index) in loot" :key="index" class="w-80">
+        <div v-for="(l, index) in loot" :key="index">
           <LootCard is-o-g :loot="l" />
         </div>
         <template v-if="loading">

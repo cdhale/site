@@ -64,7 +64,17 @@
 
       <div v-if="adventurer.l1.bags.length" id="loot">
         <h3 class="mt-8">Loot: {{ adventurer.l1.bagsHeld }}</h3>
-        <div class="flex flex-wrap w-full">
+        <div
+          class="
+            grid grid-cols-1
+            md:grid-cols-2
+            lg:grid-cols-3
+            xl:grid-cols-4
+            2xl:grid-cols-5
+            gap-4
+            xl:gap-6
+          "
+        >
           <div v-for="(loot, index) in adventurer.l1.bags" :key="index">
             <LootCard is-o-g :loot="loot" />
           </div>
@@ -74,7 +84,17 @@
         <h3 class="mt-8">
           Genesis Adventurer: {{ adventurer.l1.gAdventurers.length }}
         </h3>
-        <div class="flex flex-wrap w-full">
+        <div
+          class="
+            grid grid-cols-1
+            md:grid-cols-2
+            lg:grid-cols-3
+            xl:grid-cols-4
+            2xl:grid-cols-5
+            gap-4
+            xl:gap-6
+          "
+        >
           <div v-for="(loot, index) in adventurer.l1.gAdventurers" :key="index">
             <GACard :loot="loot" />
           </div>
@@ -83,7 +103,18 @@
       <div v-if="adventurer.l1.realms.length" id="realms">
         <div v-if="realms.l1.realms.length">
           <h3 class="mt-8">Realms: {{ adventurer.l1.realmsHeld }}</h3>
-          <div class="flex flex-wrap w-full">
+          <div
+            class="
+              grid grid-cols-1
+              md:grid-cols-2
+              lg:grid-cols-3
+              xl:grid-cols-4
+              2xl:grid-cols-5
+              gap-4
+              xl:gap-6
+              mb-4
+            "
+          >
             <div v-for="realm in realms.l1.realms" :key="realm.id">
               <RealmCard :id="realm.token_id" :realm="realm" />
             </div>
@@ -98,7 +129,18 @@
           <h3 class="mt-8">
             Staked Realms: {{ adventurer.l1.bridgedRealmsHeld }}
           </h3>
-          <div class="flex flex-wrap w-full">
+          <div
+            class="
+              grid grid-cols-1
+              md:grid-cols-2
+              lg:grid-cols-3
+              xl:grid-cols-4
+              2xl:grid-cols-5
+              gap-4
+              xl:gap-6
+              mb-6
+            "
+          >
             <div v-for="realm in realms.l1.bridgedRealms" :key="realm.id">
               <RealmCard :id="realm.token_id" :realm="realm" />
             </div>
@@ -111,7 +153,18 @@
       <div v-if="adventurer.l1.manas.length" id="mana">
         <hr />
         <h3 class="mt-8">Mana: {{ adventurer.l1.manas.length }}</h3>
-        <div class="flex flex-wrap w-full">
+        <div
+          class="
+            grid grid-cols-1
+            md:grid-cols-2
+            lg:grid-cols-3
+            xl:grid-cols-4
+            2xl:grid-cols-5
+            gap-4
+            xl:gap-6
+            mb-6
+          "
+        >
           <div v-for="(mana, index) in adventurer.l1.manas" :key="index">
             <ManaCard :mana="mana" />
           </div>
@@ -120,7 +173,18 @@
       <div v-if="adventurer.l1.mLoot.length" id="mloot">
         <hr />
         <h3 class="mt-8">mLoot: {{ adventurer.l1.mLootsHeld }}</h3>
-        <div class="flex flex-wrap w-full">
+        <div
+          class="
+            grid grid-cols-1
+            md:grid-cols-2
+            lg:grid-cols-3
+            xl:grid-cols-4
+            2xl:grid-cols-5
+            gap-4
+            xl:gap-6
+            mb-6
+          "
+        >
           <div v-for="loot in adventurer.l1.mLoot" :key="loot.id">
             <LootCard :loot="loot" />
           </div>

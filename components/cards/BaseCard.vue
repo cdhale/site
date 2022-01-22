@@ -3,11 +3,6 @@
     class="
       bg-black
       rounded-xl
-      sm:mr-8
-      w-full
-      sm:w-1/3
-      md:w-96
-      my-4
       text-off-100
       transform
       hover:-translate-y-2

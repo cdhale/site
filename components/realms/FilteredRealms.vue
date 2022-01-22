@@ -113,7 +113,6 @@
           </button>
         </span>
       </div>
-      <div v-else></div>
       <div class="flex flex-wrap sm:space-x-3 my-3 justify-between">
         <div class="flex flex-wrap">
           <span class="pr-4 self-center">Order By:</span>
@@ -159,7 +158,14 @@
       </div>
       <InfiniteScroll
         v-if="!$fetchState.pending && displayedRealms && displayedRealms.length"
-        class="flex flex-wrap w-full"
+        class="
+          grid grid-cols-1
+          md:grid-cols-2
+          lg:grid-cols-4
+          xl:grid-cols-5
+          gap-4
+          xl:gap-6
+        "
         :content-change-key="displayedRealms.length"
         @fetchNextBlock="fetchMoreRealms"
       >
@@ -178,12 +184,20 @@
         </template>
       </InfiniteScroll>
 
-      <div v-else class="flex flex-wrap mt-6">
+      <div v-if="$fetchState.pending" class="flex flex-wrap mt-6">
         <Loader
           v-for="(loader, index) in 6"
           :key="index"
           class="w-80 mr-3 mb-3"
         />
+      </div>
+      <div
+        v-if="
+          !$fetchState.pending && displayedRealms && !displayedRealms.length
+        "
+        class="pt-4"
+      >
+        No Realms discovered for this Adventurer
       </div>
     </div>
   </section>

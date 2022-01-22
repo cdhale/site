@@ -57,15 +57,19 @@
       </div>
       <InfiniteScroll
         v-if="!$fetchState.pending"
-        class="flex flex-wrap"
+        class="
+          grid grid-cols-1
+          md:grid-cols-2
+          lg:grid-cols-3
+          xl:grid-cols-4
+          2xl:grid-cols-5
+          gap-4
+          xl:gap-6
+        "
         :content-change-key="adventurers.length"
         @fetchNextBlock="fetchMore"
       >
-        <div
-          v-for="(adventurer, index) in adventurers"
-          :key="index"
-          class="w-80"
-        >
+        <div v-for="(adventurer, index) in adventurers" :key="index">
           <AdventurerCard :adventurer="adventurer" />
         </div>
         <template v-if="loading">
