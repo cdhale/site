@@ -85,7 +85,7 @@ export default defineComponent({
     }
 
     useFetch(async () => {
-      const response = await $graphql.mainnet.request(query.value, {
+      const response = await $graphql.ecosystem.request(query.value, {
         offset: offset.value,
       })
       manas.value = response.manas
@@ -99,7 +99,7 @@ export default defineComponent({
       offset.value = offset.value + 100
 
       try {
-        const response = await $graphql.mainnet.request(query.value, {
+        const response = await $graphql.ecosystem.request(query.value, {
           offset: offset.value,
         })
         manas.value = manas.value.concat(response.manas)

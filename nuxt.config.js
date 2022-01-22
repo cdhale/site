@@ -10,7 +10,7 @@ EventEmitter.defaultMaxListeners = 20
 const graphqlClients = {
   realms: {
     endpoint:
-      'https://api.thegraph.com/subgraphs/name/redbeardeth/realms-rinkeby',
+      'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms',
   },
   staker: {
     endpoint: process.env.GRAPH_API_STAKER

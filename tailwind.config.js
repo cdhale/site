@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
   purge: {
     content: [
@@ -28,6 +30,7 @@ module.exports = {
       50: '50px',
       '1/2': '50%',
     },
+
     extend: {
       fontFamily: {
         display: ['EB Garamond', 'serif'],
@@ -61,6 +64,7 @@ module.exports = {
           80: '80px',
           full: '100vh',
         },
+        amber: colors.amber,
       },
       fill: {
         none: 'none',

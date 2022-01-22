@@ -19,7 +19,6 @@
 </template>
 <script>
 import { defineComponent, computed } from '@vue/composition-api'
-import { useRarity } from '~/composables'
 export default defineComponent({
   props: {
     rarityRank: {
@@ -34,8 +33,6 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { checkRealmRarity } = useRarity()
-
     const getColour = computed(() => {
       if (props.rarityScore > 8000) {
         return 'bg-gradient-to-r from-purple-200 via-pink-400 to-red-400'
@@ -54,7 +51,6 @@ export default defineComponent({
       }
     })
     return {
-      checkRealmRarity,
       getColour,
     }
   },

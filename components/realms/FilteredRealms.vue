@@ -41,7 +41,13 @@
           >Open Filters +</BButton
         >
       </div>
-      <div class="flex flex-wrap sm:space-x-3 my-3">
+      <div
+        v-if="
+          (activeFilters.resources && activeFilters.resources.length) ||
+          (activeFilters.orders && activeFilters.orders.length)
+        "
+        class="flex flex-wrap sm:space-x-3 my-3"
+      >
         <span class="pr-4 self-center">Filtering By:</span>
         <span
           v-for="(filter, i) in activeFilters.resources"
@@ -128,18 +134,35 @@
               rounded
               capitalize
               hover:text-red-300
-              mb-2
               mr-2
             "
             @click="setOrderBy(data)"
           >
             {{ data.name }}
           </BButton>
+          <div
+            v-if="orderDirection === 'asc'"
+            @click="
+              orderDirection = 'desc'
+              fetch()
+            "
+          >
+            <SortAscending class="w-8 h-8 ml-4 mt-1 cursor-pointer" />
+          </div>
+          <div
+            v-else
+            @click="
+              orderDirection = 'asc'
+              fetch()
+            "
+          >
+            <SortDescending class="w-8 h-8 ml-4 mt-1 cursor-pointer" />
+          </div>
         </div>
       </div>
 
       <InfiniteScroll
-        v-if="!$fetchState.pending && displayedRealms.realms"
+        v-if="!$fetchState.pending && displayedRealms"
         class="flex flex-wrap w-full"
         :content-change-key="displayedRealms.realms.length"
         @fetchNextBlock="fetchMoreRealms"
@@ -155,12 +178,16 @@
           <Loader
             v-for="(loader, index) in 4"
             :key="'dummy' + index"
-            class="mr-3 mb-3"
+            class="w-80 mr-3 mb-3"
           />
         </template>
       </InfiniteScroll>
       <div v-else class="flex flex-wrap mt-6">
-        <Loader v-for="(loader, index) in 6" :key="index" class="mr-3 mb-3" />
+        <Loader
+          v-for="(loader, index) in 6"
+          :key="index"
+          class="w-80 mr-3 mb-3"
+        />
       </div>
     </div>
   </section>
@@ -172,15 +199,23 @@ import {
   ref,
   useFetch,
   computed,
+  onMounted,
 } from '@nuxtjs/composition-api'
+import axios from 'axios'
 import { useFormatting } from '~/composables/useFormatting'
 import { useRealms } from '~/composables/useRealms'
 import { resources as resourcesList } from '@/composables/utils/resourceColours'
 import { gaOrders } from '~/composables/utils/ordersData'
+import SortAscending from '~/assets/img/sort-ascending.svg?inline'
+import SortDescending from '~/assets/img/sort-descending.svg?inline'
 
 export default defineComponent({
   name: 'FilteredRealms',
   fetchOnServer: false,
+  components: {
+    SortAscending,
+    SortDescending,
+  },
   props: {
     type: {
       type: String,
@@ -199,12 +234,12 @@ export default defineComponent({
 
     const displayedRealms = ref()
     const filtersOpen = ref(false)
-    const first = ref(8)
+    const first = ref(16)
     const orderBy = ref('tokenId')
     const skip = ref(0)
     const resourcesFilter = ref()
     const ordersFilter = ref()
-    const orderDirection = ref()
+    const orderDirection = ref('asc')
     const orderByData = [
       {
         data: 'tokenId',
@@ -213,6 +248,10 @@ export default defineComponent({
       {
         data: 'rarityRank',
         name: 'rarity',
+      },
+      {
+        data: 'regions',
+        name: 'Regions',
       },
     ]
     const filterByData = [
@@ -252,7 +291,7 @@ export default defineComponent({
         orders: ordersFilter.value,
       }
     })
-
+    // const realmOsData = compu
     const filterEmit = async (checked) => {
       console.log(checked)
       ordersFilter.value = checked.orders
@@ -294,6 +333,36 @@ export default defineComponent({
       }
     })
 
+    const metaData = ref([])
+    const baseAssetAddress =
+      'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&'
+
+    const getOSData = async (ids) => {
+      const mapped = ids
+        .map((bag) => {
+          return 'token_ids=' + bag.id + '&'
+        })
+        .join('')
+        .slice(0, -1)
+
+      return await axios.get(baseAssetAddress + mapped + '&limit=50', {
+        headers: {
+          'X-API-KEY': process.env.OPENSEA,
+        },
+      })
+    }
+
+    onMounted(async () => {
+      try {
+        await fetch()
+        if (displayedRealms.value.realms) {
+          const response = await getOSData(displayedRealms.value.realms)
+          metaData.value = response.data.assets
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    })
     const submitSearch = async () => {
       if (search.value > 0 && search.value <= 8000) {
         await getRealms(filters.value)
@@ -301,14 +370,21 @@ export default defineComponent({
     }
 
     const fetchMoreRealms = async () => {
-      first.value = 8
-      skip.value = skip.value + 8
+      first.value = 16
+      skip.value = skip.value + first.value
       try {
         if (props.type === 'all') {
           await getRealms(filters.value)
           displayedRealms.value.realms = displayedRealms.value.realms.concat(
             realms.value.l1.realms
           )
+          const response = await getOSData(
+            displayedRealms.value.realms.slice(
+              skip.value,
+              skip.value + first.value
+            )
+          )
+          metaData.value = metaData.value.concat(response.data.assets)
         } else {
           await getWalletRealms(filters.value)
           displayedRealms.value.realms = displayedRealms.value.realms.concat(
@@ -323,6 +399,7 @@ export default defineComponent({
     const flipAll = ref(false)
 
     return {
+      metaData,
       getOrderByName,
       flipAll,
       getWalletRealms,
@@ -336,6 +413,8 @@ export default defineComponent({
       shortenHash,
       usersGold,
       openSeaData,
+      fetch,
+      orderDirection,
       loading,
       getResource,
       getOrderById,

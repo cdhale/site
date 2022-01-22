@@ -21,6 +21,7 @@ const getRealmsQuery = gql`
       first: $first
       skip: $skip
       orderBy: $orderBy
+      orderDirection: $orderDirection
       where: {
         currentOwner_contains: $address
         resourceIds_contains: $resources
