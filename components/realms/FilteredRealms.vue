@@ -174,10 +174,7 @@
         </template>
       </InfiniteScroll>
 
-      <div
-        v-else-if="loading || $fetchState.pending"
-        class="flex flex-wrap mt-6"
-      >
+      <div v-else class="flex flex-wrap mt-6">
         <Loader
           v-for="(loader, index) in 6"
           :key="index"
