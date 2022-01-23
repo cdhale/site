@@ -379,7 +379,6 @@ async function getBalance(network, account) {
 }
 
 async function getJourneyEpoch(network) {
-  console.log('getting epoch')
   const provider = new ethers.providers.JsonRpcProvider(network.url)
   const journeyContractAddress =
     contractAddresses[network.id].journeyContractAddress
@@ -389,7 +388,6 @@ async function getJourneyEpoch(network) {
     provider
   )
   const epoch = await journeyContract.getEpoch()
-  console.log(epoch)
   return epoch
 }
 

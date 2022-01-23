@@ -116,7 +116,7 @@
             "
           >
             <div v-for="realm in realms.l1.realms" :key="realm.id">
-              <RealmCard :id="realm.token_id" :realm="realm" />
+              <RealmCard :realm="realm" />
             </div>
           </div>
         </div>
@@ -142,7 +142,7 @@
             "
           >
             <div v-for="realm in realms.l1.bridgedRealms" :key="realm.id">
-              <RealmCard :id="realm.token_id" :realm="realm" />
+              <RealmCard :realm="realm" />
             </div>
           </div>
         </div>

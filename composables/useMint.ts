@@ -60,7 +60,6 @@ export function useMint() {
         lastFetchedId = realms[realms.length - 1].id
         mintedRealms = [...mintedRealms, ...realms]
       } catch (e) {
-        console.log('all fetched')
         break
       }
     }
@@ -150,21 +149,15 @@ export function useMint() {
 }
 
 async function mintToken(owner, network, lootId, library) {
-  console.log(library.value.getSigner())
-  console.log(network)
   const realmsAddress = erc721tokens[network].realms.address
   const signer = library.value.getSigner()
-  console.log(signer)
   const tokenContract = new ethers.Contract(realmsAddress, realmsABI, signer)
-  console.log(tokenContract)
   const overrides = {
     // To convert Ether to Wei:
     value: ethers.utils.parseEther('0.1'),
   }
   const mint = await tokenContract.mint(lootId, overrides)
-  console.log(mint)
   const tx = await mint.wait()
-  console.log(tx)
   return tx
 }
 

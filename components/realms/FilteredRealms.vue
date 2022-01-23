@@ -161,8 +161,9 @@
         class="
           grid grid-cols-1
           md:grid-cols-2
-          lg:grid-cols-4
-          xl:grid-cols-5
+          lg:grid-cols-3
+          xl:grid-cols-4
+          2xl:grid-cols-5
           gap-4
           xl:gap-6
         "
@@ -171,7 +172,6 @@
       >
         <RealmCard
           v-for="realm in displayedRealms"
-          :id="realm.id"
           :key="realm.id"
           :realm="realm"
         />

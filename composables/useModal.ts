@@ -6,7 +6,6 @@ const props = ref({})
 
 export function useModal() {
   function showNetworksMismatchDialog() {
-    console.log('showing')
     modal.value = NetworksMismatchDialog
   }
 

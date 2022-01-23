@@ -11,7 +11,6 @@ export function useGraph() {
     variables: any,
     network: any = 'mainnet'
   ) => {
-    console.log(network)
     loading.value = true
     try {
       return await $graphql[network].request(query, variables)

@@ -55,7 +55,6 @@ export function useNotification() {
       if (!params.key) params.key = makeid(10)
       queue.value.push(params)
     }
-    console.log(queue.value)
   }
 
   function showError(title) {

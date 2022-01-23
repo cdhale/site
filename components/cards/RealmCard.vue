@@ -100,7 +100,7 @@
         See on Opensea
       </span>
       <NuxtLink
-        :to="'/realms/' + id"
+        :to="'/realms/' + realm.id"
         class="
           group-hover:text-white
           text-black
@@ -133,10 +133,6 @@ export default defineComponent({
       type: Object,
       required: true,
     },
-    id: {
-      type: String,
-      required: true,
-    },
     stake: {
       type: Boolean,
       required: false,
@@ -150,7 +146,7 @@ export default defineComponent({
     const navigate = () => {
       window.open(
         'https://opensea.io/assets/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d/' +
-          props.id,
+          props.realm.id,
         '_blank'
       )
     }

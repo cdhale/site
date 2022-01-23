@@ -57,15 +57,12 @@ export function useRealms() {
   })
   const getRealm = async (params) => {
     loading.value = true
-    console.log(params)
-    console.log(typeof params)
     try {
       const { realm: realmResponse } = await gqlRequest(
         getRealmQuery,
         { id: params },
         'realms'
       )
-      console.log(realmResponse)
       realm.value = realmResponse
     } catch (e) {
       console.log(e)
@@ -100,7 +97,6 @@ export function useRealms() {
       error.getWalletRealms = null
       loading.value = true
 
-      console.log('getting wallet' + filters.address)
       userRealms.l1 = await fetchRealms(filters)
     } catch (e) {
       console.log(e)
@@ -110,7 +106,6 @@ export function useRealms() {
   }
 
   const defaultVariables = (params?) => {
-    console.log(params)
     return {
       address: params?.address?.toLowerCase() || '',
       resources: params?.resources || [],

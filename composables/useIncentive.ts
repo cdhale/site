@@ -105,7 +105,6 @@ export function useIncentive() {
     }
   }
   const getRewards = async () => {
-    console.log('rewards')
     loading.rewards = true
     try {
       userRewards.value = await rewards(activeNetwork.value, account.value)
