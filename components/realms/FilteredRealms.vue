@@ -157,7 +157,7 @@
         </div>
       </div>
       <InfiniteScroll
-        v-if="!$fetchState.pending && displayedRealms && displayedRealms.length"
+        v-if="displayedRealms && displayedRealms.length"
         class="
           grid grid-cols-1
           md:grid-cols-2
@@ -183,14 +183,6 @@
           />
         </template>
       </InfiniteScroll>
-
-      <div v-if="$fetchState.pending" class="flex flex-wrap mt-6">
-        <Loader
-          v-for="(loader, index) in 6"
-          :key="index"
-          class="w-80 mr-3 mb-3"
-        />
-      </div>
       <div
         v-if="
           !$fetchState.pending && displayedRealms && !displayedRealms.length
