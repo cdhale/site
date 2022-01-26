@@ -192,6 +192,16 @@ const getTuple = (network) => {
   }
 }
 
+const getV2Tuple = (network) => {
+  return {
+    rewardToken: contractAddresses[network.id].lordsTokenAddress,
+    pool: contractAddresses[network.id].lordsPool,
+    startTime: 1643250739,
+    endTime: 1648434739,
+    refundee: contractAddresses[network.id].treasury,
+  }
+}
+
 async function getRewardInfo(network, tokenId) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const uniswapV3Pool = contractAddresses[network.id].uniswapV3Pool
