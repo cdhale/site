@@ -18,3 +18,18 @@ export const EncodedIncentiveKey = (network) => {
     ]
   )
 }
+
+export const V2EncodedIncentiveKey = (network) => {
+  return defaultAbiCoder.encode(
+    [IncentiveKey],
+    [
+      {
+        rewardToken: contractAddresses[network.id].lordsTokenAddress,
+        pool: contractAddresses[network.id].lordsPool,
+        startTime: 1643250739,
+        endTime: 1648434739,
+        refundee: contractAddresses[network.id].treasury,
+      },
+    ]
+  )
+}
