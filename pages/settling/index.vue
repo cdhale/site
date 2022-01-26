@@ -244,6 +244,8 @@ export default defineComponent({
       fetchUserPositions,
       userPositions,
       loading: loadingIncentive,
+      getIncentivesForPool,
+      poolIncentives,
     } = useIncentive()
     const { checkForNetworkMismatch, networkMismatch, useL1Network } =
       useNetwork()
@@ -264,6 +266,8 @@ export default defineComponent({
 
     onMounted(async () => {
       activeNetworkId.value = useL1Network.value.id
+      await getIncentivesForPool()
+
       if (account.value) {
         if (networkMismatch.value) {
           checkForNetworkMismatch()
@@ -272,7 +276,6 @@ export default defineComponent({
       }
 
       await getRewards()
-
       await getClaimableLordsBalance()
       await getEpoch()
       await getTimeToNextEpoch()
@@ -376,6 +379,7 @@ export default defineComponent({
     return {
       faqs,
       account,
+      poolIncentives,
       open,
       loading,
       epoch,

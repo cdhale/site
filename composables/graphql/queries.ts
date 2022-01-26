@@ -203,7 +203,17 @@ const lpPositionQuery = gql`
     }
   }
 `
-
+const lpIncentivesQuery = gql`
+  query lpIncentivesQuery($address: String) {
+    incentives(where: { pool: $address }) {
+      id
+      startTime
+      endTime
+      reward
+      ended
+    }
+  }
+`
 export {
   getRealmQuery,
   getRealmsQuery,
@@ -213,4 +223,5 @@ export {
   getResourceListQuery,
   getResourceBalancesQuery,
   lpPositionQuery,
+  lpIncentivesQuery,
 }

@@ -2,7 +2,7 @@ import { reactive, ref, Ref } from '@nuxtjs/composition-api'
 import { ethers } from 'ethers'
 import { useWeb3 } from '@instadapp/vue-web3'
 import { activeNetwork, useNetwork } from './useNetwork'
-import { lpPositionQuery } from './graphql/queries'
+import { lpIncentivesQuery, lpPositionQuery } from './graphql/queries'
 import { useNotification } from '~/composables/useNotification'
 import uniSwapV3PoolAbi from '~/abi/uniSwapV3Pool.json'
 import uniSwapV3PositionManagerAbi from '~/abi/uniswapV3PositionManager.json'
@@ -28,6 +28,7 @@ export function useIncentive() {
   const { showError, showSuccess } = useNotification()
   const { useL1Network } = useNetwork()
   const rewardInfo = ref()
+  const poolIncentives = ref()
 
   const getRewardsByToken = async (tokenId) => {
     try {
@@ -36,6 +37,20 @@ export function useIncentive() {
       error.stake = e.message
     } finally {
       loading.stake = false
+    }
+  }
+
+  const getIncentivesForPool = async () => {
+    try {
+      const { incentives } = await gqlRequest(
+        lpIncentivesQuery,
+        { address: contractAddresses[useL1Network.value.id].lordsPool },
+        'staker'
+      )
+      console.log(incentives)
+      poolIncentives.value = incentives
+    } catch (e) {
+      console.log(e)
     }
   }
 
@@ -165,6 +180,7 @@ export function useIncentive() {
   }
 
   return {
+    getIncentivesForPool,
     getRewardsByToken,
     rewardInfo,
     deposit,
@@ -178,6 +194,7 @@ export function useIncentive() {
     fetchUserPositions,
     userPositions,
     loading,
+    poolIncentives,
   }
 }
 
