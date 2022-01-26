@@ -8,7 +8,12 @@ import uniSwapV3PoolAbi from '~/abi/uniSwapV3Pool.json'
 import uniSwapV3PositionManagerAbi from '~/abi/uniswapV3PositionManager.json'
 import contractAddresses from '~/constant/contractAddresses'
 import { useGraph } from '~/composables/useGraph'
-import { EncodedIncentiveKey } from '~/composables/encoders/encoders'
+import {
+  EncodedIncentiveKey,
+  getTuple,
+  getV2Tuple,
+  V2EncodedIncentiveKey,
+} from '~/composables/encoders/encoders'
 
 const lpPositions = ref()
 const userRewards = ref()
@@ -52,10 +57,10 @@ export function useIncentive() {
     }
   }
 
-  const stake = async (tokenId) => {
+  const stake = async (tokenId, v2) => {
     loading.stake = true
     try {
-      const tx = await stakeToken(activeNetwork.value, tokenId)
+      const tx = await stakeToken(activeNetwork.value, tokenId, v2)
       updateUserPosition(tokenId, tx)
     } catch (e) {
       await showError(e.message)
@@ -65,10 +70,10 @@ export function useIncentive() {
     }
   }
 
-  const unstake = async (tokenId) => {
+  const unstake = async (tokenId, v2) => {
     loading.stake = true
     try {
-      const tx = await unstakeToken(activeNetwork.value, tokenId)
+      const tx = await unstakeToken(activeNetwork.value, tokenId, v2)
       updateUserPosition(tokenId, tx)
     } catch (e) {
       await showError(e.message)
@@ -182,26 +187,6 @@ export function useIncentive() {
   }
 }
 
-const getTuple = (network) => {
-  return {
-    rewardToken: contractAddresses[network.id].lordsTokenAddress,
-    pool: contractAddresses[network.id].lordsPool,
-    startTime: 1640679356,
-    endTime: 1643312097,
-    refundee: contractAddresses[network.id].treasury,
-  }
-}
-
-const getV2Tuple = (network) => {
-  return {
-    rewardToken: contractAddresses[network.id].lordsTokenAddress,
-    pool: contractAddresses[network.id].lordsPool,
-    startTime: 1643250739,
-    endTime: 1648434739,
-    refundee: contractAddresses[network.id].treasury,
-  }
-}
-
 async function getRewardInfo(network, tokenId) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const uniswapV3Pool = contractAddresses[network.id].uniswapV3Pool
@@ -233,14 +218,14 @@ async function depositLp(network, account, tokenId) {
     account.value,
     contractAddresses[network.id].uniswapV3Pool,
     tokenId,
-    EncodedIncentiveKey(network)
+    V2EncodedIncentiveKey(network)
   )
   const receipt = await tx.wait()
 
   return receipt
 }
 
-async function unstakeToken(network, tokenId) {
+async function unstakeToken(network, tokenId, v2) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const uniswapV3Pool = contractAddresses[network.id].uniswapV3Pool
   const signer = provider.getSigner()
@@ -249,14 +234,19 @@ async function unstakeToken(network, tokenId) {
     uniSwapV3PoolAbi,
     signer
   )
+  let tx
 
-  const tx = await poolContract.unstakeToken(getTuple(network), tokenId)
+  if (v2) {
+    tx = await poolContract.unstakeToken(getV2Tuple(network), tokenId)
+  } else {
+    tx = await poolContract.unstakeToken(getTuple(network), tokenId)
+  }
   const receipt = await tx.wait()
 
   return receipt
 }
 
-async function stakeToken(network, tokenId) {
+async function stakeToken(network, tokenId, v2) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const uniswapV3Pool = contractAddresses[network.id].uniswapV3Pool
   const signer = provider.getSigner()
@@ -265,7 +255,13 @@ async function stakeToken(network, tokenId) {
     uniSwapV3PoolAbi,
     signer
   )
-  const tx = await poolContract.stakeToken(getTuple(network), tokenId)
+  let tx
+  if (v2) {
+    tx = await poolContract.stakeToken(getV2Tuple(network), tokenId)
+  } else {
+    tx = await poolContract.stakeToken(getTuple(network), tokenId)
+  }
+
   const receipt = await tx.wait()
   return receipt
 }

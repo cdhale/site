@@ -2,7 +2,7 @@
   <tr class="border-4 border-double border-off-200">
     <td
       class="
-        w-1/3
+        w-1/4
         text-xl
         p-2
         font-semibold
@@ -13,7 +13,7 @@
     </td>
     <td
       class="
-        w-1/3
+        w-1/4
         text-xl
         p-2
         font-semibold
@@ -24,7 +24,7 @@
     </td>
     <td
       class="
-        w-1/3
+        w-1/4
         text-xl
         p-2
         font-semibold
@@ -35,7 +35,7 @@
     </td>
     <td class="w-full flex space-x-4 justify-center p-2">
       <BButton
-        v-if="!deposited"
+        v-if="!deposited && stakeButton"
         :loading="loading.deposit"
         type="settling"
         @click="deposit(position.tokenId)"
@@ -45,14 +45,14 @@
         v-if="position.staked"
         :loading="loading.stake"
         type="settling"
-        @click="unstake(position.tokenId)"
+        @click="unstake(position.tokenId, stakeButton)"
         >Unstake / Claim</BButton
       >
       <BButton
-        v-if="deposited & !position.staked"
+        v-if="deposited & !position.staked && stakeButton"
         :loading="loading.stake"
         type="settling"
-        @click="stake(position.tokenId)"
+        @click="stake(position.tokenId, stakeButton)"
         >Stake</BButton
       >
       <BButton
@@ -76,6 +76,10 @@ export default defineComponent({
     position: {
       type: Object,
       required: true,
+    },
+    stakeButton: {
+      type: Boolean,
+      default: false,
     },
   },
   setup(props) {

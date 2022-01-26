@@ -164,8 +164,9 @@
           </div>
           <div
             v-if="userPositions && userPositions.length"
-            class="mt-8 mx-auto w-full flex"
+            class="mt-8 mx-auto w-full flex flex-wrap"
           >
+            <h2 class="text-center">Program V1 - Ending</h2>
             <table class="table-auto mx-auto w-full py-4">
               <thead>
                 <tr class="text-center font-display text-2xl pt-4">
@@ -179,6 +180,37 @@
                 <LpTable
                   v-for="position in userPositions"
                   :key="position.id"
+                  :position="position"
+                />
+              </tbody>
+            </table>
+          </div>
+          <div v-else class="my-6">
+            <p class="text-3xl">You do not have any LP positions.</p>
+          </div>
+          <p v-if="userPositions && userPositions.length" class="my-4">
+            To claim the Lords, first unstake your position, then click the
+            Claim button.
+          </p>
+          <div
+            v-if="userPositions && userPositions.length"
+            class="mt-8 mx-auto w-full flex flex-wrap"
+          >
+            <h2 class="text-center">Program V2 - Ending</h2>
+            <table class="table-auto mx-auto w-full py-4">
+              <thead>
+                <tr class="text-center font-display text-2xl pt-4">
+                  <th>LP Token ID</th>
+                  <th>Status</th>
+                  <th>LORDS</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <LpTable
+                  v-for="position in userPositions"
+                  :key="position.id"
+                  stake-button
                   :position="position"
                 />
               </tbody>
@@ -228,6 +260,7 @@ export default defineComponent({
     LoadingRings,
   },
   layout: 'settling',
+
   setup() {
     const { getWalletRealms, userRealms } = useRealms()
     const { account } = useWeb3()
