@@ -3,8 +3,6 @@
     class="
       bg-black
       rounded-xl
-      mr-8
-      my-4
       text-off-100
       transform
       hover:-translate-y-2

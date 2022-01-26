@@ -39,7 +39,7 @@
       </button>
     </div>
     <form
-      class="flex mt-4 mb-2 space-x-2 w-full"
+      class="sm:flex mt-4 mb-2 space-x-2 w-full hidden"
       method="POST"
       @submit.prevent="submitSearch"
     >
@@ -52,11 +52,10 @@
           px-4
           text-xl
           border-4 border-double border-off-200
-          sm:w-3/4
         "
         type="text"
       />
-      <div class="sm:w-auto self-center">
+      <div class="self-center">
         <BButton class="mt-2 sm:mt-0 sm:px-4 w-full text-white" type="primary"
           ><Search class="white w-6 h-6"
         /></BButton>
@@ -103,11 +102,6 @@
                   clip-rule="evenodd"
                 />
               </svg>
-              <!--
-                    Collapse icon, show/hide based on section open state.
-
-                    Heroicon name: solid/minus-sm
-                  -->
               <svg
                 v-else
                 class="h-5 w-5"
@@ -191,13 +185,10 @@
                 >
               </label>
             </div>
-            <BButton
-              class="w-full mt-4"
-              type="primary"
-              @click="updateResources()"
-              >Update</BButton
-            >
           </div>
+          <BButton class="w-full mt-4" type="primary" @click="updateResources()"
+            >Update</BButton
+          >
         </div>
       </div>
     </div>

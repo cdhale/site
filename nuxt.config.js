@@ -143,6 +143,15 @@ export default {
     '@nuxtjs/composition-api/module',
     '@nuxt/typescript-build',
     '@nuxtjs/tailwindcss',
+    function () {
+      this.nuxt.hook('tailwindcss:config', (config) => {
+        // Move the legacy purge content array to the the new property
+        // https://tailwindcss.com/docs/upgrade-guide#configure-content-sources
+        config.content = config.purge.content
+        // Remove legacy purge option to disable the warning
+        config.purge = undefined
+      })
+    },
   ],
   modules: ['@nuxtjs/axios', '@nuxtjs/svg'],
   generate: {

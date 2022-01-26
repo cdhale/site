@@ -12,6 +12,7 @@
             border-4 border-double
             tracking-wide
             uppercase
+            max-w-1/2
             hover:border-black hover:bg-off-200 hover:text-off-100
           "
           :class="[

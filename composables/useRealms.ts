@@ -10,7 +10,7 @@ import {
 import { useWeb3 } from '@instadapp/vue-web3'
 import { buildSRealmsWhere } from './graphql/helpers/search'
 import { useNetwork, activeNetwork } from './useNetwork'
-import { getRealmsQuery } from './graphql/queries'
+import { getRealmsQuery, getRealmQuery } from './graphql/queries'
 import type { Realm, Wallet } from './types'
 import { useWeb3Modal } from '~/composables/useWeb3Modal'
 import { useGraph } from '~/composables/useGraph'
@@ -33,17 +33,21 @@ const userRealms = reactive<layerRealms>({
     bridgedRealms: null,
   },
 })
+const realms = reactive({
+  l1: {
+    wallet: null,
+    realms: null,
+    bridgedRealms: null,
+  },
+})
 
 export function useRealms() {
   const loading = ref(false)
   const error = reactive({
     getWalletRealms: null,
   })
-  const { account } = useWeb3()
   const { gqlRequest } = useGraph()
-  const { useL1Network } = useNetwork()
-  const { open } = useWeb3Modal()
-
+  const realm = ref({})
   const realms = reactive({
     l1: {
       wallet: null,
@@ -51,6 +55,20 @@ export function useRealms() {
       bridgedRealms: null,
     },
   })
+  const getRealm = async (params) => {
+    loading.value = true
+    try {
+      const { realm: realmResponse } = await gqlRequest(
+        getRealmQuery,
+        { id: params },
+        'realms'
+      )
+      realm.value = realmResponse
+    } catch (e) {
+      console.log(e)
+    }
+    loading.value = false
+  }
 
   const fetchRealms = async (params) => {
     const { wallet, realms, bridgedRealms } = await gqlRequest(
@@ -79,7 +97,6 @@ export function useRealms() {
       error.getWalletRealms = null
       loading.value = true
 
-      console.log('getting wallet' + filters.address)
       userRealms.l1 = await fetchRealms(filters)
     } catch (e) {
       console.log(e)
@@ -89,7 +106,6 @@ export function useRealms() {
   }
 
   const defaultVariables = (params?) => {
-    console.log(params)
     return {
       address: params?.address?.toLowerCase() || '',
       resources: params?.resources || [],
@@ -121,10 +137,12 @@ export function useRealms() {
   }
 
   return {
+    getRealm,
     getRealms,
     getWalletRealms,
     error,
     loading,
+    realm,
     userRealms: computed(() => userRealms),
     realms: computed(() => realms),
   }

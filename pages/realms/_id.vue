@@ -11,33 +11,32 @@
           target="_blank"
           >View Realm on Open Sea</a
         >
-        <RealmRarity class="mb-8 text-xl" :traits="openSeaData.traits" />
+        <RealmRarity
+          class="mb-8 text-xl"
+          :rarity-score="realm.rarityScore"
+          :rarity-rank="realm.rarityRank"
+        />
         <h3 class="mt-3">
           👑
           <NuxtLink
             class="hover:underline"
-            :to="'/adventurer/' + openSeaData.owner.address"
-            >{{ shortenHash(openSeaData.owner.address) }}</NuxtLink
+            :to="'/adventurer/' + realm.currentOwner.address"
+            >{{ shortenHash(realm.currentOwner.address) }}</NuxtLink
           >
         </h3>
-        <h1 class="sm:text-6xl">
-          {{ openSeaData.name }} - #{{ openSeaData.token_id }}
-        </h1>
-        <div v-if="order(openSeaData.traits)" class="py-4">
-          <OrderChip class="text-xl" :order="order(openSeaData.traits).value" />
+        <h1 class="sm:text-6xl">{{ realm.name }} - #{{ realm.id }}</h1>
+        <div v-if="realm.order" class="py-4">
+          <OrderChip class="text-xl" :order="realm.order" />
         </div>
         <div v-else>
           <span class="bg-gray-800 px-2 py-1 rounded">
             No Order Discovered yet. Check back soon.
           </span>
         </div>
-        <div
-          v-if="wonder(openSeaData.traits)"
-          class="my-6 bg-black p-4 sm:p-6 rounded-2xl"
-        >
+        <div v-if="realm.wonder" class="my-6 bg-black p-4 sm:p-6 rounded-2xl">
           <h2>Realm Wonder</h2>
           <div
-            v-if="wonder(openSeaData.traits)"
+            v-if="realm.wonder"
             class="
               px-8
               text-center text-white
@@ -52,7 +51,7 @@
               text-2xl
             "
           >
-            {{ wonder(openSeaData.traits).value }}
+            {{ realm.wonder }}
           </div>
         </div>
 
@@ -60,20 +59,20 @@
           <h2>Realm Resources</h2>
           <div class="flex my-2 flex-wrap">
             <ResourceChip
-              v-for="(resource, index) in resources"
+              v-for="(resource, index) in realm.resourceIds"
               :key="index"
-              class="text-xl"
-              :resource="resource"
+              class="mr-2 my-1"
+              :resource-id="resource"
             />
           </div>
         </div>
         <div v-if="cities" class="my-6 bg-black p-4 sm:p-6 rounded-2xl">
           <h2>Realm Traits</h2>
           <Levels
-            :cities="cities"
-            :harbours="harbours"
-            :regions="regions"
-            :rivers="rivers"
+            :cities="realm.cities"
+            :harbours="realm.harbours"
+            :regions="realm.regions"
+            :rivers="realm.rivers"
           />
         </div>
         <div class="my-6 bg-black p-4 sm:p-6 rounded-2xl">
@@ -81,11 +80,18 @@
         </div>
       </div>
       <div class="sm:w-1/2">
-        <img
-          v-if="openSeaData.image_url"
-          class="w-full relative rounded-2xl"
-          :src="openSeaData.image_url"
-          alt=""
+        <b-img
+          v-if="realm.id"
+          class="
+            rounded-xl
+            w-full
+            h-84
+            border-4 border-off-200 border-double
+            bg-off-100 bg-blend-screen
+          "
+          :src="
+            'https://d23fdhqc1jb9no.cloudfront.net/_Realms/' + realm.id + '.svg'
+          "
         />
         <h4 v-else class="my-5">No image yet</h4>
       </div>
@@ -104,13 +110,15 @@ import {
 } from '@nuxtjs/composition-api'
 import axios from 'axios'
 import { useFormatting } from '~/composables/useFormatting'
+import { useRealms } from '~/composables/useRealms'
 export default defineComponent({
   setup(props, context) {
     const { shortenHash } = useFormatting()
     const { id } = context.root.$route.params
     const adventurer = ref(null)
-
+    const { getRealm, realm } = useRealms()
     useFetch(async () => {
+      await getRealm(id.toString())
       const response = await axios.get(
         'https://api.opensea.io/api/v1/asset/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d/' +
           id +
@@ -171,6 +179,7 @@ export default defineComponent({
       return traits.find((resource) => resource.trait_type === 'Order')
     }
     return {
+      realm,
       adventurer,
       shortenHash,
       openSeaData,

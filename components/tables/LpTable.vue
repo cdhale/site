@@ -72,6 +72,7 @@ import { useNetwork } from '~/composables/useNetwork'
 import contractAddresses from '~/constant/contractAddresses'
 
 export default defineComponent({
+  name: 'LpTable',
   props: {
     position: {
       type: Object,

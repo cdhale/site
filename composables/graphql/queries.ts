@@ -55,6 +55,20 @@ const getRealmsQuery = gql`
   }
 `
 
+const getRealmQuery = gql`
+  ${RealmFragment}
+  query realm($id: String) {
+    realm(id: $id) {
+      ...RealmData
+      currentOwner {
+        address
+        realmsHeld
+        bridgedRealmsHeld
+      }
+    }
+  }
+`
+
 const getResourceListQuery = gql`
   query getResourceListQuery {
     resources(first: 25) {
@@ -189,8 +203,19 @@ const lpPositionQuery = gql`
     }
   }
 `
-
+const lpIncentivesQuery = gql`
+  query lpIncentivesQuery($address: String) {
+    incentives(where: { pool: $address }) {
+      id
+      startTime
+      endTime
+      reward
+      ended
+    }
+  }
+`
 export {
+  getRealmQuery,
   getRealmsQuery,
   mintedRealmsQuery,
   getl1Adventurer,
@@ -198,4 +223,5 @@ export {
   getResourceListQuery,
   getResourceBalancesQuery,
   lpPositionQuery,
+  lpIncentivesQuery,
 }

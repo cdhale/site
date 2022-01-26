@@ -27,6 +27,8 @@
             hover:text-red-300
             mb-2
             mr-2
+            text-xs
+            sm:text-base
           "
           @click="filtersOpen = !filtersOpen"
           >Open Filters +</BButton
@@ -83,7 +85,8 @@
             px-4
             py-1
             rounded-md
-            text-sm
+            text-xs
+            sm:text-sm
             mb-1
             mr-2
             bg-opacity-75
@@ -111,7 +114,7 @@
         </span>
       </div>
       <div class="flex flex-wrap sm:space-x-3 my-3 justify-between">
-        <div class="flex flex-grow">
+        <div class="flex flex-wrap">
           <span class="pr-4 self-center">Order By:</span>
           <BButton
             v-for="(data, index) in orderByData"
@@ -126,6 +129,8 @@
               capitalize
               hover:text-red-300
               mr-2
+              mb-1
+              sm:mb-0
             "
             @click="setOrderBy(data)"
           >
@@ -152,17 +157,23 @@
         </div>
       </div>
       <InfiniteScroll
-        v-if="!$fetchState.pending && displayedRealms && displayedRealms.length"
-        class="flex flex-wrap w-full"
+        v-if="displayedRealms && displayedRealms.length"
+        class="
+          grid grid-cols-1
+          md:grid-cols-2
+          lg:grid-cols-3
+          xl:grid-cols-4
+          2xl:grid-cols-5
+          gap-4
+          xl:gap-6
+        "
         :content-change-key="displayedRealms.length"
         @fetchNextBlock="fetchMoreRealms"
       >
         <RealmCard
           v-for="realm in displayedRealms"
-          :id="realm.id"
           :key="realm.id"
           :realm="realm"
-          class="w-80"
         />
         <template v-if="loading">
           <Loader
@@ -172,16 +183,13 @@
           />
         </template>
       </InfiniteScroll>
-
       <div
-        v-else-if="loading || $fetchState.pending"
-        class="flex flex-wrap mt-6"
+        v-if="
+          !$fetchState.pending && displayedRealms && !displayedRealms.length
+        "
+        class="pt-4"
       >
-        <Loader
-          v-for="(loader, index) in 6"
-          :key="index"
-          class="w-80 mr-3 mb-3"
-        />
+        No Realms discovered for this Adventurer
       </div>
     </div>
   </section>
@@ -365,6 +373,8 @@ export default defineComponent({
           )
         }
         if (props.type === 'staked') {
+          await getWalletRealms(filters.value)
+
           displayedRealms.value = displayedRealms.value.concat(
             userRealms.value.l1.bridgedRealms
           )

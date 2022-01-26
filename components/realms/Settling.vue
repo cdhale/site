@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="w-full">
     <div>
       <h2>Unstaked Realms ({{ numberRealms || 0 }})</h2>
       <p>

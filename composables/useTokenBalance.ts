@@ -27,7 +27,6 @@ export function useBalances() {
   const { account } = useWeb3()
 
   const fetchBalances = async (refresh = false) => {
-    console.log(activeNetwork.value.id)
     if (!balances.user || refresh) {
       if (!account.value) return
       balances.user = {
@@ -77,9 +76,7 @@ async function getBalances(owner, networkName, ethers, additionalTokens = []) {
 
     const tokenContract = new ethers.Contract(agldToken.address, balanceABI)
 
-    console.log(owner)
     const tokenBalances = await tokenContract.methods.balanceOf(owner).call()
-    console.log(tokenBalances)
 
     const tokensBalObj = new BigNumber(tokenBalances)
       .dividedBy(10 ** agldToken.decimals)
