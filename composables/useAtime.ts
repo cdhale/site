@@ -30,7 +30,6 @@ export function useAtime() {
   const { userRealms, getWalletRealms } = useRealms()
 
   const checkAtimeRealmIdMinted = async () => {
-    console.log('checking if realm minted atims')
     await getWalletRealms()
     if (userRealms.value.l1) {
       /* const symbols = userRealms.value.l1.realms.filter(
@@ -93,7 +92,6 @@ export function useAtime() {
 
   const getAvailableTokenIds = async () => {
     try {
-      console.log('getting abailable')
       loading.getAvailableTokenIds = true
       error.getAvailableTokenIds = null
       availableTokenIds.value = await checkAtimeRealmIdMinted()

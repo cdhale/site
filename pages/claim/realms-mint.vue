@@ -257,11 +257,7 @@
       <div class="p-8">
         <h2>Join our Lords & Ladies with their already minted Realms below</h2>
         <div>
-          <RealmCard
-            v-if="selectedRealm"
-            :id="selectedRealm.token_id"
-            :realm="selectedRealm"
-          />
+          <RealmCard v-if="selectedRealm" :realm="selectedRealm" />
         </div>
       </div>
     </div>

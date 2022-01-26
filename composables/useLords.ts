@@ -41,7 +41,6 @@ export function useLords() {
   const lordsAvailableOnRealm = ref()
 
   const claimLords = async (realmId) => {
-    console.log(checkForNetworkMismatch())
     if (!checkForNetworkMismatch()) {
       try {
         error.lords = null
