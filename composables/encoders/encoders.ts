@@ -13,12 +13,12 @@ export const getTuple = (network) => {
     refundee: contractAddresses[network.id].treasury,
   }
 }
-
+// 1643250739 - REAL START VALUE
 export const getV2Tuple = (network) => {
   return {
     rewardToken: contractAddresses[network.id].lordsTokenAddress,
     pool: contractAddresses[network.id].lordsPool,
-    startTime: 1643250739,
+    startTime: 1643240203,
     endTime: 1648434739,
     refundee: contractAddresses[network.id].treasury,
   }
