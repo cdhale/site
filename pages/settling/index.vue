@@ -163,7 +163,7 @@
             </div>
           </div>
           <div
-            v-if="userPositions && userPositions.length"
+            v-if="userPositions && v1PositionsFilter.length"
             class="mt-8 mx-auto w-full flex flex-wrap"
           >
             <h2 class="text-center">
@@ -183,7 +183,7 @@
               </thead>
               <tbody>
                 <LpTable
-                  v-for="position in userPositions.filter((a) => a.staked)"
+                  v-for="position in v1PositionsFilter"
                   :key="position.id"
                   :position="position"
                 />
@@ -308,6 +308,11 @@ export default defineComponent({
     } = useStaking()
     const { showComponent } = useModal()
 
+    const v1PositionsFilter = computed(() => {
+      return userPositions.value.filter(
+        (a) => a.id !== '0x2c643' && a.staked === true
+      )
+    })
     onMounted(async () => {
       activeNetworkId.value = useL1Network.value.id
       await getIncentivesForPool()
@@ -450,6 +455,7 @@ export default defineComponent({
       userPositions,
       loadingIncentive,
       isLordsAdded,
+      v1PositionsFilter,
     }
   },
 })
