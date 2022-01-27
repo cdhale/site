@@ -163,11 +163,7 @@
             </div>
           </div>
           <div
-            v-if="
-              userPositions &&
-              userPositions.length &&
-              userPositions.filter((a) => a.staked) > 0
-            "
+            v-if="userPositions && userPositions.length"
             class="mt-8 mx-auto w-full flex flex-wrap"
           >
             <h2 class="text-center">
