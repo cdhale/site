@@ -35,9 +35,9 @@ export function useIncentive() {
   const rewardInfo = ref()
   const poolIncentives = ref([])
 
-  const getRewardsByToken = async (tokenId) => {
+  const getRewardsByToken = async (tokenId, v2) => {
     try {
-      rewardInfo.value = await getRewardInfo(activeNetwork.value, tokenId)
+      rewardInfo.value = await getRewardInfo(activeNetwork.value, tokenId, v2)
     } catch (e) {
       error.stake = e.message
     } finally {
@@ -202,7 +202,7 @@ export function useIncentive() {
   }
 }
 
-async function getRewardInfo(network, tokenId) {
+async function getRewardInfo(network, tokenId, v2) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const uniswapV3Pool = contractAddresses[network.id].uniswapV3Pool
   const poolContract = new ethers.Contract(
@@ -210,7 +210,12 @@ async function getRewardInfo(network, tokenId) {
     uniSwapV3PoolAbi,
     provider
   )
-  const r = await poolContract.getRewardInfo(getTuple(network), tokenId)
+  let r
+  if (v2) {
+    r = await poolContract.getRewardInfo(getV2Tuple(network), tokenId)
+  } else {
+    r = await poolContract.getRewardInfo(getTuple(network), tokenId)
+  }
 
   return ethers.utils.formatEther(r[0])
 }
@@ -270,6 +275,7 @@ async function stakeToken(network, tokenId, v2) {
     uniSwapV3PoolAbi,
     signer
   )
+  console.log(getV2Tuple(network))
   let tx
   if (v2) {
     tx = await poolContract.stakeToken(getV2Tuple(network), tokenId)

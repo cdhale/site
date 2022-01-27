@@ -163,7 +163,11 @@
             </div>
           </div>
           <div
-            v-if="userPositions && userPositions.length"
+            v-if="
+              userPositions &&
+              userPositions.length &&
+              userPositions.filter((a) => a.staked) > 0
+            "
             class="mt-8 mx-auto w-full flex flex-wrap"
           >
             <h2 class="text-center">
@@ -183,20 +187,21 @@
               </thead>
               <tbody>
                 <LpTable
-                  v-for="position in userPositions"
+                  v-for="position in userPositions.filter((a) => a.staked)"
                   :key="position.id"
                   :position="position"
                 />
               </tbody>
             </table>
+            <p class="my-4">
+              To claim the Lords, first unstake your position, then click the
+              Claim button.
+            </p>
           </div>
-          <div v-else class="my-6">
+          <!-- <div v-else class="my-6">
             <p class="text-3xl">You do not have any LP positions.</p>
-          </div>
-          <p v-if="userPositions && userPositions.length" class="my-4">
-            To claim the Lords, first unstake your position, then click the
-            Claim button.
-          </p>
+          </div> -->
+
           <div
             v-if="userPositions && userPositions.length"
             class="mt-8 mx-auto w-full flex flex-wrap"

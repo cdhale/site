@@ -115,9 +115,9 @@ export default defineComponent({
 
     onMounted(async () => {
       if (props.position.staked) {
-        await getRewardsByToken(props.position.tokenId)
+        await getRewardsByToken(props.position.tokenId, props.stakeButton)
         window.setInterval(async () => {
-          await getRewardsByToken(props.position.tokenId)
+          await getRewardsByToken(props.position.tokenId, props.stakeButton)
         }, 20000)
       }
     })
