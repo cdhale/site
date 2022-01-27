@@ -205,7 +205,7 @@ const lpPositionQuery = gql`
 `
 const lpIncentivesQuery = gql`
   query lpIncentivesQuery($address: String) {
-    incentives(where: { pool: $address }) {
+    incentives(where: { pool: $address }, orderBy: "startTime") {
       id
       startTime
       endTime

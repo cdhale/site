@@ -144,7 +144,7 @@
           <h1>The Kings' LP Rewards</h1>
           <p class="text-2xl">
             Provide your UniSwap V3 position and be rewarded in LORDS. <br />
-            300,000 LORDS available over 30 days.
+            10,000 LORDS are distributed per day to in-range positions
           </p>
           <p>
             IMPORTANT NOTE: You will only earn rewards if your Position is
@@ -166,7 +166,12 @@
             v-if="userPositions && userPositions.length"
             class="mt-8 mx-auto w-full flex flex-wrap"
           >
-            <h2 class="text-center">Program V1 - Ending</h2>
+            <h2 class="text-center">
+              Program V1 - Ending
+              <span class="text-lg">{{
+                new Date(poolIncentives[0].endTime * 1000 || 0).toLocaleString()
+              }}</span>
+            </h2>
             <table class="table-auto mx-auto w-full py-4">
               <thead>
                 <tr class="text-center font-display text-2xl pt-4">
@@ -196,7 +201,12 @@
             v-if="userPositions && userPositions.length"
             class="mt-8 mx-auto w-full flex flex-wrap"
           >
-            <h2 class="text-center">Program V2 - Ending</h2>
+            <h2 class="text-center">
+              Program V2 - Ending
+              <span class="text-lg">{{
+                new Date(poolIncentives[1].endTime * 1000 || 0).toLocaleString()
+              }}</span>
+            </h2>
             <table class="table-auto mx-auto w-full py-4">
               <thead>
                 <tr class="text-center font-display text-2xl pt-4">

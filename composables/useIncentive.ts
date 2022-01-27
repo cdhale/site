@@ -33,7 +33,7 @@ export function useIncentive() {
   const { showError, showSuccess } = useNotification()
   const { useL1Network } = useNetwork()
   const rewardInfo = ref()
-  const poolIncentives = ref()
+  const poolIncentives = ref([])
 
   const getRewardsByToken = async (tokenId) => {
     try {
@@ -52,7 +52,6 @@ export function useIncentive() {
         { address: contractAddresses[useL1Network.value.id].lordsPool },
         'staker'
       )
-      console.log(incentives)
       poolIncentives.value = incentives
     } catch (e) {
       console.log(e)
