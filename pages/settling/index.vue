@@ -309,9 +309,9 @@ export default defineComponent({
     const { showComponent } = useModal()
 
     const v1PositionsFilter = computed(() => {
-      return userPositions.value.filter(
-        (a) => a.id !== '0x2c643' && a.staked === true
-      )
+      return userPositions.value
+        .filter((a) => a.incentivePositions.every((c) => !c.active))
+        .filter((a) => a.staked)
     })
     onMounted(async () => {
       activeNetworkId.value = useL1Network.value.id
