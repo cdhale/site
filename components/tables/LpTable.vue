@@ -96,6 +96,9 @@ export default defineComponent({
     const { useL1Network } = useNetwork()
     const lordsToken = contractAddresses[useL1Network.value.id].uniswapV3Pool
 
+    const checkProgram = computed(() => {
+      return props.position.incentivePositions.filter((a) => a.active === false)
+    })
     const deposited = computed(
       () =>
         props.position.owner === lordsToken.toLowerCase() ||
@@ -131,6 +134,7 @@ export default defineComponent({
       loading,
       deposit,
       status,
+      checkProgram,
     }
   },
 })
