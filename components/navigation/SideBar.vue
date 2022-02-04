@@ -89,7 +89,7 @@
         <BButton
           type="navLink"
           class="text-left"
-          href="https://docs.bibliothecaforloot.com/"
+          href="https://docs.bibliothecadao.xyz/"
           @click.native="toggleSideBar"
           >White Paper & Docs</BButton
         >
@@ -116,7 +116,7 @@
         class="mt-auto flex flex-wrap py-10 justify-between px-4 text-off-200"
       >
         <div class="w-full text-center text-xl pb-5 hover:underline">
-          <a href="https://docs.bibliothecadao.xyz/">Docs</a>
+          <a href="https://docs.bibliothecadao.xyz/">White Paper & Docs</a>
         </div>
         <a
           target="blank_"
