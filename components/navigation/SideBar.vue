@@ -116,7 +116,7 @@
         class="mt-auto flex flex-wrap py-10 justify-between px-4 text-off-200"
       >
         <div class="w-full text-center text-xl pb-5 hover:underline">
-          <a href="https://docs.bibliothecaforloot.com/">Docs</a>
+          <a href="https://docs.bibliothecadao.xyz/">Docs</a>
         </div>
         <a
           target="blank_"
