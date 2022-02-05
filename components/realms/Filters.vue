@@ -39,7 +39,7 @@
       </button>
     </div>
     <form
-      class="sm:flex mt-4 mb-2 space-x-2 w-full hidden"
+      class="sm:flex mt-4 mb-2 space-x-2 hidden"
       method="POST"
       @submit.prevent="submitSearch"
     >
@@ -48,6 +48,7 @@
         placeholder="realm id"
         class="
           bg-black
+          w-1/2
           rounded-2xl
           px-4
           text-xl
@@ -55,7 +56,7 @@
         "
         type="text"
       />
-      <div class="self-center">
+      <div class="self-center w-1/2">
         <BButton class="mt-2 sm:mt-0 sm:px-4 w-full text-white" type="primary"
           ><Search class="white w-6 h-6"
         /></BButton>
