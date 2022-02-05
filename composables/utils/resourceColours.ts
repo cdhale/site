@@ -54,7 +54,7 @@ export const resources = [
     value: 1179,
     colour: '#b91c1c',
     colourClass: 'bg-red-700 border-red-700',
-    id: 6,
+    id: 7,
     balance: 0,
   },
   {
