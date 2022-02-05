@@ -310,7 +310,7 @@ export default defineComponent({
 
     const v1PositionsFilter = computed(() => {
       return userPositions.value.filter(
-        (a) => a.id !== '0x2c643' && a.staked === true
+        (a) => a.staked && a.incentivePositions.length === 1
       )
     })
     onMounted(async () => {
