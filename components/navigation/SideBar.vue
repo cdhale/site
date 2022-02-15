@@ -31,11 +31,6 @@
         $LORDS
       </span>
 
-      <span class="text-center font-semibold text-2xl">
-        <span class="text-yellow-400">${{ goldPrice }}</span>
-        $AGLD
-      </span>
-
       <nav class="flex flex-col p-2 capitalize mt-8">
         <h4 class="mt-8 uppercase text-off-200 tracking-wide pl-4">
           Loot Assets
