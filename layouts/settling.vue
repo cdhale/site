@@ -82,7 +82,7 @@ export default defineComponent({
       },
       {
         title: 'docs',
-        url: 'https://docs.bibliothecaforloot.com/',
+        url: 'https://docs.bibliothecadao.xyz/',
       },
       {
         title: 'stake',
