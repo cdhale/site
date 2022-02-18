@@ -417,7 +417,7 @@ export default defineComponent({
       },
       {
         title: 'Community Driven - The Bibliotheca DAO',
-        body: 'Settling of the Realms is governed by the Realm Lords under the Bibliotheca DAO. Game direction, testing and feedback are all directed by the community. There is core a team of developers building the game, however all code is open source and we encourage outside contributors.',
+        body: 'Settling of the Realms is governed by the Realm Lords under the Bibliotheca DAO. Game direction, testing and feedback are all directed by the community. There is a core team of developers building the game, however all code is open source and we encourage outside contributors.',
       },
       {
         title: 'Can I audit your Contracts?',
