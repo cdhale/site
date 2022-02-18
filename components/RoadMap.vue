@@ -140,7 +140,7 @@ export default defineComponent({
         prodTime: 'Q2 2022',
         title: 'Trading Plaza on Starknet - NFT Marketplace using $LORDS',
         description:
-          'A Starknet native NFT marketplace denominated in $LORDS is being designed and built. All trades on this marketplace will use LORDS as the currency. A % of the transactions fees will funnel directly into the Bibliotheca DAO.',
+          'A Starknet native NFT marketplace denominated in $LORDS is being designed and built. All trades on this marketplace will use LORDS as the currency. A % of the transaction fees will funnel directly into the Bibliotheca DAO.',
         active: 'true',
       },
       {
