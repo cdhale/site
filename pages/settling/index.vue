@@ -380,7 +380,7 @@ export default defineComponent({
         body: 'You need to be staked for one entire epoch (7 days) to be entitled to your $LORDS. For example, if you stake at the end of epoch 2 and remain staked until epoch 4, you will receive the epoch 3 reward. ',
       },
       {
-        title: 'Once staked, do you need stake again for future epochs?',
+        title: 'Once staked, do you need to stake again for future epochs?',
         body: 'No, once you stake and remained staked, you’ll be entitled to all future epoch rewards (unless you unstake). ',
       },
       {
@@ -413,7 +413,7 @@ export default defineComponent({
       },
       {
         title: 'What is StarkNet?',
-        body: "StarkNet is a ZK-Rollup Layer 2 network. It allows for extreme computation and cheap transaction costs, without sacrificing the security of your assets. The Bibliotheca team is building one of the world's first fully on-chain game on a ZK-Rollup. You will be able to trade with speed and with little fees.",
+        body: "StarkNet is a ZK-Rollup Layer 2 network. It allows for extreme computation and cheap transaction costs, without sacrificing the security of your assets. The Bibliotheca team is building one of the world's first fully on-chain games on a ZK-Rollup. You will be able to trade with speed and with little fees.",
       },
       {
         title: 'Community Driven - The Bibliotheca DAO',
