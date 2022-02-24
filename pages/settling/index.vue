@@ -285,13 +285,13 @@
               You earn 312.5x $LORDS per Realm per full staked epoch (claimable
               weekly)
             </p>
-            <p class="mx-auto my-auto text-6xl">
+            <!-- <p class="mx-auto my-auto text-6xl">
               <LoadingRings
                 v-if="loading.lords"
                 class="w-32 mx-auto stroke-current fill-none text-off-200"
               />
               <span v-else>{{ claimableV2Balance }}</span>
-            </p>
+            </p> -->
             <BButton
               v-if="!account"
               class="w-full mt-auto"
