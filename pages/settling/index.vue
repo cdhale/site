@@ -370,53 +370,10 @@
             </div>
           </div>
           <div
-            v-for="(incentive, i) in poolIncentives"
-            :key="incentive.id"
-            class="flex flex-wrap w-full mx-auto mt-8"
-          >
-            <h2 class="text-center">
-              Program V{{ i + 1 }} - Ending
-              <span class="text-lg">{{
-                new Date(incentive.endTime * 1000 || 0).toLocaleString()
-              }}</span>
-            </h2>
-            <table class="w-full py-4 mx-auto table-auto">
-              <thead>
-                <tr class="pt-4 text-2xl text-center font-display">
-                  <th>LP Token ID</th>
-                  <th>Status</th>
-                  <th>LORDS</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <div v-for="position in userPositions" :key="position.id">
-                  <div
-                    v-if="
-                      position.incentivePositions.some(
-                        (e) => e.id === incentive.id
-                      )
-                    "
-                  >
-                    <LpTable :key="position.id" :position="position" />
-                  </div>
-                </div>
-              </tbody>
-              <!--<tbody>
-                <LpTable
-                  v-for="position in v1PositionsFilter"
-                  :key="position.id"
-                  :position="position"
-                />
-              </tbody>-->
-            </table>
-          </div>
-
-          <div
             v-if="userPositions && v1PositionsFilter.length"
             class="flex flex-wrap w-full mx-auto mt-8"
           >
-            <h2 class="text-center">
+            <h2 v-if="poolIncentives[0]" class="text-center">
               Program V1 - Ending
               <span class="text-lg">{{
                 new Date(poolIncentives[0].endTime * 1000 || 0).toLocaleString()
@@ -444,15 +401,12 @@
               Claim button.
             </p>
           </div>
-          <!-- <div v-else class="my-6">
-            <p class="text-3xl">You do not have any LP positions.</p>
-          </div> -->
 
           <div
             v-if="userPositions && userPositions.length"
             class="flex flex-wrap w-full mx-auto mt-8"
           >
-            <h2 class="text-center">
+            <h2 v-if="poolIncentives[1]" class="text-center">
               Program V2 - Ending
               <span class="text-lg">{{
                 new Date(poolIncentives[1].endTime * 1000 || 0).toLocaleString()
@@ -562,8 +516,11 @@ export default defineComponent({
     const { showComponent } = useModal()
 
     const v1PositionsFilter = computed(() => {
-      return userPositions.value.filter(
-        (a) => a.staked && a.incentivePositions.length === 1
+      return (
+        userPositions.value &&
+        userPositions.value.filter(
+          (a) => a.staked && a.incentivePositions.length === 1
+        )
       )
     })
     onMounted(async () => {
@@ -691,7 +648,7 @@ export default defineComponent({
       },
       {
         title: 'Can I audit your Contracts?',
-        body: 'Yes! Find them here. <br> <a class="font-semibold underline" href="https://etherscan.io/address/0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0">$LORDS</a><br> <a class="font-semibold underline" href="https://etherscan.io/address/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d">Realms</a><br> <a class="font-semibold underline" href="https://etherscan.io/address/0x17963290db8c30552d0cfa2a6453ff20a28c31a2#code">Journey</a><a class="font-semibold underline" href="https://etherscan.io/address/0xcdFe3d7eBFA793675426F150E928CD395469cA53#code">Journey v2</a>',
+        body: 'Yes! Find them here. <br> <a class="font-semibold underline" href="https://etherscan.io/address/0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0">$LORDS</a><br> <a class="font-semibold underline" href="https://etherscan.io/address/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d">Realms</a><br> <a class="font-semibold underline" href="https://etherscan.io/address/0x17963290db8c30552d0cfa2a6453ff20a28c31a2#code">Journey</a><br> <a class="font-semibold underline" href="https://etherscan.io/address/0xcdFe3d7eBFA793675426F150E928CD395469cA53#code">Journey v2</a>',
       },
     ]
 
