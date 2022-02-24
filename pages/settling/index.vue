@@ -547,11 +547,17 @@ export default defineComponent({
     const faqs = [
       {
         title: 'What does this staking contract do?',
-        body: 'By boarding the ship now, you can begin to earn $LORDS. Once the StarkNet bridge is complete, your Realms will be available to claim directly on StarkNet.',
+        body: 'By boarding the Galleon or Carrack now, you can begin to earn $LORDS. Once the StarkNet bridge is complete, your Realms will be available to claim directly on StarkNet.',
       },
       {
-        title: 'How long do I need to be staked for to be entitled?',
-        body: 'For each Realm staked per epoch, you will be rewarded with 625x $LORDS.',
+        title:
+          'What are the rewards?',
+        body: 'Epoch 11-15: The Galleon 350x $LORDS for each Realm staked per epoch. The Carrack 312.5x $LORDS for each Realm staked per epoch.',
+      },
+      {
+        title:
+          'What's the difference between the Galleon and Carrack?',
+        body: 'You can claim rewards directly on mainnet after each epoch in the Carrack, while in the Galleon you must wait to claim them directly on StarkNet once the Journey (bridging) is complete.',
       },
       {
         title:
@@ -560,7 +566,7 @@ export default defineComponent({
       },
       {
         title: 'Once staked, do you need to stake again for future epochs?',
-        body: 'No, once you stake and remained staked, you’ll be entitled to all future epoch rewards (unless you unstake). ',
+        body: 'No, once you stake and remained staked, you’ll be entitled to all future epoch rewards (unless you unstake).',
       },
       {
         title: 'Why can’t I see my Realm(s) in OpenSea after staking?',
@@ -571,11 +577,11 @@ export default defineComponent({
         body: 'No, during staking you can’t list/sell your Realms as they are in the contract wallet. If you wish to list/sell your Realms then you must first unstake them.',
       },
       {
-        title: 'How long will the Journey last for?',
-        body: 'Until the StarkNet bridge is complete, the Journey will happen for a minimum 10 weeks. You can withdraw when your balance is above 0.',
+        title: 'How long will the Journey last for and what happens at epoch 16+?',
+        body: 'The Journey will continue for a maximum of 15 epochs. If StarkNet is not ready by the end of epoch 15, rewards will be adjusted to the future gaming emissions amount (25x per day / 175x per week). If StarkNet is ready, gaming emissions (25x per day / 175x per week) will commence directly on layer 2.',
       },
       {
-        title: 'Do you have to claim $LORDS after each epoch?',
+        title: 'Do you have to claim $LORDS after each epoch/on mainnet?',
         body: 'No, you can let rewards accrue and claim in bulk to save gas. If you wish to avoid claiming on L1 we will have a solution to migrate your $LORDS to StarkNet and claim there to save further gas.',
       },
       {
@@ -584,7 +590,7 @@ export default defineComponent({
       },
       {
         title: 'The $LORDS Token',
-        body: 'The $LORDS token is the utility token of the Realmsverse, used to transact on marketplaces on StarkNet. There will be a native StarkNet marketplace for trading Realms along with an AMM (Uniswap style) for trading the resources generated. Both marketplaces will be denominated in $LORDS. Read the full tokenomics breakdown here: <a class="font-semibold underline" href="https://docs.bibliothecaforloot.com/economics/lords">$LORDS Tokenomics</a>',
+        body: 'The $LORDS token is the utility token of the Realmsverse, used to transact on marketplaces on StarkNet. There will be a native StarkNet marketplace for trading Realms along with an AMM (Uniswap style) for trading the resources generated. Both marketplaces will be denominated in $LORDS. Read the full tokenomics breakdown here: <a class="font-semibold underline" href="https://docs.bibliothecadao.xyz/lootverse-master-scroll/economics/lords-resources-and-more-fungibles">$LORDS Tokenomics</a>',
       },
       {
         title: 'Why is settling all on-chain?',
