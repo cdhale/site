@@ -100,9 +100,8 @@
           <BaseBox class="h-80">
             <h1 class="text-center">Your Unstaked Realms</h1>
             <p>
-              After epoch 11-15, you will earn 350 $LORDS per week which will be
-              airdropped directly onto StarkNet. Past epoch 15 you will earn 25
-              $LORDS per day inline with the game emmissions.
+              You need to be staked for an entire epoch to be entitled to your
+              Lords
             </p>
             <p class="text-6xl my-auto">{{ numberRealms || 0 }}</p>
             <BButton
@@ -148,8 +147,8 @@
           <BaseBox class="h-80">
             <h1>Your Lords Available To Claim</h1>
             <p>
-              You will earn 625 per Realm per full epoch staked up until week
-              10.
+              You earn 350x $LORDS per Realm per full staked epoch (claimable on
+              StarkNet after epoch 15)
             </p>
             <p class="text-6xl mx-auto my-auto">
               <LoadingRings
@@ -273,7 +272,10 @@
         <div class="p-2 sm:w-1/2 w-full">
           <BaseBox class="h-80">
             <h1>Your Lords Available To Claim</h1>
-            <p>You will earn 625 per Realm per full epoch staked</p>
+            <p>
+              You earn 312.5x $LORDS per Realm per full staked epoch (claimable
+              weekly)
+            </p>
             <p class="text-6xl mx-auto my-auto">
               <LoadingRings
                 v-if="loading.lords"
@@ -624,7 +626,7 @@ export default defineComponent({
       },
       {
         title: 'Can I audit your Contracts?',
-        body: 'Yes! Find them here. <br> <a class="font-semibold underline" href="https://etherscan.io/address/0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0">$LORDS</a><br> <a class="font-semibold underline" href="https://etherscan.io/address/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d">Realms</a><br> <a class="font-semibold underline" href="https://etherscan.io/address/0x17963290db8c30552d0cfa2a6453ff20a28c31a2#code">Journey</a>',
+        body: 'Yes! Find them here. <br> <a class="font-semibold underline" href="https://etherscan.io/address/0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0">$LORDS</a><br> <a class="font-semibold underline" href="https://etherscan.io/address/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d">Realms</a><br> <a class="font-semibold underline" href="https://etherscan.io/address/0x17963290db8c30552d0cfa2a6453ff20a28c31a2#code">Journey</a><a class="font-semibold underline" href="https://etherscan.io/address/0xcdFe3d7eBFA793675426F150E928CD395469cA53#code">Journey v2</a>',
       },
     ]
 
