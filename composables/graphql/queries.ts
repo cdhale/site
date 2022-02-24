@@ -48,9 +48,24 @@ const getRealmsQuery = gql`
       id
       ...RealmData
     }
+    bridgedV2Realms: realms(
+      first: $first
+      skip: $skip
+      orderBy: $orderBy
+      orderDirection: $orderDirection
+      where: {
+        bridgedV2Owner: $address
+        resourceIds_contains: $resources
+        order_in: $orders
+      }
+    ) {
+      id
+      ...RealmData
+    }
     wallet(id: $address) {
       realmsHeld
       bridgedRealmsHeld
+      bridgedV2RealmsHeld
     }
   }
 `
@@ -64,6 +79,7 @@ const getRealmQuery = gql`
         address
         realmsHeld
         bridgedRealmsHeld
+        bridgedV2RealmsHeld
       }
     }
   }
@@ -199,6 +215,9 @@ const lpPositionQuery = gql`
       incentivePositions {
         id
         active
+        incentive {
+          id
+        }
       }
     }
   }
