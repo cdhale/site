@@ -25,106 +25,233 @@
       </div>
     </div>
     <div
+      class="
+        p-4
+        flex flex-wrap
+        container
+        mx-auto
+        font-display
+        text-center text-2xl text-white
+      "
+    >
+      <button class="w-1/2 bg-off-200 p-4 rounded" @click="tab = 'A'">
+        Galleon
+      </button>
+      <button class="w-1/2 bg-off-200 p-4 rounded" @click="tab = 'B'">
+        Carrack
+      </button>
+    </div>
+    <div
       id="stake"
       class="flex flex-wrap justify-center text-center container mx-auto"
     >
-      <div class="p-2 sm:w-1/2 w-full">
-        <BaseBox class="h-80">
-          <h1 class="text-center">Your Unstaked Realms</h1>
-          <p>
-            You need to be staked for an entire epoch to be entitled to your
-            Lords
-          </p>
-          <p class="text-6xl my-auto">{{ numberRealms || 0 }}</p>
-          <BButton
-            v-if="!account"
-            class="w-full mt-auto"
-            type="settling"
-            @click="open"
-            >Connect Account</BButton
-          >
-          <BButton
-            v-else
-            class="w-full mt-auto"
-            type="settling"
-            :disabled="numberRealms == 0"
-            @click="stakeRealms"
-            >Board the Ship (stake)</BButton
-          >
-        </BaseBox>
-      </div>
-      <div class="p-2 sm:w-1/2 w-full">
-        <BaseBox class="h-80">
-          <h1>Your Staked Realms</h1>
-          <p class="text-6xl my-auto">
-            {{ bridgedRealms || 0 }}
-          </p>
-          <BButton
-            v-if="!account"
-            class="w-full mt-auto"
-            type="settling"
-            @click="open"
-            >Connect Account</BButton
-          >
-          <BButton
-            v-else
-            class="w-full mt-auto"
-            type="settling"
-            @click="unstakeRealms"
-            >Leave Ship (unstake)</BButton
-          >
-        </BaseBox>
-      </div>
-      <div class="p-2 sm:w-1/2 w-full">
-        <BaseBox class="h-80">
-          <h1>Your Lords Available To Claim</h1>
-          <p>You will earn 625 per Realm per full epoch staked</p>
-          <p class="text-6xl mx-auto my-auto">
-            <LoadingRings
-              v-if="loading.lords"
-              class="mx-auto fill-none stroke-current text-off-200 w-32"
-            />
-            <span v-else>{{ claimableBalance }}</span>
-          </p>
-          <BButton
-            v-if="!account"
-            class="w-full mt-auto"
-            type="settling"
-            @click="open"
-            >Connect Account</BButton
-          >
-          <BButton
-            v-else
-            class="w-full mt-auto"
-            type="settling"
-            :disabled="claimableBalance == '0'"
-            @click="claimAllLords"
-            >Claim Lords</BButton
-          >
-          <div class="w-full mt-2">
-            <span class="cursor-pointer hover:underline" @click="isLordsAdded"
-              >Add LORDS to MetaMask</span
+      <div
+        v-if="tab === 'A'"
+        class="flex flex-wrap justify-center text-center container mx-auto"
+      >
+        <h1 class="w-full py-4">The Galleon (V1 Staking)</h1>
+        <div v class="p-2 sm:w-1/2 w-full">
+          <BaseBox class="h-80">
+            <h1 class="text-center">Your Unstaked Realms</h1>
+            <p>
+              You need to be staked for an entire epoch to be entitled to your
+              Lords
+            </p>
+            <p class="text-6xl my-auto">{{ numberRealms || 0 }}</p>
+            <BButton
+              v-if="!account"
+              class="w-full mt-auto"
+              type="settling"
+              @click="open"
+              >Connect Account</BButton
             >
-          </div>
-        </BaseBox>
-      </div>
-      <div class="p-2 sm:w-1/2 w-full">
-        <BaseBox class="h-80">
-          <h1>Current Epoch</h1>
-          <p>An epoch is 1 week</p>
-          <p class="text-6xl text-center my-auto">{{ epoch }}</p>
-          <no-ssr>
-            <vac
-              v-if="timeLeft"
-              class="text-center"
-              :end-time="new Date().getTime() + timeLeft * 1000"
+            <BButton
+              v-else
+              class="w-full mt-auto"
+              type="settling"
+              :disabled="numberRealms == 0"
+              @click="stakeRealms"
+              >Board the Ship (stake)</BButton
             >
-              <span slot="process" slot-scope="{ timeObj }">{{
-                `Time Left in Epoch: ${timeObj.d} days ${timeObj.h} hrs ${timeObj.m} mins ${timeObj.s} seconds`
-              }}</span>
-            </vac>
-          </no-ssr>
-        </BaseBox>
+          </BaseBox>
+        </div>
+        <div class="p-2 sm:w-1/2 w-full">
+          <BaseBox class="h-80">
+            <h1>Your Staked Realms</h1>
+            <p class="text-6xl my-auto">
+              {{ bridgedRealms || 0 }}
+            </p>
+            <BButton
+              v-if="!account"
+              class="w-full mt-auto"
+              type="settling"
+              @click="open"
+              >Connect Account</BButton
+            >
+            <BButton
+              v-else
+              class="w-full mt-auto"
+              type="settling"
+              @click="unstakeRealms"
+              >Leave Ship (unstake)</BButton
+            >
+          </BaseBox>
+        </div>
+        <div class="p-2 sm:w-1/2 w-full">
+          <BaseBox class="h-80">
+            <h1>Your Lords Available To Claim</h1>
+            <p>You will earn 625 per Realm per full epoch staked</p>
+            <p class="text-6xl mx-auto my-auto">
+              <LoadingRings
+                v-if="loading.lords"
+                class="mx-auto fill-none stroke-current text-off-200 w-32"
+              />
+              <span v-else>{{ claimableBalance }}</span>
+            </p>
+            <BButton
+              v-if="!account"
+              class="w-full mt-auto"
+              type="settling"
+              @click="open"
+              >Connect Account</BButton
+            >
+            <BButton
+              v-else
+              class="w-full mt-auto"
+              type="settling"
+              :disabled="claimableBalance == '0'"
+              @click="claimAllLords"
+              >Claim Lords</BButton
+            >
+            <div class="w-full mt-2">
+              <span class="cursor-pointer hover:underline" @click="isLordsAdded"
+                >Add LORDS to MetaMask</span
+              >
+            </div>
+          </BaseBox>
+        </div>
+        <div class="p-2 sm:w-1/2 w-full">
+          <BaseBox class="h-80">
+            <h1>Current Epoch</h1>
+            <p>An epoch is 1 week</p>
+            <p class="text-6xl text-center my-auto">{{ epoch }}</p>
+            <no-ssr>
+              <vac
+                v-if="timeLeft"
+                class="text-center"
+                :end-time="new Date().getTime() + timeLeft * 1000"
+              >
+                <span slot="process" slot-scope="{ timeObj }">{{
+                  `Time Left in Epoch: ${timeObj.d} days ${timeObj.h} hrs ${timeObj.m} mins ${timeObj.s} seconds`
+                }}</span>
+              </vac>
+            </no-ssr>
+          </BaseBox>
+        </div>
+      </div>
+      <div
+        v-if="tab === 'B'"
+        class="flex flex-wrap justify-center text-center container mx-auto"
+      >
+        <h1 class="w-full py-4">The Carrack (V2 Staking)</h1>
+        <div v class="p-2 sm:w-1/2 w-full">
+          <BaseBox class="h-80">
+            <h1 class="text-center">Your Unstaked Realms</h1>
+            <p>
+              You need to be staked for an entire epoch to be entitled to your
+              Lords
+            </p>
+            <p class="text-6xl my-auto">{{ numberRealms || 0 }}</p>
+            <BButton
+              v-if="!account"
+              class="w-full mt-auto"
+              type="settling"
+              @click="open"
+              >Connect Account</BButton
+            >
+            <BButton
+              v-else
+              class="w-full mt-auto"
+              type="settling"
+              :disabled="numberRealms == 0"
+              @click="stakeRealms"
+              >Board the Ship (stake)</BButton
+            >
+          </BaseBox>
+        </div>
+        <div class="p-2 sm:w-1/2 w-full">
+          <BaseBox class="h-80">
+            <h1>Your Staked Realms</h1>
+            <p class="text-6xl my-auto">
+              {{ bridgedRealms || 0 }}
+            </p>
+            <BButton
+              v-if="!account"
+              class="w-full mt-auto"
+              type="settling"
+              @click="open"
+              >Connect Account</BButton
+            >
+            <BButton
+              v-else
+              class="w-full mt-auto"
+              type="settling"
+              @click="unstakeRealms"
+              >Leave Ship (unstake)</BButton
+            >
+          </BaseBox>
+        </div>
+        <div class="p-2 sm:w-1/2 w-full">
+          <BaseBox class="h-80">
+            <h1>Your Lords Available To Claim</h1>
+            <p>You will earn 625 per Realm per full epoch staked</p>
+            <p class="text-6xl mx-auto my-auto">
+              <LoadingRings
+                v-if="loading.lords"
+                class="mx-auto fill-none stroke-current text-off-200 w-32"
+              />
+              <span v-else>{{ claimableBalance }}</span>
+            </p>
+            <BButton
+              v-if="!account"
+              class="w-full mt-auto"
+              type="settling"
+              @click="open"
+              >Connect Account</BButton
+            >
+            <BButton
+              v-else
+              class="w-full mt-auto"
+              type="settling"
+              :disabled="claimableBalance == '0'"
+              @click="claimAllLords"
+              >Claim Lords</BButton
+            >
+            <div class="w-full mt-2">
+              <span class="cursor-pointer hover:underline" @click="isLordsAdded"
+                >Add LORDS to MetaMask</span
+              >
+            </div>
+          </BaseBox>
+        </div>
+        <div class="p-2 sm:w-1/2 w-full">
+          <BaseBox class="h-80">
+            <h1>Current Epoch</h1>
+            <p>An epoch is 1 week</p>
+            <p class="text-6xl text-center my-auto">{{ epoch }}</p>
+            <no-ssr>
+              <vac
+                v-if="timeLeft"
+                class="text-center"
+                :end-time="new Date().getTime() + timeLeft * 1000"
+              >
+                <span slot="process" slot-scope="{ timeObj }">{{
+                  `Time Left in Epoch: ${timeObj.d} days ${timeObj.h} hrs ${timeObj.m} mins ${timeObj.s} seconds`
+                }}</span>
+              </vac>
+            </no-ssr>
+          </BaseBox>
+        </div>
       </div>
       <div class="p-2 w-full">
         <BaseBox>
@@ -256,6 +383,7 @@ import {
   onMounted,
   watch,
   computed,
+  ref,
 } from '@nuxtjs/composition-api'
 import { useModal } from '~/composables/useModal'
 import { useNetwork, activeNetworkId } from '~/composables/useNetwork'
@@ -273,6 +401,7 @@ export default defineComponent({
   layout: 'settling',
 
   setup() {
+    const tab = ref('A')
     const { getWalletRealms, userRealms } = useRealms()
     const { account } = useWeb3()
     const { open } = useWeb3Modal()
@@ -456,6 +585,7 @@ export default defineComponent({
       loadingIncentive,
       isLordsAdded,
       v1PositionsFilter,
+      tab,
     }
   },
 })
