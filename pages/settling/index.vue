@@ -203,7 +203,26 @@
         v-if="tab === 'B'"
         class="flex flex-wrap justify-center text-center container mx-auto"
       >
-        <h1 class="w-full py-4">The Carrack (V2 Staking)</h1>
+        <div class="mx-auto w-full my-8">
+          <h1 class="w-full">The Carrack (V2 Staking)</h1>
+          <p class="sm:text-2xl">
+            <span class="font-semibold">Rewards:</span> 312.5x $LORDS per epoch.
+            <br />
+            <span class="font-semibold">Length: </span>5 epochs (11-15). <br />
+            <span class="font-semibold">Claiming $LORDS:</span>You can claim
+            $LORDS immediately after each fully staked epoch.<br /><span
+              class="font-semibold"
+              >Rewards Eligibility:</span
+            >
+            You will be rewarded for every full epoch staked.<br /><span
+              class="font-semibold"
+              >Entry:</span
+            >
+            You must unstake from the OG contract (Galleon) and re-stake in the
+            Carrack. There is a 48 hours grace period between epoch 10/11 to
+            stake in time for 11’s rewards.
+          </p>
+        </div>
         <div v class="p-2 sm:w-1/2 w-full">
           <BaseBox class="h-80">
             <h1 class="text-center">Your Unstaked Realms</h1>
@@ -550,13 +569,11 @@ export default defineComponent({
         body: 'By boarding the Galleon or Carrack now, you can begin to earn $LORDS. Once the StarkNet bridge is complete, your Realms will be available to claim directly on StarkNet.',
       },
       {
-        title:
-          'What are the rewards?',
+        title: 'What are the rewards?',
         body: 'Epoch 11-15: The Galleon 350x $LORDS for each Realm staked per epoch. The Carrack 312.5x $LORDS for each Realm staked per epoch.',
       },
       {
-        title:
-          'What's the difference between the Galleon and Carrack?',
+        title: 'What is the difference between the Galleon and Carrack?',
         body: 'You can claim rewards directly on mainnet after each epoch in the Carrack, while in the Galleon you must wait to claim them directly on StarkNet once the Journey (bridging) is complete.',
       },
       {
@@ -577,7 +594,8 @@ export default defineComponent({
         body: 'No, during staking you can’t list/sell your Realms as they are in the contract wallet. If you wish to list/sell your Realms then you must first unstake them.',
       },
       {
-        title: 'How long will the Journey last for and what happens at epoch 16+?',
+        title:
+          'How long will the Journey last for and what happens at epoch 16+?',
         body: 'The Journey will continue for a maximum of 15 epochs. If StarkNet is not ready by the end of epoch 15, rewards will be adjusted to the future gaming emissions amount (25x per day / 175x per week). If StarkNet is ready, gaming emissions (25x per day / 175x per week) will commence directly on layer 2.',
       },
       {

@@ -14,7 +14,7 @@
         duration-200
         transition
       "
-      :class="{ 'bg-off-200 text-off-100': open }"
+      :class="{ 'bg-off-200 text-off-100 hover:text-off-200': open }"
       @click="open = !open"
     >
       <slot name="header"></slot>
