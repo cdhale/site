@@ -204,6 +204,15 @@
       >
         <div class="mx-auto w-full my-8">
           <h1 class="w-full">The Carrack (V2 Staking)</h1>
+          <div class="py-4 text-2xl my-4 underline">
+            <no-ssr>
+              <vac class="text-center" :end-time="1645916697 * 1000">
+                <span slot="process" slot-scope="{ timeObj }">{{
+                  `Grace Period: ${timeObj.d} days ${timeObj.h} hrs ${timeObj.m} mins ${timeObj.s} seconds`
+                }}</span>
+              </vac>
+            </no-ssr>
+          </div>
           <p class="sm:text-2xl">
             <span class="font-semibold">Rewards:</span> 312.5x $LORDS per epoch.
             <br />
