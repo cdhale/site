@@ -34,12 +34,40 @@
         text-center text-2xl text-white
       "
     >
-      <button class="w-1/2 bg-off-200 p-4 rounded" @click="tab = 'A'">
-        Galleon
-      </button>
-      <button class="w-1/2 bg-off-200 p-4 rounded" @click="tab = 'B'">
-        Carrack
-      </button>
+      <div class="w-1/2 flex p-2">
+        <button
+          :class="{ 'bg-off-200 text-off-100 border-off-100': tab === 'A' }"
+          class="
+            p-4
+            border-double border-4
+            rounded
+            w-full
+            text-off-200
+            border-off-200
+            hover:bg-off-200 hover:text-off-100
+          "
+          @click="tab = 'A'"
+        >
+          Galleon v1
+        </button>
+      </div>
+      <div class="w-1/2 flex p-2">
+        <button
+          :class="{ 'bg-off-200 text-off-100 border-off-100': tab === 'B' }"
+          class="
+            w-full
+            p-4
+            border-double border-4
+            rounded
+            text-off-200
+            border-off-200
+            hover:bg-off-200 hover:text-off-100
+          "
+          @click="tab = 'B'"
+        >
+          Carrack v2
+        </button>
+      </div>
     </div>
     <div
       id="stake"
@@ -100,7 +128,10 @@
         <div class="p-2 sm:w-1/2 w-full">
           <BaseBox class="h-80">
             <h1>Your Lords Available To Claim</h1>
-            <p>You will earn 625 per Realm per full epoch staked</p>
+            <p>
+              You will earn 625 per Realm per full epoch staked up until week
+              10.
+            </p>
             <p class="text-6xl mx-auto my-auto">
               <LoadingRings
                 v-if="loading.lords"
