@@ -15,6 +15,8 @@ import contractAddresses from '~/constant/contractAddresses'
 const totalRealmsStaked = ref()
 const balance = ref()
 const claimableBalance = ref()
+const claimableV2Balance = ref()
+
 const isApproved = ref(false)
 export function useStaking() {
   const { close } = useModal()
@@ -166,13 +168,22 @@ export function useStaking() {
   }
   const getClaimableLordsBalance = async (version) => {
     try {
+      console.log('getting blaance ' + version)
       error.stake = null
       loading.lords = true
-      claimableBalance.value[version] = await getClaimable(
-        version,
-        useL1Network.value,
-        account.value
-      )
+      if (version === 'v2') {
+        claimableV2Balance.value = await getClaimable(
+          version,
+          useL1Network.value,
+          account.value
+        )
+      } else {
+        claimableBalance.value = await getClaimable(
+          version,
+          useL1Network.value,
+          account.value
+        )
+      }
     } catch (e) {
       // await showError('Staking Error', e.message, null)
       error.stake = e.message
@@ -280,6 +291,7 @@ export function useStaking() {
     getTimeToNextEpoch,
     getLordsBalance,
     getClaimableLordsBalance,
+    claimableV2Balance,
     getApproved,
     approve,
     isApproved,

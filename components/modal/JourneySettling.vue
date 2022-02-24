@@ -2,23 +2,23 @@
   <div
     class="
       inline-block
-      w-96
       max-w-sm
       px-4
       py-6
       overflow-hidden
-      text-left
+      text-xl text-left
       align-bottom
       transition-all
       transform
       bg-white
+      border-4 border-double
       rounded-lg
-      text-xl
       shadow-xl
+      w-96
       dark:bg-dark-400
       text-off-200
       sm:my-8 sm:align-middle sm:p-6
-      border-double border-4 border-off-200
+      border-off-200
     "
   >
     <h1 class="text-center">
@@ -26,7 +26,7 @@
     </h1>
     <LoadingRings
       v-if="loading.approve"
-      class="mx-auto fill-none stroke-current text-off-200 w-32"
+      class="w-32 mx-auto stroke-current fill-none text-off-200"
     />
     <div v-else-if="!isApproved" class="content-center mx-auto">
       <p>Approve your account to stake your Realms</p>
@@ -41,13 +41,13 @@
             'bg-gray-500 text-off-100': multiMintIds.find((a) => a === id),
           }"
           class="
-            mx-2
-            my-2
             px-2
             py-1
+            mx-2
+            my-2
+            text-xl
             hover:bg-gray-500 hover:text-off-100
             rounded-xl
-            text-xl
           "
           @click="addIds(id)"
         >
@@ -91,7 +91,7 @@
     <div v-else-if="!userRealmIds.length">No Realms Available</div>
     <div v-else>
       <LoadingRings
-        class="mx-auto fill-none stroke-current text-off-200 w-32"
+        class="w-32 mx-auto stroke-current fill-none text-off-200"
       />
     </div>
   </div>
@@ -117,6 +117,10 @@ export default defineComponent({
       type: String,
       default: 'stake',
     },
+    version: {
+      type: String,
+      default: null,
+    },
   },
 
   setup(props) {
@@ -139,22 +143,24 @@ export default defineComponent({
     const userRealmIds = computed(() => {
       if (props.type === 'stake') {
         return userRealms.value.l1?.realms.map((a) => a.id) || null
+      } else if (props.version === 'v2') {
+        return userRealms.value.l1?.bridgedV2Realms.map((a) => a.id) || null
       } else {
         return userRealms.value.l1?.bridgedRealms.map((a) => a.id) || null
       }
     })
     const stakeUserRealms = async () => {
-      await stakeRealms(userRealmIds.value)
+      await stakeRealms(props.version, userRealmIds.value)
     }
     const stakeSelectedUserRealms = async () => {
-      await stakeRealms(multiMintIds.value)
+      await stakeRealms(props.version, multiMintIds.value)
       multiMintIds.value = []
     }
     const unstakeUserRealms = async () => {
-      await unstake(userRealmIds.value)
+      await unstake(props.version, userRealmIds.value)
     }
     const unstakeSelectedUserRealms = async () => {
-      await unstake(multiMintIds.value)
+      await unstake(props.version, multiMintIds.value)
       multiMintIds.value = []
     }
     const addIds = (id) => {

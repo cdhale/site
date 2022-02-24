@@ -10,7 +10,7 @@ export default {
   },
   rinkeby: {
     journeyContractAddress: '0x8ff4549Cb610755507732eA88b9413B625c55b7C',
-    carrackContractAddress: '0x93F894eD138372978C7C5e118f12053AB1481068',
+    carrackContractAddress: '0xcA20487BF988687D480dea76F1499cFbD0F97E81',
     lordsTokenAddress: '0x6781dbb93C6BaC8b91bE1c6e3c99dFd98a7b5b88',
     uniswapV3Pool: '0xe34139463bA50bD61336E0c446Bd8C0867c6fE65',
     uniswapV3PositionManager: '0xc36442b4a4522e871399cd717abdd847ab11fe88',

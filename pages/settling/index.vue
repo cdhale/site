@@ -1,47 +1,47 @@
 <template>
   <section class="text-off-200">
     <div class="container mx-auto text-center">
-      <h1 class="text-3xl sm:text-6xl capitalize font-semibold sm:mt-20">
+      <h1 class="text-3xl font-semibold capitalize sm:text-6xl sm:mt-20">
         The great journey has begun.
       </h1>
       <p class="text-2xl sm:text-4xl">Lords, it's time to board the Galleon.</p>
     </div>
     <div class="flex flex-wrap">
-      <div class="sm:w-1/2 p-2 sm:p-10 my-10 self-center font-semibold">
-        <p class="text-xl sm:text-3xl leading-normal my-2">
+      <div class="self-center p-2 my-10 font-semibold sm:w-1/2 sm:p-10">
+        <p class="my-2 text-xl leading-normal sm:text-3xl">
           <span class="">Settling of the Realms</span>
           is an open source MMOCCG (Massively Multiplayer On-Chain Composable
           Game) of economics and Chivalry built on-top of ZK-STARKS (StarkNet).
           <br />
         </p>
-        <p class="text-xl sm:text-3xl leading-normal my-8">
+        <p class="my-8 text-xl leading-normal sm:text-3xl">
           Board the ship now for the promised zero-knowledge proofed land and be
           rewarded in $LORDS. The token of the Realmverse.
           <br />
         </p>
       </div>
-      <div class="sm:w-1/2 my-10">
-        <img class="mx-auto w-full" src="~/assets/img/hand.svg" alt="" />
+      <div class="my-10 sm:w-1/2">
+        <img class="w-full mx-auto" src="~/assets/img/hand.svg" alt="" />
       </div>
     </div>
     <div
       class="
-        p-4
-        flex flex-wrap
         container
+        flex flex-wrap
+        p-4
         mx-auto
+        text-2xl text-center text-white
         font-display
-        text-center text-2xl text-white
       "
     >
-      <div class="w-1/2 flex p-2">
+      <div class="flex w-1/2 p-2">
         <button
           :class="{ 'bg-off-200 text-off-100 border-off-100': tab === 'A' }"
           class="
-            p-4
-            border-double border-4
-            rounded
             w-full
+            p-4
+            border-4 border-double
+            rounded
             text-off-200
             border-off-200
             hover:bg-off-200 hover:text-off-100
@@ -51,13 +51,13 @@
           Galleon v1
         </button>
       </div>
-      <div class="w-1/2 flex p-2">
+      <div class="flex w-1/2 p-2">
         <button
           :class="{ 'bg-off-200 text-off-100 border-off-100': tab === 'B' }"
           class="
             w-full
             p-4
-            border-double border-4
+            border-4 border-double
             rounded
             text-off-200
             border-off-200
@@ -71,13 +71,13 @@
     </div>
     <div
       id="stake"
-      class="flex flex-wrap justify-center text-center container mx-auto"
+      class="container flex flex-wrap justify-center mx-auto text-center"
     >
       <div
         v-if="tab === 'A'"
-        class="flex flex-wrap justify-center text-center container mx-auto"
+        class="container flex flex-wrap justify-center mx-auto text-center"
       >
-        <div class="mx-auto w-full my-8">
+        <div class="w-full mx-auto my-8">
           <h1 class="w-full">The Galleon (V1 Staking)</h1>
           <p class="sm:text-2xl">
             <span class="font-semibold">Rewards:</span> 350x $LORDS per epoch (a
@@ -96,14 +96,14 @@
           </p>
         </div>
 
-        <div v class="p-2 sm:w-1/2 w-full">
+        <div v class="w-full p-2 sm:w-1/2">
           <BaseBox class="h-80">
             <h1 class="text-center">Your Unstaked Realms</h1>
             <p>
               You need to be staked for an entire epoch to be entitled to your
               Lords
             </p>
-            <p class="text-6xl my-auto">{{ numberRealms || 0 }}</p>
+            <p class="my-auto text-6xl">{{ numberRealms || 0 }}</p>
             <BButton
               v-if="!account"
               class="w-full mt-auto"
@@ -121,10 +121,10 @@
             >
           </BaseBox>
         </div>
-        <div class="p-2 sm:w-1/2 w-full">
+        <div class="w-full p-2 sm:w-1/2">
           <BaseBox class="h-80">
             <h1>Your Staked Realms</h1>
-            <p class="text-6xl my-auto">
+            <p class="my-auto text-6xl">
               {{ bridgedRealms || 0 }}
             </p>
             <BButton
@@ -143,17 +143,17 @@
             >
           </BaseBox>
         </div>
-        <div class="p-2 sm:w-1/2 w-full">
+        <div class="w-full p-2 sm:w-1/2">
           <BaseBox class="h-80">
             <h1>Your Lords Available To Claim</h1>
             <p>
               You earn 350x $LORDS per Realm per full staked epoch (claimable on
               StarkNet after epoch 15)
             </p>
-            <p class="text-6xl mx-auto my-auto">
+            <p class="mx-auto my-auto text-6xl">
               <LoadingRings
                 v-if="loading.lords"
-                class="mx-auto fill-none stroke-current text-off-200 w-32"
+                class="w-32 mx-auto stroke-current fill-none text-off-200"
               />
               <span v-else>{{ claimableBalance }}</span>
             </p>
@@ -179,11 +179,11 @@
             </div>
           </BaseBox>
         </div>
-        <div class="p-2 sm:w-1/2 w-full">
+        <div class="w-full p-2 sm:w-1/2">
           <BaseBox class="h-80">
             <h1>Current Epoch</h1>
             <p>An epoch is 1 week</p>
-            <p class="text-6xl text-center my-auto">{{ epoch }}</p>
+            <p class="my-auto text-6xl text-center">{{ epoch }}</p>
             <no-ssr>
               <vac
                 v-if="timeLeft"
@@ -200,11 +200,11 @@
       </div>
       <div
         v-if="tab === 'B'"
-        class="flex flex-wrap justify-center text-center container mx-auto"
+        class="container flex flex-wrap justify-center mx-auto text-center"
       >
-        <div class="mx-auto w-full my-8">
+        <div class="w-full mx-auto my-8">
           <h1 class="w-full">The Carrack (V2 Staking)</h1>
-          <div class="py-4 text-2xl my-4 underline">
+          <div class="py-4 my-4 text-2xl underline">
             <no-ssr>
               <vac class="text-center" :end-time="1645916697 * 1000">
                 <span slot="process" slot-scope="{ timeObj }">{{
@@ -231,14 +231,14 @@
             stake in time for 11’s rewards.
           </p>
         </div>
-        <div v class="p-2 sm:w-1/2 w-full">
+        <div v class="w-full p-2 sm:w-1/2">
           <BaseBox class="h-80">
             <h1 class="text-center">Your Unstaked Realms</h1>
             <p>
               You need to be staked for an entire epoch to be entitled to your
               Lords
             </p>
-            <p class="text-6xl my-auto">{{ numberRealms || 0 }}</p>
+            <p class="my-auto text-6xl">{{ numberRealms || 0 }}</p>
             <BButton
               v-if="!account"
               class="w-full mt-auto"
@@ -251,16 +251,16 @@
               class="w-full mt-auto"
               type="settling"
               :disabled="numberRealms == 0"
-              @click="stakeRealms"
+              @click="stakeRealms('v2')"
               >Board the Ship (stake)</BButton
             >
           </BaseBox>
         </div>
-        <div class="p-2 sm:w-1/2 w-full">
+        <div class="w-full p-2 sm:w-1/2">
           <BaseBox class="h-80">
             <h1>Your Staked Realms</h1>
-            <p class="text-6xl my-auto">
-              {{ bridgedRealms || 0 }}
+            <p class="my-auto text-6xl">
+              {{ bridgedV2Realms || 0 }}
             </p>
             <BButton
               v-if="!account"
@@ -273,24 +273,24 @@
               v-else
               class="w-full mt-auto"
               type="settling"
-              @click="unstakeRealms"
+              @click="unstakeRealms('v2')"
               >Leave Ship (unstake)</BButton
             >
           </BaseBox>
         </div>
-        <div class="p-2 sm:w-1/2 w-full">
+        <div class="w-full p-2 sm:w-1/2">
           <BaseBox class="h-80">
             <h1>Your Lords Available To Claim</h1>
             <p>
               You earn 312.5x $LORDS per Realm per full staked epoch (claimable
               weekly)
             </p>
-            <p class="text-6xl mx-auto my-auto">
+            <p class="mx-auto my-auto text-6xl">
               <LoadingRings
                 v-if="loading.lords"
-                class="mx-auto fill-none stroke-current text-off-200 w-32"
+                class="w-32 mx-auto stroke-current fill-none text-off-200"
               />
-              <span v-else>{{ claimableBalance }}</span>
+              <span v-else>{{ claimableV2Balance }}</span>
             </p>
             <BButton
               v-if="!account"
@@ -303,8 +303,8 @@
               v-else
               class="w-full mt-auto"
               type="settling"
-              :disabled="claimableBalance == '0'"
-              @click="claimAllLords"
+              :disabled="claimableV2Balance == '0'"
+              @click="claimAllLords('v2')"
               >Claim Lords</BButton
             >
             <div class="w-full mt-2">
@@ -314,16 +314,16 @@
             </div>
           </BaseBox>
         </div>
-        <div class="p-2 sm:w-1/2 w-full">
+        <div class="w-full p-2 sm:w-1/2">
           <BaseBox class="h-80">
             <h1>Current Epoch</h1>
             <p>An epoch is 1 week</p>
-            <p class="text-6xl text-center my-auto">{{ epoch }}</p>
+            <p class="my-auto text-6xl text-center">{{ epoch }}</p>
             <no-ssr>
               <vac
                 v-if="timeLeft"
                 class="text-center"
-                :end-time="new Date().getTime() + timeLeft * 1000"
+                :end-time="new Date().getTime() + timeLeftV2 * 1000"
               >
                 <span slot="process" slot-scope="{ timeObj }">{{
                   `Time Left in Epoch: ${timeObj.d} days ${timeObj.h} hrs ${timeObj.m} mins ${timeObj.s} seconds`
@@ -333,20 +333,20 @@
           </BaseBox>
         </div>
       </div>
-      <div class="p-2 w-full">
+      <div class="w-full p-2">
         <BaseBox>
           <h1>Total Realms Staked</h1>
-          <span class="text-2xl sm:text-6xl flex mx-auto">
+          <span class="flex mx-auto text-2xl sm:text-6xl">
             <LoadingRings
               v-if="!totalRealmsStaked"
-              class="fill-none stroke-current text-off-200 self-center"
+              class="self-center stroke-current fill-none text-off-200"
             />
             <span v-else class="mr-8">{{ totalRealmsStaked }}</span> /
             8000</span
           >
         </BaseBox>
       </div>
-      <div class="hidden sm:block p-2 w-full">
+      <div class="hidden w-full p-2 sm:block">
         <BaseBox>
           <h1>The Kings' LP Rewards</h1>
           <p class="text-2xl">
@@ -357,10 +357,10 @@
             IMPORTANT NOTE: You will only earn rewards if your Position is
             within range.
           </p>
-          <div v-if="userRewards != '0.0'" class="font-display my-6">
+          <div v-if="userRewards != '0.0'" class="my-6 font-display">
             <h3>Claimable LORDS</h3>
             <span class="text-3xl">{{ userRewards }}</span>
-            <div class="flex mx-auto justify-center space-x-4 mt-4">
+            <div class="flex justify-center mx-auto mt-4 space-x-4">
               <BButton
                 :loading="loadingIncentive.claim"
                 type="settling"
@@ -370,8 +370,51 @@
             </div>
           </div>
           <div
+            v-for="(incentive, i) in poolIncentives"
+            :key="incentive.id"
+            class="flex flex-wrap w-full mx-auto mt-8"
+          >
+            <h2 class="text-center">
+              Program V{{ i + 1 }} - Ending
+              <span class="text-lg">{{
+                new Date(incentive.endTime * 1000 || 0).toLocaleString()
+              }}</span>
+            </h2>
+            <table class="w-full py-4 mx-auto table-auto">
+              <thead>
+                <tr class="pt-4 text-2xl text-center font-display">
+                  <th>LP Token ID</th>
+                  <th>Status</th>
+                  <th>LORDS</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <div v-for="position in userPositions" :key="position.id">
+                  <div
+                    v-if="
+                      position.incentivePositions.some(
+                        (e) => e.id === incentive.id
+                      )
+                    "
+                  >
+                    <LpTable :key="position.id" :position="position" />
+                  </div>
+                </div>
+              </tbody>
+              <!--<tbody>
+                <LpTable
+                  v-for="position in v1PositionsFilter"
+                  :key="position.id"
+                  :position="position"
+                />
+              </tbody>-->
+            </table>
+          </div>
+
+          <div
             v-if="userPositions && v1PositionsFilter.length"
-            class="mt-8 mx-auto w-full flex flex-wrap"
+            class="flex flex-wrap w-full mx-auto mt-8"
           >
             <h2 class="text-center">
               Program V1 - Ending
@@ -379,9 +422,9 @@
                 new Date(poolIncentives[0].endTime * 1000 || 0).toLocaleString()
               }}</span>
             </h2>
-            <table class="table-auto mx-auto w-full py-4">
+            <table class="w-full py-4 mx-auto table-auto">
               <thead>
-                <tr class="text-center font-display text-2xl pt-4">
+                <tr class="pt-4 text-2xl text-center font-display">
                   <th>LP Token ID</th>
                   <th>Status</th>
                   <th>LORDS</th>
@@ -407,7 +450,7 @@
 
           <div
             v-if="userPositions && userPositions.length"
-            class="mt-8 mx-auto w-full flex flex-wrap"
+            class="flex flex-wrap w-full mx-auto mt-8"
           >
             <h2 class="text-center">
               Program V2 - Ending
@@ -415,9 +458,9 @@
                 new Date(poolIncentives[1].endTime * 1000 || 0).toLocaleString()
               }}</span>
             </h2>
-            <table class="table-auto mx-auto w-full py-4">
+            <table class="w-full py-4 mx-auto table-auto">
               <thead>
-                <tr class="text-center font-display text-2xl pt-4">
+                <tr class="pt-4 text-2xl text-center font-display">
                   <th>LP Token ID</th>
                   <th>Status</th>
                   <th>LORDS</th>
@@ -444,14 +487,14 @@
         </BaseBox>
       </div>
     </div>
-    <div id="faqs" class="container mx-auto sm:w-1/2 my-20">
+    <div id="faqs" class="container mx-auto my-20 sm:w-1/2">
       <h1 class="text-center">FAQs</h1>
       <Accordion v-for="(faq, index) in faqs" :key="index">
         <template #header> {{ faq.title }} </template>
         <template #body> <p v-html="faq.body"></p> </template>
       </Accordion>
     </div>
-    <div id="roadmap" class="container mx-auto sm:w-1/2 my-20">
+    <div id="roadmap" class="container mx-auto my-20 sm:w-1/2">
       <RoadMap />
     </div>
   </section>
@@ -504,6 +547,7 @@ export default defineComponent({
       useNetwork()
     const {
       claimableBalance,
+      claimableV2Balance,
       loading,
       getClaimableLordsBalance,
       getEpoch,
@@ -535,19 +579,26 @@ export default defineComponent({
 
       await getRewards()
       await getClaimableLordsBalance()
+      await getClaimableLordsBalance({ version: 'v2' })
       await getEpoch()
+      await getEpoch({ version: 'v2' })
       await getTimeToNextEpoch()
+      await getTimeToNextEpoch({ version: 'v2' })
       await getTotalRealmsStaked()
+      await getTotalRealmsStaked({ version: 'v2' })
+
       // await isLordsAdded()
     })
-    const stakeRealms = () => {
+    const stakeRealms = (version) => {
       showComponent(JourneySettling, {
         type: 'stake',
+        version,
       })
     }
-    const unstakeRealms = () => {
+    const unstakeRealms = (version) => {
       showComponent(JourneySettling, {
         type: 'unstake',
+        version,
       })
     }
     const numberRealms = computed(() => {
@@ -556,6 +607,9 @@ export default defineComponent({
     const bridgedRealms = computed(() => {
       return userRealms.value.l1?.wallet?.bridgedRealmsHeld
     })
+    const bridgedV2Realms = computed(() => {
+      return userRealms.value.l1?.wallet?.bridgedV2RealmsHeld
+    })
     watch(
       account,
       async (val) => {
@@ -563,8 +617,10 @@ export default defineComponent({
           await getRewards()
           await fetchUserPositions()
           await getClaimableLordsBalance()
+          await getClaimableLordsBalance('v2')
           await getWalletRealms({ address: account.value, first: 1000 })
           await getTotalRealmsStaked()
+          await getTotalRealmsStaked({ version: 'v2' })
           if (networkMismatch.value) {
             checkForNetworkMismatch()
           }
@@ -648,8 +704,10 @@ export default defineComponent({
       epoch,
       userRealms,
       bridgedRealms,
+      bridgedV2Realms,
       claimableBalance,
       numberRealms,
+      claimableV2Balance,
       fetch,
       stakeRealms,
       unstakeRealms,
