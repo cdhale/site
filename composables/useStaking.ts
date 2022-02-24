@@ -34,9 +34,10 @@ export function useStaking() {
 
   const epoch = ref(0)
 
-  const getApproved = async () => {
+  const getApproved = async (version) => {
     try {
       const response = await getApproval(
+        version,
         account.value,
         activeNetwork.value.id,
         library
@@ -52,10 +53,11 @@ export function useStaking() {
       loading.stake = false
     }
   }
-  const approve = async () => {
+  const approve = async (version) => {
     try {
       loading.approve = true
       const response = await setApprovalForAllRealms(
+        version,
         account.value,
         activeNetwork.value.id,
         library
@@ -71,17 +73,23 @@ export function useStaking() {
       loading.approve = false
     }
   }
-  const stakeRealms = async (realmIds) => {
+  const stakeRealms = async (version, realmIds) => {
     try {
       error.stake = null
       loading.stake = true
 
       await setApprovalForAllRealms(
+        version,
         account.value,
         activeNetwork.value.id,
         library
       )
-      const realmsStaked = await stake(realmIds, useL1Network.value.id, library)
+      const realmsStaked = await stake(
+        version,
+        realmIds,
+        useL1Network.value.id,
+        library
+      )
       const convertedRealms = realmsStaked.map((x) => {
         return x.toString()
       })
@@ -108,14 +116,16 @@ export function useStaking() {
     } finally {
       loading.stake = false
       close()
-      await resetState()
+      await resetState(version)
     }
   }
-  const getTotalRealmsStaked = async () => {
+  const getTotalRealmsStaked = async (version) => {
     try {
       const realmsAddress = erc721tokens[activeNetwork.value.id].realms.address
       const journeyContractAddress =
-        contractAddresses[useL1Network.value.id].journeyContractAddress
+        version === 'v2'
+          ? contractAddresses[activeNetwork.value.id].carrackContractAddress
+          : contractAddresses[activeNetwork.value.id].journeyContractAddress
       const provider = new ethers.providers.JsonRpcProvider(
         activeNetwork.value.url
       )
@@ -124,7 +134,7 @@ export function useStaking() {
         lootRealmsABI,
         provider
       )
-      totalRealmsStaked.value = await realmsContract.balanceOf(
+      totalRealmsStaked.value[version] = await realmsContract.balanceOf(
         journeyContractAddress
       )
     } catch (e) {
@@ -154,11 +164,12 @@ export function useStaking() {
       loading.lords = false
     }
   }
-  const getClaimableLordsBalance = async () => {
+  const getClaimableLordsBalance = async (version) => {
     try {
       error.stake = null
       loading.lords = true
-      claimableBalance.value = await getClaimable(
+      claimableBalance.value[version] = await getClaimable(
+        version,
         useL1Network.value,
         account.value
       )
@@ -169,12 +180,12 @@ export function useStaking() {
       loading.lords = false
     }
   }
-  const getEpoch = async () => {
+  const getEpoch = async (version) => {
     try {
       error.stake = null
       loading.stake = true
-      const response = await getJourneyEpoch(useL1Network.value)
-      epoch.value = response.toNumber()
+      const response = await getJourneyEpoch(version, useL1Network.value)
+      epoch.value[version] = response.toNumber()
     } catch (e) {
       // await showError('Staking Error', e.message, null)
       error.stake = e.message
@@ -183,11 +194,11 @@ export function useStaking() {
     }
   }
   const timeLeft = ref()
-  const getTimeToNextEpoch = async () => {
+  const getTimeToNextEpoch = async (version) => {
     try {
       error.stake = null
       loading.stake = true
-      const response = await getTimeUntilEpoch(useL1Network.value)
+      const response = await getTimeUntilEpoch(version, useL1Network.value)
       timeLeft.value = response.toNumber()
     } catch (e) {
       // await showError('Staking Error', e.message, null)
@@ -197,26 +208,26 @@ export function useStaking() {
     }
   }
 
-  const claimAllLords = async () => {
+  const claimAllLords = async (version) => {
     try {
       error.stake = null
       loading.lords = true
-      await claimAll(useL1Network.value.id, library)
+      await claimAll(version, useL1Network.value.id, library)
       showSuccess('Transaction Complete', 'All Lords claimed')
     } catch (e) {
       await showError('Claiming Error')
       error.stake = e.message
     } finally {
-      await resetState()
+      await resetState(version)
       loading.lords = false
     }
   }
 
-  const unstake = async (realmIds) => {
+  const unstake = async (version, realmIds) => {
     try {
       error.stake = null
       loading.stake = true
-      await unStakeAndExit(activeNetwork.value.id, realmIds, library)
+      await unStakeAndExit(version, activeNetwork.value.id, realmIds, library)
       return setTimeout(() => {
         getWalletRealms()
       }, 4500)
@@ -226,14 +237,14 @@ export function useStaking() {
     } finally {
       loading.stake = false
       close()
-      await resetState()
+      await resetState(version)
     }
   }
-  const resetState = async () => {
+  const resetState = async (version) => {
     try {
-      await getClaimableLordsBalance()
+      await getClaimableLordsBalance(version)
       await getLordsBalance()
-      await getTotalRealmsStaked()
+      await getTotalRealmsStaked(version)
     } catch (e) {
       console.log(e)
     } finally {
@@ -286,10 +297,14 @@ export function useStaking() {
   }
 }
 
-async function getTimeUntilEpoch(network) {
+async function getTimeUntilEpoch(version, network) {
   const provider = new ethers.providers.JsonRpcProvider(network.url)
+
   const journeyContractAddress =
-    contractAddresses[network.id].journeyContractAddress
+    version === 'v2'
+      ? contractAddresses[network].carrackContractAddress
+      : contractAddresses[network].journeyContractAddress
+
   const journeyContract = new ethers.Contract(
     journeyContractAddress,
     JourneyABI.abi,
@@ -299,11 +314,13 @@ async function getTimeUntilEpoch(network) {
   return t
 }
 
-async function stake(realmIds, network, library) {
+async function stake(version, realmIds, network, library) {
   const signer = library.value.getSigner()
 
   const journeyContractAddress =
-    contractAddresses[network].journeyContractAddress
+    version === 'v2'
+      ? contractAddresses[network].carrackContractAddress
+      : contractAddresses[network].journeyContractAddress
 
   const journeyContract = new ethers.Contract(
     journeyContractAddress,
@@ -317,10 +334,12 @@ async function stake(realmIds, network, library) {
   return event.args[0]
 }
 // TODO: make generic
-async function getApproval(owner, network, library) {
+async function getApproval(version, owner, network, library) {
   const realmsAddress = erc721tokens[activeNetwork.value.id].realms.address
   const journeyContractAddress =
-    contractAddresses[network].journeyContractAddress
+    version === 'v2'
+      ? contractAddresses[network].carrackContractAddress
+      : contractAddresses[network].journeyContractAddress
   const signer = library.value.getSigner()
   const realmsContract = new ethers.Contract(
     realmsAddress,
@@ -338,7 +357,7 @@ async function getApproval(owner, network, library) {
   }
 }
 
-async function setApprovalForAllRealms(owner, network, library) {
+async function setApprovalForAllRealms(version, owner, network, library) {
   const realmsAddress = erc721tokens[activeNetwork.value.id].realms.address
 
   const signer = library.value.getSigner()
@@ -348,7 +367,10 @@ async function setApprovalForAllRealms(owner, network, library) {
     signer
   )
   const journeyContractAddress =
-    contractAddresses[network].journeyContractAddress
+    version === 'v2'
+      ? contractAddresses[network].carrackContractAddress
+      : contractAddresses[network].journeyContractAddress
+
   const journeyApproved = await realmsContract.isApprovedForAll(
     owner,
     journeyContractAddress
@@ -378,10 +400,13 @@ async function getBalance(network, account) {
   return ethers.utils.formatEther(tokenBalances)
 }
 
-async function getJourneyEpoch(network) {
+async function getJourneyEpoch(version, network) {
   const provider = new ethers.providers.JsonRpcProvider(network.url)
   const journeyContractAddress =
-    contractAddresses[network.id].journeyContractAddress
+    version === 'v2'
+      ? contractAddresses[network].carrackContractAddress
+      : contractAddresses[network].journeyContractAddress
+
   const journeyContract = new ethers.Contract(
     journeyContractAddress,
     JourneyABI.abi,
@@ -391,10 +416,12 @@ async function getJourneyEpoch(network) {
   return epoch
 }
 
-async function getClaimable(network, account) {
+async function getClaimable(version, network, account) {
   const provider = new ethers.providers.JsonRpcProvider(network.url)
   const journeyContractAddress =
-    contractAddresses[network.id].journeyContractAddress
+    version === 'v2'
+      ? contractAddresses[network].carrackContractAddress
+      : contractAddresses[network].journeyContractAddress
   const journeyContract = new ethers.Contract(
     journeyContractAddress,
     JourneyABI.abi,
@@ -405,12 +432,13 @@ async function getClaimable(network, account) {
   return ethers.utils.formatEther(tokenBalances)
 }
 
-async function claimAll(network, library) {
+async function claimAll(version, network, library) {
   const signer = library.value.getSigner()
 
   const journeyContractAddress =
-    contractAddresses[network].journeyContractAddress
-
+    version === 'v2'
+      ? contractAddresses[network].carrackContractAddress
+      : contractAddresses[network].journeyContractAddress
   const journeyContract = new ethers.Contract(
     journeyContractAddress,
     JourneyABI.abi,
@@ -423,11 +451,13 @@ async function claimAll(network, library) {
 
   return withdraw
 }
-async function unStakeAndExit(network, realmIds, library) {
+async function unStakeAndExit(version, network, realmIds, library) {
   const signer = library.value.getSigner()
 
   const journeyContractAddress =
-    contractAddresses[network].journeyContractAddress
+    version === 'v2'
+      ? contractAddresses[network].carrackContractAddress
+      : contractAddresses[network].journeyContractAddress
   const journeyContract = new ethers.Contract(
     journeyContractAddress,
     JourneyABI.abi,
