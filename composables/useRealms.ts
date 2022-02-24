@@ -24,6 +24,7 @@ export type layerRealms = {
     wallet: Wallet
     realms: [Realm]
     bridgedRealms: [Realm]
+    bridgedV2Realms: [Realm]
   }
 }
 const userRealms = reactive<layerRealms>({
@@ -31,6 +32,7 @@ const userRealms = reactive<layerRealms>({
     wallet: null,
     realms: null,
     bridgedRealms: null,
+    bridgedV2Realms: null,
   },
 })
 const realms = reactive({
@@ -71,12 +73,12 @@ export function useRealms() {
   }
 
   const fetchRealms = async (params) => {
-    const { wallet, realms, bridgedRealms } = await gqlRequest(
+    const { wallet, realms, bridgedRealms, bridgedV2Realms } = await gqlRequest(
       getRealmsQuery,
       defaultVariables(params),
       'realms'
     )
-    return { wallet, realms, bridgedRealms }
+    return { wallet, realms, bridgedRealms, bridgedV2Realms }
   }
 
   const getRealms = async (params?: null) => {
