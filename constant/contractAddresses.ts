@@ -1,7 +1,7 @@
 export default {
   mainnet: {
     journeyContractAddress: '0x17963290db8c30552d0cfa2a6453ff20a28c31a2',
-    carrackContractAddress: '',
+    carrackContractAddress: '0xcdfe3d7ebfa793675426f150e928cd395469ca53',
     lordsTokenAddress: '0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0',
     uniswapV3Pool: '0xe34139463bA50bD61336E0c446Bd8C0867c6fE65',
     uniswapV3PositionManager: '0xc36442b4a4522e871399cd717abdd847ab11fe88',
