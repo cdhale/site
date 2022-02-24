@@ -77,13 +77,32 @@
         v-if="tab === 'A'"
         class="flex flex-wrap justify-center text-center container mx-auto"
       >
-        <h1 class="w-full py-4">The Galleon (V1 Staking)</h1>
+        <div class="mx-auto w-full my-8">
+          <h1 class="w-full">The Galleon (V1 Staking)</h1>
+          <p class="sm:text-2xl">
+            <span class="font-semibold">Rewards:</span> 350x $LORDS per epoch (a
+            bonus of 12%). <br />
+            <span class="font-semibold">Claiming $LORDS:</span> You must claim
+            directly on StarkNet once migrated (not weekly). <br /><span
+              class="font-semibold"
+              >Rewards Eligibility:</span
+            >
+            You will be rewarded for every full epoch staked. <br /><span
+              class="font-semibold"
+              >Entry:</span
+            >
+            If already staked in the Galleon, you will automatically continue in
+            this contract.
+          </p>
+        </div>
+
         <div v class="p-2 sm:w-1/2 w-full">
           <BaseBox class="h-80">
             <h1 class="text-center">Your Unstaked Realms</h1>
             <p>
-              You need to be staked for an entire epoch to be entitled to your
-              Lords
+              After epoch 11-15, you will earn 350 $LORDS per week which will be
+              airdropped directly onto StarkNet. Past epoch 15 you will earn 25
+              $LORDS per day inline with the game emmissions.
             </p>
             <p class="text-6xl my-auto">{{ numberRealms || 0 }}</p>
             <BButton
