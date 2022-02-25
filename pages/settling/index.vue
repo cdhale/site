@@ -183,7 +183,7 @@
           <BaseBox class="h-80">
             <h1>Current Epoch</h1>
             <p>An epoch is 1 week</p>
-            <p class="my-auto text-6xl text-center">{{ epoch }}</p>
+            <p class="my-auto text-6xl text-center">{{ epoch.v1 }}</p>
             <no-ssr>
               <vac
                 v-if="timeLeft"
@@ -318,7 +318,7 @@
           <BaseBox class="h-80">
             <h1>Current Epoch</h1>
             <p>An epoch is 1 week</p>
-            <p class="my-auto text-6xl text-center">{{ epoch }}</p>
+            <p class="my-auto text-6xl text-center">{{ epoch.v2 }}</p>
             <no-ssr>
               <vac
                 v-if="timeLeft"
@@ -538,11 +538,10 @@ export default defineComponent({
       await getClaimableLordsBalance()
       await getClaimableLordsBalance({ version: 'v2' })
       await getEpoch()
-      await getEpoch({ version: 'v2' })
+      await getEpoch('v2')
       await getTimeToNextEpoch()
       await getTimeToNextEpoch({ version: 'v2' })
       await getTotalRealmsStaked()
-      await getTotalRealmsStaked({ version: 'v2' })
 
       // await isLordsAdded()
     })
@@ -577,7 +576,6 @@ export default defineComponent({
           await getClaimableLordsBalance('v2')
           await getWalletRealms({ address: account.value, first: 1000 })
           await getTotalRealmsStaked()
-          await getTotalRealmsStaked({ version: 'v2' })
           if (networkMismatch.value) {
             checkForNetworkMismatch()
           }

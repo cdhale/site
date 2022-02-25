@@ -34,8 +34,10 @@ export function useStaking() {
   })
   const result = reactive({ stake: null })
 
-  const epoch = ref(0)
-
+  const epoch = reactive({
+    v1: 0,
+    v2: null,
+  })
   const getApproved = async (version) => {
     try {
       const response = await getApproval(
@@ -193,10 +195,15 @@ export function useStaking() {
   }
   const getEpoch = async (version) => {
     try {
+      console.log('getting epoch')
       error.stake = null
       loading.stake = true
       const response = await getJourneyEpoch(version, useL1Network.value)
-      epoch.value[version] = response.toNumber()
+      if (version === 'v2') {
+        epoch.v2 = response.toNumber()
+      } else {
+        epoch.v1 = response.toNumber()
+      }
     } catch (e) {
       // await showError('Staking Error', e.message, null)
       error.stake = e.message
@@ -413,11 +420,12 @@ async function getBalance(network, account) {
 }
 
 async function getJourneyEpoch(version, network) {
+  console.log('getting journey epoch' + version)
   const provider = new ethers.providers.JsonRpcProvider(network.url)
   const journeyContractAddress =
     version === 'v2'
-      ? contractAddresses[network].carrackContractAddress
-      : contractAddresses[network].journeyContractAddress
+      ? contractAddresses[network.id].carrackContractAddress
+      : contractAddresses[network.id].journeyContractAddress
 
   const journeyContract = new ethers.Contract(
     journeyContractAddress,
@@ -425,6 +433,7 @@ async function getJourneyEpoch(version, network) {
     provider
   )
   const epoch = await journeyContract.getEpoch()
+  console.log('epoch is ' + epoch)
   return epoch
 }
 
