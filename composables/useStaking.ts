@@ -430,7 +430,6 @@ async function getJourneyEpoch(version, network) {
 
 async function getClaimable(version, network, account) {
   const provider = new ethers.providers.JsonRpcProvider(network.url)
-  console.log(network)
   const journeyContractAddress =
     version === 'v2'
       ? contractAddresses[network.id].carrackContractAddress

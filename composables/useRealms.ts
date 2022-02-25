@@ -40,6 +40,7 @@ const realms = reactive({
     wallet: null,
     realms: null,
     bridgedRealms: null,
+    bridgedV2Realms: null,
   },
 })
 
@@ -55,6 +56,7 @@ export function useRealms() {
       wallet: null,
       realms: null,
       bridgedRealms: null,
+      bridgedV2Realms: null,
     },
   })
   const getRealm = async (params) => {

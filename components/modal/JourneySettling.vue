@@ -172,7 +172,7 @@ export default defineComponent({
       }
     }
     onMounted(async () => {
-      await getApproved()
+      await getApproved(props.version)
     })
     return {
       step,
