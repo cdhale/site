@@ -206,7 +206,7 @@
           <h1 class="w-full">The Carrack (V2 Staking)</h1>
           <div class="py-4 my-4 text-2xl underline">
             <no-ssr>
-              <vac class="text-center" :end-time="1645916697 * 1000">
+              <vac class="text-center" :end-time="1645923897 * 1000">
                 <span slot="process" slot-scope="{ timeObj }">{{
                   `Grace Period: ${timeObj.d} days ${timeObj.h} hrs ${timeObj.m} mins ${timeObj.s} seconds`
                 }}</span>
