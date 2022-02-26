@@ -144,9 +144,10 @@ export function useIncentive() {
         { address: account.value },
         'staker'
       )
+      console.log(positions)
       userPositions.value = [
-        ...positions.positions,
-        ...positions.depositedPositions,
+        ...positions?.positions,
+        ...positions?.depositedPositions,
       ]
     } catch (e) {
       console.log(e)
