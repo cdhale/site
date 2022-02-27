@@ -126,10 +126,10 @@ export function useStaking() {
   const getTotalRealmsStaked = async (version) => {
     try {
       const realmsAddress = erc721tokens[activeNetwork.value.id].realms.address
+      const carrackContractAddress =
+        contractAddresses[activeNetwork.value.id].carrackContractAddress
       const journeyContractAddress =
-        version === 'v2'
-          ? contractAddresses[activeNetwork.value.id].carrackContractAddress
-          : contractAddresses[activeNetwork.value.id].journeyContractAddress
+        contractAddresses[activeNetwork.value.id].journeyContractAddress
       const provider = new ethers.providers.JsonRpcProvider(
         activeNetwork.value.url
       )
@@ -138,9 +138,12 @@ export function useStaking() {
         lootRealmsABI,
         provider
       )
-      totalRealmsStaked.value[version] = await realmsContract.balanceOf(
-        journeyContractAddress
-      )
+
+      const carrack = await realmsContract.balanceOf(carrackContractAddress)
+
+      const galleon = await realmsContract.balanceOf(journeyContractAddress)
+
+      totalRealmsStaked.value = parseInt(carrack) + parseInt(galleon)
     } catch (e) {
       // await showError('Staking Error', e.message, null)
       error.stake = e.message
@@ -170,7 +173,6 @@ export function useStaking() {
   }
   const getClaimableLordsBalance = async (version) => {
     try {
-      console.log('getting blaance ' + version)
       error.stake = null
       loading.lords = true
       if (version === 'v2') {

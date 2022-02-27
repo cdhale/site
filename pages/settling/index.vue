@@ -318,7 +318,7 @@
           <BaseBox class="h-80">
             <h1>Current Epoch</h1>
             <p>An epoch is 1 week</p>
-            <p class="my-auto text-6xl text-center">{{ epoch.v2 }}</p>
+            <p class="my-auto text-6xl text-center">{{ epoch.v2 + 10 }}</p>
             <no-ssr>
               <vac
                 v-if="timeLeft"
@@ -341,7 +341,7 @@
               v-if="!totalRealmsStaked"
               class="self-center stroke-current fill-none text-off-200"
             />
-            <span v-else class="mr-8">{{ totalRealmsStaked }}</span> /
+            <span v-else class="mr-8">{{ totalRealmsStaked }} </span> /
             8000</span
           >
         </BaseBox>
