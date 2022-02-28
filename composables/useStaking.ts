@@ -197,7 +197,6 @@ export function useStaking() {
   }
   const getEpoch = async (version) => {
     try {
-      console.log('getting epoch')
       error.stake = null
       loading.stake = true
       const response = await getJourneyEpoch(version, useL1Network.value)
@@ -219,6 +218,7 @@ export function useStaking() {
       error.stake = null
       loading.stake = true
       const response = await getTimeUntilEpoch(version, useL1Network.value)
+      console.log(response)
       timeLeft.value = response.toNumber()
     } catch (e) {
       // await showError('Staking Error', e.message, null)
@@ -323,8 +323,8 @@ async function getTimeUntilEpoch(version, network) {
 
   const journeyContractAddress =
     version === 'v2'
-      ? contractAddresses[network].carrackContractAddress
-      : contractAddresses[network].journeyContractAddress
+      ? contractAddresses[network.id].carrackContractAddress
+      : contractAddresses[network.id].journeyContractAddress
 
   const journeyContract = new ethers.Contract(
     journeyContractAddress,
