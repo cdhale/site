@@ -89,6 +89,7 @@
               >Rewards Eligibility:</span
             >
             You will be rewarded for every full epoch staked. <br />
+          </p>
         </div>
 
         <div v class="w-full p-2 sm:w-1/2">
@@ -218,7 +219,9 @@
               >Rewards Eligibility:</span
             >
             You will be rewarded for every full epoch staked.<br />
+          </p>
         </div>
+
         <div v class="w-full p-2 sm:w-1/2">
           <BaseBox class="h-80">
             <h1 class="text-center">Your Unstaked Realms</h1>

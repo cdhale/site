@@ -16,7 +16,7 @@
       sideBarOpen ? 'translate-x-0' : '-translate-x-full sm:translate-x-0'
     "
   >
-    <div class="sm:sticky top-10 flex flex-col z-30 h-screen">
+    <div class="sm:sticky top-10 flex flex-col z-30 h-screen overflow-scroll">
       <div class="sm:hidden w-full">
         <button class="ml-auto" @click="toggleSideBar">
           <Close class="w-6 h-6" />
@@ -63,7 +63,25 @@
           @click.native="toggleSideBar"
           >{{ link.title }}</BButton
         >
-
+        <a
+          type="navLink"
+          class="
+            button
+            ease-in-out
+            font-display
+            disabled:opacity-25
+            w-full
+            text-xl
+            rounded-xl
+            hover:bg-gray-800
+            p-2
+            px-4
+            font-body
+          "
+          href="https://atlas.bibliothecadao.xyz"
+          @click.native="toggleSideBar"
+          >Atlas</a
+        >
         <h4 class="mt-8 uppercase text-off-200 tracking-wide pl-4">
           Knowledge base
         </h4>

@@ -92,6 +92,10 @@ export default defineComponent({
         title: 'Roadmap',
         url: '#roadmap',
       },
+      {
+        title: 'Atlas',
+        url: 'https://atlas.bibliothecadao.xyz',
+      },
     ]
 
     return {
