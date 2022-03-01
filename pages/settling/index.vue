@@ -82,18 +82,13 @@
           <p class="sm:text-2xl">
             <span class="font-semibold">Rewards:</span> 350x $LORDS per epoch (a
             bonus of 12%). <br />
+            <span class="font-semibold">Length: </span>5 epochs (11-15). <br />
             <span class="font-semibold">Claiming $LORDS:</span> You must claim
             directly on StarkNet once migrated (not weekly). <br /><span
               class="font-semibold"
               >Rewards Eligibility:</span
             >
-            You will be rewarded for every full epoch staked. <br /><span
-              class="font-semibold"
-              >Entry:</span
-            >
-            If already staked in the Galleon, you will automatically continue in
-            this contract.
-          </p>
+            You will be rewarded for every full epoch staked. <br />
         </div>
 
         <div v class="w-full p-2 sm:w-1/2">
@@ -222,14 +217,7 @@
               class="font-semibold"
               >Rewards Eligibility:</span
             >
-            You will be rewarded for every full epoch staked.<br /><span
-              class="font-semibold"
-              >Entry:</span
-            >
-            You must unstake from the OG contract (Galleon) and re-stake in the
-            Carrack. There is a 48 hours grace period between epoch 10/11 to
-            stake in time for 11’s rewards.
-          </p>
+            You will be rewarded for every full epoch staked.<br />
         </div>
         <div v class="w-full p-2 sm:w-1/2">
           <BaseBox class="h-80">
