@@ -86,7 +86,7 @@ export const allNetworks: Network[] = [
     tokenBridge: rinkebyBridge,
     partnerChainID: null,
     isArbitrum: false,
-    explorerUrl: 'http://127.0.0.1:8545/',
-    url: 'http://127.0.0.1:8545/',
+    explorerUrl: 'https://etherscan.io',
+    url: `https://mainnet.infura.io/v3/${process.env.INFURA_ID}`,
   },
 ]

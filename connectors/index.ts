@@ -22,7 +22,7 @@ const RPC_URLS: { [chainId: number]: string } = {
   4: `https://rinkeby.infura.io/v3/${process.env.INFURA_ID}`,
   421611: 'https://rinkeby.arbitrum.io/rpc',
   42161: 'https://arb1.arbitrum.io/rpc',
-  1337: 'http://127.0.0.1:8545/',
+  1337: `https://mainnet.infura.io/v3/${process.env.INFURA_ID}`,
 }
 
 export const injected = new InjectedConnector({

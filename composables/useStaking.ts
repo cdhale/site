@@ -218,8 +218,7 @@ export function useStaking() {
     try {
       error.stake = null
       loading.stake = true
-      const response = await getTimeUntilEpoch(version, useL1Network.value)
-      console.log(response)
+      const response = await getTimeUntilEpoch(version, useL1Network.value.id)
       timeLeft.value = response.toNumber()
     } catch (e) {
       // await showError('Staking Error', e.message, null)
@@ -321,18 +320,21 @@ export function useStaking() {
 
 async function getTimeUntilEpoch(version, network) {
   const provider = new ethers.providers.JsonRpcProvider(network.url)
+  console.log(provider)
 
   const journeyContractAddress =
     version === 'v2'
-      ? contractAddresses[network.id].carrackContractAddress
-      : contractAddresses[network.id].journeyContractAddress
+      ? contractAddresses[network].carrackContractAddress
+      : contractAddresses[network].journeyContractAddress
 
   const journeyContract = new ethers.Contract(
     journeyContractAddress,
     JourneyABI.abi,
     provider
   )
+
   const t = await journeyContract.getTimeUntilEpoch()
+  console.log(t)
   return t
 }
 
@@ -423,7 +425,6 @@ async function getBalance(network, account) {
 }
 
 async function getJourneyEpoch(version, network) {
-  console.log('getting journey epoch' + version)
   const provider = new ethers.providers.JsonRpcProvider(network.url)
   const journeyContractAddress =
     version === 'v2'
@@ -436,7 +437,6 @@ async function getJourneyEpoch(version, network) {
     provider
   )
   const epoch = await journeyContract.getEpoch()
-  console.log('epoch is ' + epoch)
   return epoch
 }
 
@@ -457,11 +457,9 @@ async function getClaimable(version, network, account) {
   )
   let tokenBalances
   if (version === 'v2') {
-    tokenBalances = await journeyContract.lordsAvailable(account)[0]
-    console.log(tokenBalances)
+    tokenBalances = await journeyContract.lordsAvailable(account)
   } else {
     tokenBalances = await journeyContract.lordsAvailable(account)
-    console.log(tokenBalances)
   }
 
   return ethers.utils.formatEther(tokenBalances)
