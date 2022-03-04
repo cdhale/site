@@ -6,6 +6,7 @@ import { activeNetwork, useNetwork } from './useNetwork'
 import { useRealms } from './useRealms'
 import { useNotification } from '~/composables/useNotification'
 import JourneyABI from '~/abi/Journey.json'
+import Journey2ABI from '~/abi/Journey2.json'
 import lootRealmsABI from '~/abi/lootRealms.json'
 import balanceABI from '~/abi/balance.json'
 import { useModal } from '~/composables/useModal'
@@ -178,13 +179,13 @@ export function useStaking() {
       if (version === 'v2') {
         claimableV2Balance.value = await getClaimable(
           version,
-          useL1Network.value,
+          useL1Network.value.id,
           account.value
         )
       } else {
         claimableBalance.value = await getClaimable(
           version,
-          useL1Network.value,
+          useL1Network.value.id,
           account.value
         )
       }
@@ -441,17 +442,28 @@ async function getJourneyEpoch(version, network) {
 
 async function getClaimable(version, network, account) {
   const provider = new ethers.providers.JsonRpcProvider(network.url)
+
+  const abi = version === 'v2' ? Journey2ABI.abi : JourneyABI.abi
+
   const journeyContractAddress =
     version === 'v2'
-      ? contractAddresses[network.id].carrackContractAddress
-      : contractAddresses[network.id].journeyContractAddress
+      ? contractAddresses[network].carrackContractAddress
+      : contractAddresses[network].journeyContractAddress
+
   const journeyContract = new ethers.Contract(
     journeyContractAddress,
-    JourneyABI.abi,
+    abi,
     provider
   )
+  let tokenBalances
+  if (version === 'v2') {
+    tokenBalances = await journeyContract.lordsAvailable(account)[0]
+    console.log(tokenBalances)
+  } else {
+    tokenBalances = await journeyContract.lordsAvailable(account)
+    console.log(tokenBalances)
+  }
 
-  const tokenBalances = await journeyContract.lordsAvailable(account)
   return ethers.utils.formatEther(tokenBalances)
 }
 

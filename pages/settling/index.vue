@@ -179,12 +179,12 @@
           <BaseBox class="h-80">
             <h1>Current Epoch</h1>
             <p>An epoch is 1 week</p>
-            <p class="my-auto text-6xl text-center">{{ epoch.v1 }}</p>
+            <p class="my-auto text-6xl text-center">{{ epoch.v2 + 10 }}</p>
             <no-ssr>
               <vac
                 v-if="timeLeft"
                 class="text-center"
-                :end-time="new Date().getTime() + timeLeft * 1000"
+                :end-time="new Date().getTime() + timeLeftV2 * 1000"
               >
                 <span slot="process" slot-scope="{ timeObj }">{{
                   `Time Left in Epoch: ${timeObj.d} days ${timeObj.h} hrs ${timeObj.m} mins ${timeObj.s} seconds`
