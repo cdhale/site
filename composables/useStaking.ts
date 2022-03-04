@@ -179,13 +179,13 @@ export function useStaking() {
       if (version === 'v2') {
         claimableV2Balance.value = await getClaimable(
           version,
-          useL1Network.value.id,
+          useL1Network.value,
           account.value
         )
       } else {
         claimableBalance.value = await getClaimable(
           version,
-          useL1Network.value.id,
+          useL1Network.value,
           account.value
         )
       }
@@ -218,7 +218,7 @@ export function useStaking() {
     try {
       error.stake = null
       loading.stake = true
-      const response = await getTimeUntilEpoch(version, useL1Network.value.id)
+      const response = await getTimeUntilEpoch(version, useL1Network.value)
       timeLeft.value = response.toNumber()
     } catch (e) {
       // await showError('Staking Error', e.message, null)
@@ -320,19 +320,17 @@ export function useStaking() {
 
 async function getTimeUntilEpoch(version, network) {
   const provider = new ethers.providers.JsonRpcProvider(network.url)
-  console.log(provider)
 
   const journeyContractAddress =
-    version === 'v2'
-      ? contractAddresses[network].carrackContractAddress
-      : contractAddresses[network].journeyContractAddress
+    contractAddresses[network.id].carrackContractAddress
 
   const journeyContract = new ethers.Contract(
     journeyContractAddress,
     JourneyABI.abi,
     provider
   )
-
+  console.log(provider)
+  console.log(journeyContract)
   const t = await journeyContract.getTimeUntilEpoch()
   console.log(t)
   return t
@@ -441,14 +439,15 @@ async function getJourneyEpoch(version, network) {
 }
 
 async function getClaimable(version, network, account) {
+  console.log(network)
   const provider = new ethers.providers.JsonRpcProvider(network.url)
 
   const abi = version === 'v2' ? Journey2ABI.abi : JourneyABI.abi
 
   const journeyContractAddress =
     version === 'v2'
-      ? contractAddresses[network].carrackContractAddress
-      : contractAddresses[network].journeyContractAddress
+      ? contractAddresses[network.id].carrackContractAddress
+      : contractAddresses[network.id].journeyContractAddress
 
   const journeyContract = new ethers.Contract(
     journeyContractAddress,
@@ -457,7 +456,8 @@ async function getClaimable(version, network, account) {
   )
   let tokenBalances
   if (version === 'v2') {
-    tokenBalances = await journeyContract.lordsAvailable(account)
+    const t = await journeyContract.lordsAvailable(account)
+    tokenBalances = t[0]
   } else {
     tokenBalances = await journeyContract.lordsAvailable(account)
   }

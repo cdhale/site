@@ -8,6 +8,7 @@
       mb-2
       flex-col flex
       border-double
+      h-full
     "
   >
     <slot />

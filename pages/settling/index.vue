@@ -146,7 +146,7 @@
               You earn 350x $LORDS per Realm per full staked epoch (claimable on
               StarkNet after epoch 15)
             </p>
-            <p class="mx-auto my-auto text-6xl">
+            <p class="mx-auto my-auto text-6xl py-8">
               <LoadingRings
                 v-if="loading.lords"
                 class="w-32 mx-auto stroke-current fill-none text-off-200"
@@ -179,18 +179,24 @@
           <BaseBox class="h-80">
             <h1>Current Epoch</h1>
             <p>An epoch is 1 week</p>
-            <p class="my-auto text-6xl text-center">{{ epoch.v2 + 10 }}</p>
-            <no-ssr>
-              <vac
-                v-if="timeLeft"
-                class="text-center"
-                :end-time="new Date().getTime() + timeLeftV2 * 1000"
-              >
-                <span slot="process" slot-scope="{ timeObj }">{{
-                  `Time Left in Epoch: ${timeObj.d} days ${timeObj.h} hrs ${timeObj.m} mins ${timeObj.s} seconds`
-                }}</span>
-              </vac>
-            </no-ssr>
+            <p class="my-auto text-6xl text-center">
+              <span v-if="epoch.v2">{{ epoch.v2 + 10 }}</span>
+            </p>
+            <p>
+              Time Left in Epoch:
+              <span v-if="!timeLeft" class="animate-pulse">loading time</span>
+              <no-ssr>
+                <vac
+                  v-if="timeLeft"
+                  class="text-center"
+                  :end-time="new Date().getTime() + timeLeft * 1000"
+                >
+                  <span slot="process" slot-scope="{ timeObj }">{{
+                    `${timeObj.d} days ${timeObj.h} hrs ${timeObj.m} mins ${timeObj.s} seconds`
+                  }}</span>
+                </vac>
+              </no-ssr>
+            </p>
           </BaseBox>
         </div>
       </div>
@@ -276,13 +282,13 @@
               You earn 312.5x $LORDS per Realm per full staked epoch (claimable
               weekly)
             </p>
-            <!-- <p class="mx-auto my-auto text-6xl">
+            <p class="mx-auto my-auto text-6xl py-8">
               <LoadingRings
                 v-if="loading.lords"
                 class="w-32 mx-auto stroke-current fill-none text-off-200"
               />
               <span v-else>{{ claimableV2Balance }}</span>
-            </p> -->
+            </p>
             <BButton
               v-if="!account"
               class="w-full mt-auto"
@@ -298,7 +304,7 @@
               @click="claimAllLords('v2')"
               >Claim Lords</BButton
             >
-            <div class="w-full mt-2">
+            <div class="w-full my-2">
               <span class="cursor-pointer hover:underline" @click="isLordsAdded"
                 >Add LORDS to MetaMask</span
               >
@@ -310,17 +316,21 @@
             <h1>Current Epoch</h1>
             <p>An epoch is 1 week</p>
             <p class="my-auto text-6xl text-center">{{ epoch.v2 + 10 }}</p>
-            <no-ssr>
-              <vac
-                v-if="timeLeft"
-                class="text-center"
-                :end-time="new Date().getTime() + timeLeftV2 * 1000"
-              >
-                <span slot="process" slot-scope="{ timeObj }">{{
-                  `Time Left in Epoch: ${timeObj.d} days ${timeObj.h} hrs ${timeObj.m} mins ${timeObj.s} seconds`
-                }}</span>
-              </vac>
-            </no-ssr>
+            <p>
+              Time Left in Epoch:
+              <span v-if="!timeLeft" class="animate-pulse">loading time</span>
+              <no-ssr>
+                <vac
+                  v-if="timeLeft"
+                  class="text-center"
+                  :end-time="new Date().getTime() + timeLeft * 1000"
+                >
+                  <span slot="process" slot-scope="{ timeObj }">{{
+                    `${timeObj.d} days ${timeObj.h} hrs ${timeObj.m} mins ${timeObj.s} seconds`
+                  }}</span>
+                </vac>
+              </no-ssr>
+            </p>
           </BaseBox>
         </div>
       </div>
