@@ -83,8 +83,7 @@
             <span class="font-semibold">Rewards:</span> 350x $LORDS per epoch (a
             bonus of 12%). <br />
             <span class="font-semibold">Length: </span>5 epochs (11-15). <br />
-            <span class="font-semibold">Claiming $LORDS:</span> You must claim
-            directly on StarkNet once migrated (not weekly). <br /><span
+            <span class="font-semibold">Claiming $LORDS:</span> Epochs 1-10: claimable below. Epochs 11-15: rewards are not tallied below, and you must claim directly on StarkNet once migrated (not weekly). <br /><span
               class="font-semibold"
               >Rewards Eligibility:</span
             >
@@ -141,10 +140,9 @@
         </div>
         <div class="w-full p-2 sm:w-1/2">
           <BaseBox class="h-80">
-            <h1>Your Lords Available To Claim</h1>
+            <h1>Claimable $LORDS from epochs 1-10</h1>
             <p>
-              You earn 350x $LORDS per Realm per full staked epoch (claimable on
-              StarkNet after epoch 15)
+              You earn 350x $LORDS per Realm per full staked epoch (rewards from epoch 11-15 will not appear here as they will only be claimable from epoch 16 directly on StarkNet).
             </p>
             <p class="mx-auto my-auto text-6xl py-8">
               <LoadingRings
