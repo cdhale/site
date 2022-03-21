@@ -146,7 +146,7 @@
         <a
           target="blank_"
           class="hover:bg-gracy-700"
-          href="https://twitter.com/lootgraph"
+          href="https://twitter.com/bibliothecadao"
           ><Twitter class="w-8 h-8 fill-current"
         /></a>
         <a
