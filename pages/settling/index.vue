@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 <template>
   <section class="text-off-200">
     <div class="container mx-auto text-center">
@@ -25,27 +26,12 @@
       </div>
     </div>
     <div
-      class="
-        container
-        flex flex-wrap
-        p-4
-        mx-auto
-        text-2xl text-center text-white
-        font-display
-      "
+      class="container flex flex-wrap p-4 mx-auto text-2xl text-center text-white font-display"
     >
       <div class="flex w-1/2 p-2">
         <button
           :class="{ 'bg-off-200 text-off-100 border-off-100': tab === 'A' }"
-          class="
-            w-full
-            p-4
-            border-4 border-double
-            rounded
-            text-off-200
-            border-off-200
-            hover:bg-off-200 hover:text-off-100
-          "
+          class="w-full p-4 border-4 border-double rounded text-off-200 border-off-200 hover:bg-off-200 hover:text-off-100"
           @click="tab = 'A'"
         >
           Galleon v1
@@ -54,15 +40,7 @@
       <div class="flex w-1/2 p-2">
         <button
           :class="{ 'bg-off-200 text-off-100 border-off-100': tab === 'B' }"
-          class="
-            w-full
-            p-4
-            border-4 border-double
-            rounded
-            text-off-200
-            border-off-200
-            hover:bg-off-200 hover:text-off-100
-          "
+          class="w-full p-4 border-4 border-double rounded text-off-200 border-off-200 hover:bg-off-200 hover:text-off-100"
           @click="tab = 'B'"
         >
           Carrack v2
@@ -83,11 +61,11 @@
             <span class="font-semibold">Rewards:</span> 350x $LORDS per epoch (a
             bonus of 12%). <br />
             <span class="font-semibold">Length: </span>5 epochs (11-15). <br />
-            <span class="font-semibold">Claiming $LORDS:</span> Epochs 1-10: claimable below. Epochs 11-15: rewards are not tallied below, and you must claim directly on StarkNet once migrated (not weekly). <br /><span
-              class="font-semibold"
-              >Rewards Eligibility:</span
-            >
-            You will be rewarded for every full epoch staked. <br />
+            <span class="font-semibold">Claiming $LORDS:</span> Epochs 1-10:
+            claimable below. Epochs 11-15: rewards are not tallied below, and
+            you must claim directly on StarkNet once migrated (not weekly).
+            <br /><span class="font-semibold">Rewards Eligibility:</span> You
+            will be rewarded for every full epoch staked. <br />
           </p>
         </div>
 
@@ -142,9 +120,11 @@
           <BaseBox class="h-80">
             <h1>Claimable $LORDS from epochs 1-10</h1>
             <p>
-              You earn 350x $LORDS per Realm per full staked epoch (rewards from epoch 11-15 will not appear here as they will only be claimable from epoch 16 directly on StarkNet).
+              You earn 350x $LORDS per Realm per full staked epoch (rewards from
+              epoch 11-15 will not appear here as they will only be claimable
+              from epoch 16 directly on StarkNet).
             </p>
-            <p class="mx-auto my-auto text-6xl py-8">
+            <p class="py-8 mx-auto my-auto text-6xl">
               <LoadingRings
                 v-if="loading.lords"
                 class="w-32 mx-auto stroke-current fill-none text-off-200"
@@ -167,7 +147,9 @@
               >Claim Lords</BButton
             >
             <div class="w-full mt-2">
-              <span class="cursor-pointer hover:underline" @click="isLordsAdded"
+              <span
+               class="cursor-pointer hover:underline"
+               @click="isLordsAdded"
                 >Add LORDS to MetaMask</span
               >
             </div>
@@ -280,7 +262,7 @@
               You earn 312.5x $LORDS per Realm per full staked epoch (claimable
               weekly)
             </p>
-            <p class="mx-auto my-auto text-6xl py-8">
+            <p class="py-8 mx-auto my-auto text-6xl">
               <LoadingRings
                 v-if="loading.lords"
                 class="w-32 mx-auto stroke-current fill-none text-off-200"
@@ -303,7 +285,9 @@
               >Claim Lords</BButton
             >
             <div class="w-full my-2">
-              <span class="cursor-pointer hover:underline" @click="isLordsAdded"
+              <span
+                class="cursor-pointer hover:underline"
+                @click="isLordsAdded"
                 >Add LORDS to MetaMask</span
               >
             </div>
@@ -368,14 +352,15 @@
               >
             </div>
           </div>
+
           <div
-            v-if="userPositions && v1PositionsFilter.length"
+            v-if="userPositions && v2PositionsFilter.length"
             class="flex flex-wrap w-full mx-auto mt-8"
           >
-            <h2 v-if="poolIncentives[0]" class="text-center">
-              Program V1 - Ending
+            <h2 v-if="poolIncentives[1]" class="text-center">
+              Program V2 - Ended
               <span class="text-lg">{{
-                new Date(poolIncentives[0].endTime * 1000 || 0).toLocaleString()
+                new Date(poolIncentives[1].endTime * 1000 || 0).toLocaleString()
               }}</span>
             </h2>
             <table class="w-full py-4 mx-auto table-auto">
@@ -389,26 +374,22 @@
               </thead>
               <tbody>
                 <LpTable
-                  v-for="position in v1PositionsFilter"
+                  v-for="position in v2PositionsFilter"
                   :key="position.id"
+                  stake-button
                   :position="position"
                 />
               </tbody>
             </table>
-            <p class="my-4">
-              To claim the Lords, first unstake your position, then click the
-              Claim button.
-            </p>
           </div>
-
           <div
             v-if="userPositions && userPositions.length"
             class="flex flex-wrap w-full mx-auto mt-8"
           >
-            <h2 v-if="poolIncentives[1]" class="text-center">
-              Program V2 - Ending
+            <h2 v-if="poolIncentives[2]" class="text-center">
+              Program V3 - Ending
               <span class="text-lg">{{
-                new Date(poolIncentives[1].endTime * 1000 || 0).toLocaleString()
+                new Date(poolIncentives[2].endTime * 1000 || 0).toLocaleString()
               }}</span>
             </h2>
             <table class="w-full py-4 mx-auto table-auto">
@@ -459,7 +440,7 @@ import {
   onMounted,
   watch,
   computed,
-  ref,
+  ref
 } from '@nuxtjs/composition-api'
 import { useModal } from '~/composables/useModal'
 import { useNetwork, activeNetworkId } from '~/composables/useNetwork'
@@ -472,11 +453,11 @@ import LoadingRings from '~/assets/img/loadingRings.svg?inline'
 
 export default defineComponent({
   components: {
-    LoadingRings,
+    LoadingRings
   },
   layout: 'settling',
 
-  setup() {
+  setup () {
     const tab = ref('A')
     const { getWalletRealms, userRealms } = useRealms()
     const { account } = useWeb3()
@@ -494,7 +475,7 @@ export default defineComponent({
       userPositions,
       loading: loadingIncentive,
       getIncentivesForPool,
-      poolIncentives,
+      poolIncentives
     } = useIncentive()
     const { checkForNetworkMismatch, networkMismatch, useL1Network } =
       useNetwork()
@@ -510,15 +491,15 @@ export default defineComponent({
       timeLeft,
       getTotalRealmsStaked,
       totalRealmsStaked,
-      isLordsAdded,
+      isLordsAdded
     } = useStaking()
     const { showComponent } = useModal()
 
-    const v1PositionsFilter = computed(() => {
+    const v2PositionsFilter = computed(() => {
       return (
         userPositions.value &&
         userPositions.value.filter(
-          (a) => a.staked && a.incentivePositions.length === 1
+          a => a.staked && a.incentivePositions[0].incentive.id === poolIncentives.value[1].id
         )
       )
     })
@@ -541,19 +522,20 @@ export default defineComponent({
       await getTimeToNextEpoch()
       await getTimeToNextEpoch({ version: 'v2' })
       await getTotalRealmsStaked()
-
+      console.log(userPositions.value[1].incentivePositions[0]?.incentive.id)
+      console.log(poolIncentives[1]?.id)
       // await isLordsAdded()
     })
     const stakeRealms = (version) => {
       showComponent(JourneySettling, {
         type: 'stake',
-        version,
+        version
       })
     }
     const unstakeRealms = (version) => {
       showComponent(JourneySettling, {
         type: 'unstake',
-        version,
+        version
       })
     }
     const numberRealms = computed(() => {
@@ -581,72 +563,72 @@ export default defineComponent({
         }
       },
       {
-        immediate: true,
+        immediate: true
       }
     )
     const faqs = [
       {
         title: 'What does this staking contract do?',
-        body: 'By boarding the Galleon or Carrack now, you can begin to earn $LORDS. Once the StarkNet bridge is complete, your Realms will be available to claim directly on StarkNet.',
+        body: 'By boarding the Galleon or Carrack now, you can begin to earn $LORDS. Once the StarkNet bridge is complete, your Realms will be available to claim directly on StarkNet.'
       },
       {
         title: 'What are the rewards?',
-        body: 'Epoch 11-15: The Galleon 350x $LORDS for each Realm staked per epoch. The Carrack 312.5x $LORDS for each Realm staked per epoch.',
+        body: 'Epoch 11-15: The Galleon 350x $LORDS for each Realm staked per epoch. The Carrack 312.5x $LORDS for each Realm staked per epoch.'
       },
       {
         title: 'What is the difference between the Galleon and Carrack?',
-        body: 'You can claim rewards directly on mainnet after each epoch in the Carrack, while in the Galleon you must wait to claim them directly on StarkNet once the Journey (bridging) is complete.',
+        body: 'You can claim rewards directly on mainnet after each epoch in the Carrack, while in the Galleon you must wait to claim them directly on StarkNet once the Journey (bridging) is complete.'
       },
       {
         title:
           'How long do you need to be staked for to be entitled to rewards?',
-        body: 'You need to be staked for one entire epoch (7 days) to be entitled to your $LORDS. For example, if you stake at the end of epoch 2 and remain staked until epoch 4, you will receive the epoch 3 reward. ',
+        body: 'You need to be staked for one entire epoch (7 days) to be entitled to your $LORDS. For example, if you stake at the end of epoch 2 and remain staked until epoch 4, you will receive the epoch 3 reward. '
       },
       {
         title: 'Once staked, do you need to stake again for future epochs?',
-        body: 'No, once you stake and remained staked, you’ll be entitled to all future epoch rewards (unless you unstake).',
+        body: 'No, once you stake and remained staked, you’ll be entitled to all future epoch rewards (unless you unstake).'
       },
       {
         title: 'Why can’t I see my Realm(s) in OpenSea after staking?',
-        body: 'Your realms won’t appear in OS while staking as they are transferred into the contract wallet in this process. You can view your staked Realms at your Adventurers page. ',
+        body: 'Your realms won’t appear in OS while staking as they are transferred into the contract wallet in this process. You can view your staked Realms at your Adventurers page. '
       },
       {
         title: 'Can I list/sell my Realms on OpenSea while staking?',
-        body: 'No, during staking you can’t list/sell your Realms as they are in the contract wallet. If you wish to list/sell your Realms then you must first unstake them.',
+        body: 'No, during staking you can’t list/sell your Realms as they are in the contract wallet. If you wish to list/sell your Realms then you must first unstake them.'
       },
       {
         title:
           'How long will the Journey last for and what happens at epoch 16+?',
-        body: 'The Journey will continue for a maximum of 15 epochs. If StarkNet is not ready by the end of epoch 15, rewards will be adjusted to the future gaming emissions amount (25x per day / 175x per week). If StarkNet is ready, gaming emissions (25x per day / 175x per week) will commence directly on layer 2.',
+        body: 'The Journey will continue for a maximum of 15 epochs. If StarkNet is not ready by the end of epoch 15, rewards will be adjusted to the future gaming emissions amount (25x per day / 175x per week). If StarkNet is ready, gaming emissions (25x per day / 175x per week) will commence directly on layer 2.'
       },
       {
         title: 'Do you have to claim $LORDS after each epoch/on mainnet?',
-        body: 'No, you can let rewards accrue and claim in bulk to save gas. If you wish to avoid claiming on L1 we will have a solution to migrate your $LORDS to StarkNet and claim there to save further gas.',
+        body: 'No, you can let rewards accrue and claim in bulk to save gas. If you wish to avoid claiming on L1 we will have a solution to migrate your $LORDS to StarkNet and claim there to save further gas.'
       },
       {
         title: 'What are Realms?',
-        body: 'Realms are mythical maps of the Lootverse. Every realm has been procedurally generated and is unique down to the language. Each realm has a map showing the regions, cities, rivers and topography that exist in the world. Resource deposits and exclusive Wonders can be found in each realm with varying rarity, and each belongs to one of the 16 Loot Orders.',
+        body: 'Realms are mythical maps of the Lootverse. Every realm has been procedurally generated and is unique down to the language. Each realm has a map showing the regions, cities, rivers and topography that exist in the world. Resource deposits and exclusive Wonders can be found in each realm with varying rarity, and each belongs to one of the 16 Loot Orders.'
       },
       {
         title: 'The $LORDS Token',
-        body: 'The $LORDS token is the utility token of the Realmsverse, used to transact on marketplaces on StarkNet. There will be a native StarkNet marketplace for trading Realms along with an AMM (Uniswap style) for trading the resources generated. Both marketplaces will be denominated in $LORDS. Read the full tokenomics breakdown here: <a class="font-semibold underline" href="https://docs.bibliothecadao.xyz/lootverse-master-scroll/economics/lords-resources-and-more-fungibles">$LORDS Tokenomics</a>',
+        body: 'The $LORDS token is the utility token of the Realmsverse, used to transact on marketplaces on StarkNet. There will be a native StarkNet marketplace for trading Realms along with an AMM (Uniswap style) for trading the resources generated. Both marketplaces will be denominated in $LORDS. Read the full tokenomics breakdown here: <a class="font-semibold underline" href="https://docs.bibliothecadao.xyz/lootverse-master-scroll/economics/lords-resources-and-more-fungibles">$LORDS Tokenomics</a>'
       },
       {
         title: 'Why is settling all on-chain?',
-        body: 'All game activity will be on-chain, this means no central servers and no central backend. This allows the game assets to be composed and used in other games within the Realmverse, with no reliance on a central entity for their ongoing use.',
+        body: 'All game activity will be on-chain, this means no central servers and no central backend. This allows the game assets to be composed and used in other games within the Realmverse, with no reliance on a central entity for their ongoing use.'
       },
       {
         title: 'What is StarkNet?',
-        body: "StarkNet is a ZK-Rollup Layer 2 network. It allows for extreme computation and cheap transaction costs, without sacrificing the security of your assets. The Bibliotheca team is building one of the world's first fully on-chain games on a ZK-Rollup. You will be able to trade with speed and with little fees.",
+        body: "StarkNet is a ZK-Rollup Layer 2 network. It allows for extreme computation and cheap transaction costs, without sacrificing the security of your assets. The Bibliotheca team is building one of the world's first fully on-chain games on a ZK-Rollup. You will be able to trade with speed and with little fees."
       },
       {
         title: 'Community Driven - The Bibliotheca DAO',
-        body: 'Settling of the Realms is governed by the Realm Lords under the Bibliotheca DAO. Game direction, testing and feedback are all directed by the community. There is a core team of developers building the game, however all code is open source and we encourage outside contributors.',
+        body: 'Settling of the Realms is governed by the Realm Lords under the Bibliotheca DAO. Game direction, testing and feedback are all directed by the community. There is a core team of developers building the game, however all code is open source and we encourage outside contributors.'
       },
       {
         title: 'Can I audit your Contracts?',
-        body: 'Yes! Find them here. <br> <a class="font-semibold underline" href="https://etherscan.io/address/0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0">$LORDS</a><br> <a class="font-semibold underline" href="https://etherscan.io/address/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d">Realms</a><br> <a class="font-semibold underline" href="https://etherscan.io/address/0x17963290db8c30552d0cfa2a6453ff20a28c31a2#code">Journey</a><br> <a class="font-semibold underline" href="https://etherscan.io/address/0xcdFe3d7eBFA793675426F150E928CD395469cA53#code">Journey v2</a>',
-      },
+        body: 'Yes! Find them here. <br> <a class="font-semibold underline" href="https://etherscan.io/address/0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0">$LORDS</a><br> <a class="font-semibold underline" href="https://etherscan.io/address/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d">Realms</a><br> <a class="font-semibold underline" href="https://etherscan.io/address/0x17963290db8c30552d0cfa2a6453ff20a28c31a2#code">Journey</a><br> <a class="font-semibold underline" href="https://etherscan.io/address/0xcdFe3d7eBFA793675426F150E928CD395469cA53#code">Journey v2</a>'
+      }
     ]
 
     return {
@@ -681,9 +663,9 @@ export default defineComponent({
       userPositions,
       loadingIncentive,
       isLordsAdded,
-      v1PositionsFilter,
-      tab,
+      v2PositionsFilter,
+      tab
     }
-  },
+  }
 })
 </script>

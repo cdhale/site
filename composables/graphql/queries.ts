@@ -217,6 +217,7 @@ const lpPositionQuery = gql`
         active
         incentive {
           id
+          pool
         }
       }
     }
@@ -242,5 +243,5 @@ export {
   getResourceListQuery,
   getResourceBalancesQuery,
   lpPositionQuery,
-  lpIncentivesQuery,
+  lpIncentivesQuery
 }
