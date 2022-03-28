@@ -499,7 +499,7 @@ export default defineComponent({
       return (
         userPositions.value &&
         userPositions.value.filter(
-          a => a.staked && a.incentivePositions[0]?.incentive?.id === poolIncentives.value[1].id
+          a => a.staked && a.incentivePositions[0]?.incentive?.id === poolIncentives.value[1]?.id
         )
       )
     })
