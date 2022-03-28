@@ -45,14 +45,14 @@
         v-if="position.staked"
         :loading="loading.stake"
         type="settling"
-        @click="unstake(position.tokenId, stakeButton)"
+        @click="unstake(position.tokenId, program)"
         >Unstake / Claim</BButton
       >
       <BButton
         v-if="deposited & !position.staked && stakeButton"
         :loading="loading.stake"
         type="settling"
-        @click="stake(position.tokenId, stakeButton)"
+        @click="stake(position.tokenId, program)"
         >Stake</BButton
       >
       <BButton
@@ -81,6 +81,10 @@ export default defineComponent({
     stakeButton: {
       type: Boolean,
       default: false,
+    },
+    program: {
+      type: String,
+      default: 'v2',
     },
   },
   setup(props) {
@@ -118,9 +122,9 @@ export default defineComponent({
 
     onMounted(async () => {
       if (props.position.staked) {
-        await getRewardsByToken(props.position.tokenId, props.stakeButton)
+        await getRewardsByToken(props.position.tokenId, props.program)
         window.setInterval(async () => {
-          await getRewardsByToken(props.position.tokenId, props.stakeButton)
+          await getRewardsByToken(props.position.tokenId, props.program)
         }, 20000)
       }
     })

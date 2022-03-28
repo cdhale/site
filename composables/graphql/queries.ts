@@ -212,7 +212,8 @@ const lpPositionQuery = gql`
       owner
       staked
       oldOwner
-      incentivePositions {
+      liquidity
+      incentivePositions(where: { active: true }) {
         id
         active
         incentive {
@@ -243,5 +244,5 @@ export {
   getResourceListQuery,
   getResourceBalancesQuery,
   lpPositionQuery,
-  lpIncentivesQuery
+  lpIncentivesQuery,
 }

@@ -10,7 +10,9 @@
     @click="externalSite()"
   >
     <slot v-if="!loading" />
-    <span v-else><LoadingRings class="mx-auto w-7 h-7" /></span>
+    <span v-else
+      ><LoadingRings class="mx-auto w-7 h-7 text-off-100 fill-current"
+    /></span>
   </component>
 </template>
 <script>

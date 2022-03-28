@@ -24,10 +24,25 @@ export const getV2Tuple = (network) => {
   }
 }
 
+// 1643250739 - REAL START VALUE
+export const getV3Tuple = (network) => {
+  return {
+    rewardToken: contractAddresses[network.id].lordsTokenAddress,
+    pool: contractAddresses[network.id].lordsPool,
+    startTime: 1648467650,
+    endTime: 1653651650,
+    refundee: contractAddresses[network.id].treasury,
+  }
+}
+
 export const EncodedIncentiveKey = (network) => {
   return defaultAbiCoder.encode([IncentiveKey], [getTuple(network)])
 }
 
 export const V2EncodedIncentiveKey = (network) => {
   return defaultAbiCoder.encode([IncentiveKey], [getV2Tuple(network)])
+}
+
+export const V3EncodedIncentiveKey = (network) => {
+  return defaultAbiCoder.encode([IncentiveKey], [getV3Tuple(network)])
 }

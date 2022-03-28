@@ -12,7 +12,9 @@ import {
   EncodedIncentiveKey,
   getTuple,
   getV2Tuple,
+  getV3Tuple,
   V2EncodedIncentiveKey,
+  V3EncodedIncentiveKey,
 } from '~/composables/encoders/encoders'
 
 const lpPositions = ref()
@@ -35,9 +37,13 @@ export function useIncentive() {
   const rewardInfo = ref()
   const poolIncentives = ref([])
 
-  const getRewardsByToken = async (tokenId, v2) => {
+  const getRewardsByToken = async (tokenId, program) => {
     try {
-      rewardInfo.value = await getRewardInfo(activeNetwork.value, tokenId, v2)
+      rewardInfo.value = await getRewardInfo(
+        activeNetwork.value,
+        tokenId,
+        program
+      )
     } catch (e) {
       error.stake = e.message
     } finally {
@@ -71,10 +77,10 @@ export function useIncentive() {
     }
   }
 
-  const stake = async (tokenId, v2) => {
+  const stake = async (tokenId, version) => {
     loading.stake = true
     try {
-      const tx = await stakeToken(activeNetwork.value, tokenId, v2)
+      const tx = await stakeToken(activeNetwork.value, tokenId, version)
       updateUserPosition(tokenId, tx)
     } catch (e) {
       await showError(e.message)
@@ -84,10 +90,10 @@ export function useIncentive() {
     }
   }
 
-  const unstake = async (tokenId, v2) => {
+  const unstake = async (tokenId, version) => {
     loading.stake = true
     try {
-      const tx = await unstakeToken(activeNetwork.value, tokenId, v2)
+      const tx = await unstakeToken(activeNetwork.value, tokenId, version)
       updateUserPosition(tokenId, tx)
     } catch (e) {
       await showError(e.message)
@@ -203,7 +209,7 @@ export function useIncentive() {
   }
 }
 
-async function getRewardInfo(network, tokenId, v2) {
+async function getRewardInfo(network, tokenId, program) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const uniswapV3Pool = contractAddresses[network.id].uniswapV3Pool
   const poolContract = new ethers.Contract(
@@ -212,8 +218,10 @@ async function getRewardInfo(network, tokenId, v2) {
     provider
   )
   let r
-  if (v2) {
+  if (program === 'v2') {
     r = await poolContract.getRewardInfo(getV2Tuple(network), tokenId)
+  } else if (program === 'v3') {
+    r = await poolContract.getRewardInfo(getV3Tuple(network), tokenId)
   } else {
     r = await poolContract.getRewardInfo(getTuple(network), tokenId)
   }
@@ -239,14 +247,14 @@ async function depositLp(network, account, tokenId) {
     account.value,
     contractAddresses[network.id].uniswapV3Pool,
     tokenId,
-    V2EncodedIncentiveKey(network)
+    V3EncodedIncentiveKey(network)
   )
   const receipt = await tx.wait()
 
   return receipt
 }
 
-async function unstakeToken(network, tokenId, v2) {
+async function unstakeToken(network, tokenId, version) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const uniswapV3Pool = contractAddresses[network.id].uniswapV3Pool
   const signer = provider.getSigner()
@@ -257,8 +265,10 @@ async function unstakeToken(network, tokenId, v2) {
   )
   let tx
 
-  if (v2) {
+  if (version === 'v2') {
     tx = await poolContract.unstakeToken(getV2Tuple(network), tokenId)
+  } else if (version === 'v3') {
+    tx = await poolContract.unstakeToken(getV3Tuple(network), tokenId)
   } else {
     tx = await poolContract.unstakeToken(getTuple(network), tokenId)
   }
@@ -267,7 +277,7 @@ async function unstakeToken(network, tokenId, v2) {
   return receipt
 }
 
-async function stakeToken(network, tokenId, v2) {
+async function stakeToken(network, tokenId, version) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const uniswapV3Pool = contractAddresses[network.id].uniswapV3Pool
   const signer = provider.getSigner()
@@ -276,10 +286,12 @@ async function stakeToken(network, tokenId, v2) {
     uniSwapV3PoolAbi,
     signer
   )
-  console.log(getV2Tuple(network))
+
   let tx
-  if (v2) {
+  if (version === 'v2') {
     tx = await poolContract.stakeToken(getV2Tuple(network), tokenId)
+  } else if (version === 'v3') {
+    tx = await poolContract.stakeToken(getV3Tuple(network), tokenId)
   } else {
     tx = await poolContract.stakeToken(getTuple(network), tokenId)
   }
