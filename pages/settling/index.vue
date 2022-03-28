@@ -499,7 +499,7 @@ export default defineComponent({
       return (
         userPositions.value &&
         userPositions.value.filter(
-          a => a.staked && a.incentivePositions[0].incentive.id === poolIncentives.value[1].id
+          a => a.staked && a.incentivePositions[0]?.incentive?.id === poolIncentives.value[1].id
         )
       )
     })
@@ -522,8 +522,7 @@ export default defineComponent({
       await getTimeToNextEpoch()
       await getTimeToNextEpoch({ version: 'v2' })
       await getTotalRealmsStaked()
-      console.log(userPositions.value[1].incentivePositions[0]?.incentive.id)
-      console.log(poolIncentives[1]?.id)
+
       // await isLordsAdded()
     })
     const stakeRealms = (version) => {
