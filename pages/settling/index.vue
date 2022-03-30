@@ -143,8 +143,8 @@
           <BaseBox class="h-80">
             <h1>Claimable $LORDS from epochs 1-10</h1>
             <p>
-              You earn 196x $LORDS per Realm per full staked epoch from epoch 16+ until bridged to StarkNet (rewards from
-              epoch 11+ will not appear here as they will only be claimable directly on StarkNet - ETA mid-May).
+              You earn 196x $LORDS per Realm per full staked epoch from epoch 16+ until bridged to StarkNet - ETA mid-May (rewards from
+              epoch 11+ will not appear here as they will only be claimable directly on StarkNet).
             </p>
             <p class="py-8 mx-auto my-auto text-6xl">
               <LoadingRings
