@@ -81,12 +81,12 @@
         <div class="w-full mx-auto my-8">
           <h1 class="w-full">The Galleon (V1 Staking)</h1>
           <p class="sm:text-2xl">
-            <span class="font-semibold">Rewards:</span> 350x $LORDS per epoch (a
+            <span class="font-semibold">Rewards:</span> 196x $LORDS per epoch (a
             bonus of 12%). <br />
-            <span class="font-semibold">Length: </span>5 epochs (11-15). <br />
+            <span class="font-semibold">Length: </span>Epoch 16 - until StarkNet is in beta and we have bridged (ETA mid-May).<br />
             <span class="font-semibold">Claiming $LORDS:</span> Epochs 1-10:
-            claimable below. Epochs 11-15: rewards are not tallied below, and
-            you must claim directly on StarkNet once migrated (not weekly).
+            claimable below. Epochs 11+: rewards are not tallied below, and
+            you must claim directly on StarkNet once migrated (ETA mid-May).
             <br /><span class="font-semibold">Rewards Eligibility:</span> You
             will be rewarded for every full epoch staked. <br />
           </p>
@@ -143,9 +143,8 @@
           <BaseBox class="h-80">
             <h1>Claimable $LORDS from epochs 1-10</h1>
             <p>
-              You earn 350x $LORDS per Realm per full staked epoch (rewards from
-              epoch 11-15 will not appear here as they will only be claimable
-              from epoch 16 directly on StarkNet).
+              You earn 196x $LORDS per Realm per full staked epoch from epoch 16+ until bridged to StarkNet (rewards from
+              epoch 11+ will not appear here as they will only be claimable directly on StarkNet - ETA mid-May).
             </p>
             <p class="py-8 mx-auto my-auto text-6xl">
               <LoadingRings
@@ -217,11 +216,11 @@
             </no-ssr>
           </div>
           <p class="sm:text-2xl">
-            <span class="font-semibold">Rewards:</span> 312.5x $LORDS per epoch.
+            <span class="font-semibold">Rewards:</span> 175x $LORDS per epoch.
             <br />
-            <span class="font-semibold">Length: </span>5 epochs (11-15). <br />
+            <span class="font-semibold">Length: </span>Epoch 16 - until StarkNet is in beta and we have bridged. <br />
             <span class="font-semibold">Claiming $LORDS:</span>You can claim
-            $LORDS immediately after each fully staked epoch.<br /><span
+            $LORDS immediately after each fully staked epoch directly on mainnet.<br /><span
               class="font-semibold"
               >Rewards Eligibility:</span
             >
@@ -280,7 +279,7 @@
           <BaseBox class="h-80">
             <h1>Your Lords Available To Claim</h1>
             <p>
-              You earn 312.5x $LORDS per Realm per full staked epoch (claimable
+              You earn 175x $LORDS per Realm per full staked epoch (claimable
               weekly)
             </p>
             <p class="py-8 mx-auto my-auto text-6xl">
