@@ -5,7 +5,7 @@
       <h1 class="text-3xl font-semibold capitalize sm:text-6xl sm:mt-20">
         The great journey has begun.
       </h1>
-      <p class="text-2xl sm:text-4xl">Lords, it's time to board the Galleon.</p>
+      <p class="text-2xl sm:text-4xl">Lords, it's time to board the Galleon or Carrack.</p>
     </div>
     <div class="flex flex-wrap">
       <div class="self-center p-2 my-10 font-semibold sm:w-1/2 sm:p-10">
