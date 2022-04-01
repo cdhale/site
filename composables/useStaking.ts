@@ -2,8 +2,10 @@ import { reactive, ref, Ref } from '@nuxtjs/composition-api'
 import { ethers } from 'ethers'
 import { useWeb3 } from '@instadapp/vue-web3'
 import BigNumber from 'bignumber.js'
+import EthDater from 'ethereum-block-by-date'
 import { activeNetwork, useNetwork } from './useNetwork'
 import { useRealms } from './useRealms'
+import { getWalletAtBlock } from './graphql/queries'
 import { useNotification } from '~/composables/useNotification'
 import JourneyABI from '~/abi/Journey.json'
 import Journey2ABI from '~/abi/Journey2.json'
@@ -12,32 +14,36 @@ import balanceABI from '~/abi/balance.json'
 import { useModal } from '~/composables/useModal'
 import erc721tokens from '~/constant/erc721Tokens'
 import contractAddresses from '~/constant/contractAddresses'
+import { useGraph } from '~/composables/useGraph'
 
 const totalRealmsStaked = ref()
 const balance = ref()
 const claimableBalance = ref()
 const claimableV2Balance = ref()
-
 const isApproved = ref(false)
-export function useStaking() {
+
+export function useStaking () {
+  const unclaimableBalance = ref([])
+
+  const { gqlRequest } = useGraph()
   const { close } = useModal()
   const { account, library } = useWeb3()
   const { getWalletRealms, userRealms } = useRealms()
   const { useL1Network } = useNetwork()
   const error = reactive({
-    stake: null,
+    stake: null
   })
   const { showError, showSuccess } = useNotification()
   const loading = reactive({
     stake: false,
     lords: false,
-    approve: false,
+    approve: false
   })
   const result = reactive({ stake: null })
 
   const epoch = reactive({
     v1: 0,
-    v2: null,
+    v2: null
   })
   const getApproved = async (version) => {
     try {
@@ -196,6 +202,44 @@ export function useStaking() {
       loading.lords = false
     }
   }
+  const getUnclaimableLordsBalance = async (params) => {
+    const provider = new ethers.providers.JsonRpcProvider(useL1Network.value.url)
+    const dater = new EthDater(
+      provider // Ethers provider, required.
+    )
+    const startingEpochBlocks = await dater.getEvery(
+      'weeks', // Period, required. Valid value: years, quarters, months, weeks, days, hours, minutes
+      '2022-02-17T11:04:29Z', // Start date, required. Any valid moment.js value: string, milliseconds, Date() object, moment() object.
+      '2022-03-20T12:00:00Z', // End date, required. Any valid moment.js value: string, milliseconds, Date() object, moment() object.
+      1, // Duration, optional, integer. By default 1.
+      true, // Block after, optional. Search for the nearest block before or after the given date. By default true.
+      false // Refresh boundaries, optional. Recheck the latest block before request. By default false.
+    )
+    console.log(startingEpochBlocks)
+
+    const getBridgedRealmsAtEpoch = async (epoch) => {
+      const { wallet } = await gqlRequest(
+        getWalletAtBlock,
+        {
+          address: params.address.toLowerCase(),
+          block: epoch.block
+        },
+        'realms'
+      )
+      return wallet.bridgedRealmsHeld
+    }
+
+    // eslint-disable-next-line require-await
+    const getData = async () => {
+      return Promise.all(startingEpochBlocks.map(epoch => getBridgedRealmsAtEpoch(epoch)))
+    }
+
+    try {
+      unclaimableBalance.value = await getData()
+    } catch (e) {
+      console.log(e)
+    }
+  }
   const getEpoch = async (version) => {
     try {
       error.stake = null
@@ -284,9 +328,9 @@ export function useStaking() {
             address: contractAddresses[useL1Network.value.id].lordsTokenAddress, // The address that the token is at.
             symbol: 'LORDS', // A ticker symbol or shorthand, up to 5 chars.
             decimals: 18, // The number of decimals in the token
-            image: 'https://bibliothecadao.xyz/lords-icon.png', // A string url of the token logo
-          },
-        },
+            image: 'https://bibliothecadao.xyz/lords-icon.png' // A string url of the token logo
+          }
+        }
       })
     } catch (error) {
       console.log(error)
@@ -300,6 +344,8 @@ export function useStaking() {
     getTimeToNextEpoch,
     getLordsBalance,
     getClaimableLordsBalance,
+    getUnclaimableLordsBalance,
+    unclaimableBalance,
     claimableV2Balance,
     getApproved,
     approve,
@@ -314,11 +360,11 @@ export function useStaking() {
     result,
     timeLeft,
     unstake,
-    isLordsAdded,
+    isLordsAdded
   }
 }
 
-async function getTimeUntilEpoch(version, network) {
+async function getTimeUntilEpoch (version, network) {
   const provider = new ethers.providers.JsonRpcProvider(network.url)
 
   const journeyContractAddress =
@@ -336,7 +382,7 @@ async function getTimeUntilEpoch(version, network) {
   return t
 }
 
-async function stake(version, realmIds, network, library) {
+async function stake (version, realmIds, network, library) {
   const signer = library.value.getSigner()
 
   const journeyContractAddress =
@@ -356,7 +402,7 @@ async function stake(version, realmIds, network, library) {
   return event.args[0]
 }
 // TODO: make generic
-async function getApproval(version, owner, network, library) {
+async function getApproval (version, owner, network, library) {
   const realmsAddress = erc721tokens[activeNetwork.value.id].realms.address
   const journeyContractAddress =
     version === 'v2'
@@ -379,7 +425,7 @@ async function getApproval(version, owner, network, library) {
   }
 }
 
-async function setApprovalForAllRealms(version, owner, network, library) {
+async function setApprovalForAllRealms (version, owner, network, library) {
   const realmsAddress = erc721tokens[activeNetwork.value.id].realms.address
 
   const signer = library.value.getSigner()
@@ -408,7 +454,7 @@ async function setApprovalForAllRealms(version, owner, network, library) {
   return receipt
 }
 
-async function getBalance(network, account) {
+async function getBalance (network, account) {
   const provider = new ethers.providers.JsonRpcProvider(network.url)
   const lordsTokenAddress = contractAddresses[network.id].lordsTokenAddress
 
@@ -422,7 +468,7 @@ async function getBalance(network, account) {
   return ethers.utils.formatEther(tokenBalances)
 }
 
-async function getJourneyEpoch(version, network) {
+async function getJourneyEpoch (version, network) {
   const provider = new ethers.providers.JsonRpcProvider(network.url)
   const journeyContractAddress =
     version === 'v2'
@@ -438,7 +484,7 @@ async function getJourneyEpoch(version, network) {
   return epoch
 }
 
-async function getClaimable(version, network, account) {
+async function getClaimable (version, network, account) {
   console.log(network)
   const provider = new ethers.providers.JsonRpcProvider(network.url)
 
@@ -465,7 +511,7 @@ async function getClaimable(version, network, account) {
   return ethers.utils.formatEther(tokenBalances)
 }
 
-async function claimAll(version, network, library) {
+async function claimAll (version, network, library) {
   const signer = library.value.getSigner()
 
   const journeyContractAddress =
@@ -484,7 +530,7 @@ async function claimAll(version, network, library) {
 
   return withdraw
 }
-async function unStakeAndExit(version, network, realmIds, library) {
+async function unStakeAndExit (version, network, realmIds, library) {
   const signer = library.value.getSigner()
 
   const journeyContractAddress =

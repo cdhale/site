@@ -9,7 +9,6 @@ module.exports = {
   },
   extends: [
     '@nuxtjs',
-    'plugin:prettier/recommended',
     'plugin:nuxt/recommended',
   ],
   plugins: [],
@@ -38,7 +37,6 @@ module.exports = {
         'plugin:@typescript-eslint/eslint-recommended',
         'plugin:@typescript-eslint/recommended',
         'plugin:import/typescript',
-        'prettier',
       ],
       rules: {
         // temp allowing during TS migration

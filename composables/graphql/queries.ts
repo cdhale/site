@@ -155,6 +155,24 @@ const getl1Adventurer = gql`
     }
   }
 `
+
+const getWalletAtBlock = gql`
+  query getWalletAtBlock(
+    $address: String! 
+    $block: Int!
+  ) {
+    wallet(
+      id: $address 
+      block: {
+        number: $block
+      }
+    ) {
+      id
+      realmsHeld
+      bridgedRealmsHeld
+    }
+  }
+`
 const getl2Adventurer = gql`
   ${RealmFragment}
   ${SRealmFragment}
@@ -241,6 +259,7 @@ export {
   mintedRealmsQuery,
   getl1Adventurer,
   getl2Adventurer,
+  getWalletAtBlock,
   getResourceListQuery,
   getResourceBalancesQuery,
   lpPositionQuery,

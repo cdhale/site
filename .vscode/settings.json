@@ -4,8 +4,8 @@
         "editor.suggest.insertMode": "replace"
     },
     "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-    "editor.fontLigatures": null,
-    "editor.formatOnSave": true,
+    "editor.fontLigatures": false,
+    "editor.formatOnSave": false,
     "eslint.format.enable": true,
     "eslint.lintTask.enable": true,
     "[vue]": {
