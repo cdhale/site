@@ -15,8 +15,7 @@
         class="px-5 py-2 rounded-xl bg-black hover:bg-gray-800"
         target="_blank"
         href="https://genesisproject.xyz"
-        >Claim Here (Free)</a
-      >
+      >Claim Here (Free)</a>
     </div>
 
     <div v-if="!$fetchState.pending" class="mt-8">
@@ -49,11 +48,11 @@ import {
   defineComponent,
   ref,
   useContext,
-  useFetch,
+  useFetch
 } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  setup(props, context) {
+  setup (props, context) {
     const { $graphql } = useContext()
     const search = ref()
     const offset = ref(1)
@@ -86,7 +85,7 @@ export default defineComponent({
 
     useFetch(async () => {
       const response = await $graphql.ecosystem.request(query.value, {
-        offset: offset.value,
+        offset: offset.value
       })
       manas.value = response.manas
     })
@@ -100,7 +99,7 @@ export default defineComponent({
 
       try {
         const response = await $graphql.ecosystem.request(query.value, {
-          offset: offset.value,
+          offset: offset.value
         })
         manas.value = manas.value.concat(response.manas)
       } catch (e) {
@@ -115,8 +114,8 @@ export default defineComponent({
       search,
       submitSearch,
       fetchMore,
-      loading,
+      loading
     }
-  },
+  }
 })
 </script>

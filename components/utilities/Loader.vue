@@ -12,5 +12,5 @@
       mr-10
       mb-10
     "
-  ></div>
+  />
 </template>

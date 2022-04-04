@@ -13,5 +13,5 @@ export const ButtonColors = {
   small:
     'border border-gray-800 rounded px-2 py-1 text-xs hover:bg-gray-800 hover:shadow font-body',
   outline:
-    'rounded hover:shadow-lg py-2 px-8 rounded-xl transition ease-in-out duration-150 flex justify-center group focus:outline-none focus:ring focus:border-primary focus:ring-off-200 border-off-200 border-double border-4 text-off-100 uppercase hover:rounded-xl hover:bg-off-100 hover:text-off-200 hover:border-off-100',
+    'rounded hover:shadow-lg py-2 px-8 rounded-xl transition ease-in-out duration-150 flex justify-center group focus:outline-none focus:ring focus:border-primary focus:ring-off-200 border-off-200 border-double border-4 text-off-100 uppercase hover:rounded-xl hover:bg-off-100 hover:text-off-200 hover:border-off-100'
 }

@@ -50,11 +50,11 @@ import { useModal } from '~/composables/useModal'
 import { useNetwork, activeNetwork } from '~/composables/useNetwork'
 
 export default defineComponent({
-  setup() {
+  setup () {
     const { close } = useModal()
     const { switchNetwork } = useNetwork()
 
-    async function switchAndClose() {
+    async function switchAndClose () {
       try {
         await switchNetwork()
 
@@ -63,6 +63,6 @@ export default defineComponent({
     }
 
     return { switchAndClose, activeNetwork }
-  },
+  }
 })
 </script>

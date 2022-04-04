@@ -32,8 +32,7 @@
         <span class="bold text-off-100">
           {{
             activeElement ? '  ' + activeElement.name : 'Select Loot Item'
-          }}</span
-        >
+          }}</span>
         <svg
           class="-mr-1 ml-2 h-5 w-5 self-center"
           xmlns="http://www.w3.org/2000/svg"
@@ -93,8 +92,7 @@
           role="menuitem"
           tabindex="-1"
           @click="setElement(item)"
-          >{{ item.name }}</a
-        >
+        >{{ item.name }}</a>
       </div>
     </div>
   </div>
@@ -106,10 +104,10 @@ export default defineComponent({
   props: {
     items: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
-  setup(props, context) {
+  setup (props, context) {
     const activeElement = ref(props.items[0])
     const active = ref(false)
     const hide = () => {
@@ -126,8 +124,8 @@ export default defineComponent({
       activeElement,
       active,
       hide,
-      setElement,
+      setElement
     }
-  },
+  }
 })
 </script>

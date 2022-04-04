@@ -77,15 +77,15 @@ import Helm from '~/assets/img/helm.svg?inline'
 import { useWeb3Modal } from '~/composables/useWeb3Modal'
 export default defineComponent({
   components: {
-    Helm,
+    Helm
   },
   props: {
     type: {
       default: null,
-      type: String,
-    },
+      type: String
+    }
   },
-  setup() {
+  setup () {
     const { account, active, deactivate } = useWeb3()
     const { shortenHash } = useFormatting()
     const { open } = useWeb3Modal()
@@ -102,8 +102,8 @@ export default defineComponent({
       open,
       active,
       deactivate,
-      shortenHash,
+      shortenHash
     }
-  },
+  }
 })
 </script>

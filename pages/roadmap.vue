@@ -11,12 +11,13 @@
       <p class="my-4 text-2xl">
         Settling is an open source MMOCCG (Massively Multiplayer On-Chain
         Composable Game) of economics and Chivalry built on-top of ZK STARKS
-        (Starknet). <br />
+        (Starknet). <br>
         The goal of the game is to build up your Realm, form alliances and
         harvest resources. If you would like to contibute - check out our
-        <a href="https://github.com/BibliothecaForAdventurers" target="_blank"
-          >GitHub Repos</a
-        >
+        <a
+          href="https://github.com/BibliothecaForAdventurers"
+          target="_blank"
+        >GitHub Repos</a>
         and come say hi on our
         <a href="https://discord.gg/GHrrTNkuwa" target="_blank">Discord</a>
       </p>
@@ -37,9 +38,9 @@
         "
       >
         <span class="text-red-800 bg-red-400 rounded p-2 px-4">Open Beta</span>
-        <span class="text-blue-800 bg-blue-400 rounded p-2 px-4"
-          >Production</span
-        >
+        <span
+          class="text-blue-800 bg-blue-400 rounded p-2 px-4"
+        >Production</span>
       </div>
       <div
         v-for="(stage, index) in mapStages"
@@ -111,7 +112,7 @@
 import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
-  setup() {
+  setup () {
     const mapStages = [
       {
         betaTime: '',
@@ -119,7 +120,7 @@ export default defineComponent({
         title: 'Starknet Bridge & Staking',
         description:
           'The journey commences with a bridge to the Layer 2 network - Starknet. To reward early Realm Lords, a joint Staking contract is being built where Lords can earn.',
-        active: 'true',
+        active: 'true'
       },
       {
         betaTime: 'Q1 2021',
@@ -127,7 +128,7 @@ export default defineComponent({
         title: 'Staking Realms to Earn Resources',
         description:
           'Realm holders begin to generate resources and $LORDS tokens after the development of staking contracts on Arbitrum ',
-        active: 'true',
+        active: 'true'
       },
       {
         betaTime: 'Q1 2021',
@@ -135,7 +136,7 @@ export default defineComponent({
         title: 'Staking Realms to Earn Resources',
         description:
           'Realm holders begin to generate resources and $LORDS tokens after the development of staking contracts on Arbitrum ',
-        active: 'true',
+        active: 'true'
       },
       {
         betaTime: 'Q1 2021',
@@ -143,7 +144,7 @@ export default defineComponent({
         title: 'Build upgrades on your Realms',
         description:
           "Construct various structures to upgrade a Realms' resource generation and manage its health, defense and more.",
-        active: 'true',
+        active: 'true'
       },
       {
         betaTime: 'Q1 2021',
@@ -151,7 +152,7 @@ export default defineComponent({
         title: 'Resources Automated Market Maker',
         description:
           'The Resources AMM provides the vital functionality for Adventurers to be able to trade for missing materials for upgrades - such as Wood, Diamonds and Dragonhide',
-        active: 'true',
+        active: 'true'
       },
       {
         betaTime: 'Q1 2021',
@@ -159,7 +160,7 @@ export default defineComponent({
         title: 'V1 Platform live',
         description:
           'Full Version 1 production launch of user frontend to enable staking, trading resources, and building upgrades',
-        active: 'true',
+        active: 'true'
       },
       {
         betaTime: 'Q1 2021',
@@ -167,19 +168,19 @@ export default defineComponent({
         title: 'PvP Contracts',
         description:
           "Fight your way to resource supremacy by raiding other adventurers' Realms, and participate in other creative PvP experiences using Loot derivatives",
-        active: 'true',
+        active: 'true'
       },
       {
         betaTime: 'Beyond',
         title: 'Much, much more',
         description:
           'Functionality will continue to be added based on community feedback and engagement.',
-        active: 'true',
-      },
+        active: 'true'
+      }
     ]
     return {
-      mapStages,
+      mapStages
     }
-  },
+  }
 })
 </script>

@@ -13,7 +13,7 @@
       shadow-2xl
       border-2 border-double
     "
-    >{{ getResource.trait }}
+  >{{ getResource.trait }}
     <slot />
   </span>
 </template>
@@ -24,16 +24,16 @@ export default defineComponent({
   props: {
     resourceId: {
       type: Number,
-      required: true,
-    },
-  },
-  setup(props) {
-    const getResource = computed(() => {
-      return resources.find((c) => c.id === props.resourceId)
-    })
-    return {
-      getResource,
+      required: true
     }
   },
+  setup (props) {
+    const getResource = computed(() => {
+      return resources.find(c => c.id === props.resourceId)
+    })
+    return {
+      getResource
+    }
+  }
 })
 </script>

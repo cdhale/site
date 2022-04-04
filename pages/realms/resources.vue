@@ -7,7 +7,7 @@
         represented in this data.
       </p>
     </div>
-    <canvas id="myChart" width="400" height="400"></canvas>
+    <canvas id="myChart" width="400" height="400" />
   </div>
 </template>
 <script>
@@ -37,7 +37,7 @@ import {
   Legend,
   Title,
   Tooltip,
-  SubTitle,
+  SubTitle
 } from 'chart.js'
 import { resources as resourceData } from '@/composables/utils/resourceColours'
 
@@ -69,7 +69,7 @@ Chart.register(
 )
 
 export default defineComponent({
-  setup(props, context) {
+  setup (props, context) {
     const myChart = ref(null)
 
     const filteredResources = resourceData.filter((d) => {
@@ -97,9 +97,9 @@ export default defineComponent({
           data: resources,
           backgroundColor: colours,
           borderColor: '#000',
-          hoverOffset: 20,
-        },
-      ],
+          hoverOffset: 20
+        }
+      ]
     }
     onMounted(() => {
       const ctx = document.getElementById('myChart')
@@ -111,7 +111,7 @@ export default defineComponent({
           plugins: {
             tooltip: {
               backgroundColor: '#fff',
-              bodyColor: '#000',
+              bodyColor: '#000'
             },
             legend: {
               position: 'right',
@@ -119,16 +119,16 @@ export default defineComponent({
                 color: '#fff',
                 font: {
                   size: 16,
-                  family: 'EB Garamond, serif',
-                },
-              },
-            },
-          },
-        },
+                  family: 'EB Garamond, serif'
+                }
+              }
+            }
+          }
+        }
       })
     })
 
     return { myChart, resources, colours }
-  },
+  }
 })
 </script>

@@ -17,13 +17,13 @@
       :class="{ ' hover:text-off-200 hover:bg-off-100': open }"
       @click="open = !open"
     >
-      <slot name="header"></slot>
+      <slot name="header" />
       <button class="hover:text-black">
         {{ open ? 'close' : 'open' }}
       </button>
     </div>
     <div v-if="open" class="p-4 text-2xl bg-off-200 text-off-100">
-      <slot name="body"></slot>
+      <slot name="body" />
     </div>
   </div>
 </template>
@@ -31,11 +31,11 @@
 import { defineComponent, ref } from '@vue/composition-api'
 
 export default defineComponent({
-  setup() {
+  setup () {
     const open = ref(false)
     return {
-      open,
+      open
     }
-  },
+  }
 })
 </script>

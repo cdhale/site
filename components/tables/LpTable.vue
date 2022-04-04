@@ -39,29 +39,33 @@
         :loading="loading.deposit"
         type="settling"
         @click="deposit(position.tokenId)"
-        >Deposit & Stake</BButton
       >
+        Deposit & Stake
+      </BButton>
       <BButton
         v-if="position.staked"
         :loading="loading.stake"
         type="settling"
         @click="unstake(position.tokenId, program)"
-        >Unstake / Claim</BButton
       >
+        Unstake / Claim
+      </BButton>
       <BButton
         v-if="deposited & !position.staked && stakeButton"
         :loading="loading.stake"
         type="settling"
         @click="stake(position.tokenId, program)"
-        >Stake</BButton
       >
+        Stake
+      </BButton>
       <BButton
         v-if="deposited && !position.staked"
         :loading="loading.stake"
         type="settling"
         @click="withdraw(position.tokenId)"
-        >Withdraw</BButton
       >
+        Withdraw
+      </BButton>
     </td>
   </tr>
 </template>
@@ -76,18 +80,18 @@ export default defineComponent({
   props: {
     position: {
       type: Object,
-      required: true,
+      required: true
     },
     stakeButton: {
       type: Boolean,
-      default: false,
+      default: false
     },
     program: {
       type: String,
-      default: 'v2',
-    },
+      default: 'v2'
+    }
   },
-  setup(props) {
+  setup (props) {
     const {
       getRewardsByToken,
       rewardInfo,
@@ -95,13 +99,13 @@ export default defineComponent({
       stake,
       withdraw,
       loading,
-      deposit,
+      deposit
     } = useIncentive()
     const { useL1Network } = useNetwork()
     const lordsToken = contractAddresses[useL1Network.value.id].uniswapV3Pool
 
     const checkProgram = computed(() => {
-      return props.position.incentivePositions.filter((a) => a.active === false)
+      return props.position.incentivePositions.filter(a => a.active === false)
     })
     const deposited = computed(
       () =>
@@ -138,8 +142,8 @@ export default defineComponent({
       loading,
       deposit,
       status,
-      checkProgram,
+      checkProgram
     }
-  },
+  }
 })
 </script>

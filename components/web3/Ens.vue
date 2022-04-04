@@ -12,18 +12,18 @@ export default defineComponent({
   props: {
     address: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
-  setup(props, context) {
+  setup (props, context) {
     const { shortenHash, returnEns, ensName } = useFormatting()
     onMounted(async () => {
       await returnEns(props.address)
     })
     return {
       shortenHash,
-      ensName,
+      ensName
     }
-  },
+  }
 })
 </script>

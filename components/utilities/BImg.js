@@ -4,38 +4,38 @@ import {
   computed,
   ref,
   onMounted,
-  onBeforeUnmount,
+  onBeforeUnmount
 } from '@nuxtjs/composition-api'
 
 export default {
   props: {
     src: {
       type: String,
-      required: true,
+      required: true
     },
     srcPlaceholder: {
       type: String,
-      default: 'data:,',
+      default: 'data:,'
     },
     srcset: {
-      type: String,
+      type: String
     },
     intersectionOptions: {
       type: Object,
-      default: () => ({}),
+      default: () => ({})
     },
     usePicture: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   inheritAttrs: false,
-  setup(props, context) {
+  setup (props, context) {
     const root = ref(context.root.$el)
     const state = reactive({
       observer: null,
       intersected: false,
-      loaded: false,
+      loaded: false
     })
 
     // Computed
@@ -81,22 +81,22 @@ export default {
       srcImage,
       srcsetImage,
       load,
-      error,
+      error
     }
   },
-  render() {
+  render () {
     const img = h('img', {
       ref: this.root,
       attrs: {
         src: this.srcImage,
-        srcset: this.srcsetImage,
+        srcset: this.srcsetImage
       },
       domProps: this.$attrs,
       class: {
         'v-lazy-image': true,
-        'v-lazy-image-loaded': this.state.loaded,
+        'v-lazy-image-loaded': this.state.loaded
       },
-      on: { load: this.load, error: this.error },
+      on: { load: this.load, error: this.error }
     })
     if (this.usePicture) {
       return h(
@@ -107,5 +107,5 @@ export default {
     } else {
       return img
     }
-  },
+  }
 }

@@ -8,8 +8,8 @@ module.exports = {
       './pages/**/*.vue',
       './validators/*.js',
       './slices/**/*.vue',
-      './composables/utils/*.ts',
-    ],
+      './composables/utils/*.ts'
+    ]
   },
   theme: {
     boxShadow: {
@@ -22,22 +22,22 @@ module.exports = {
       '2xl': '0 25px 50px -12px rgba(29, 32, 194, 0.25)',
       '3xl': '0 35px 60px -15px rgba(29, 32, 194, 0.3)',
       inner: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
-      none: 'none',
+      none: 'none'
     },
     inset: {
       0: 0,
       10: '10px',
       50: '50px',
-      '1/2': '50%',
+      '1/2': '50%'
     },
 
     extend: {
       fontFamily: {
         display: ['EB Garamond', 'serif'],
-        body: ['Inconsolata', 'monospace'],
+        body: ['Inconsolata', 'monospace']
       },
       backgroundImage: {
-        'map-img': "url('/assets/img/unknown.png')",
+        'map-img': "url('/assets/img/unknown.png')"
       },
       colors: {
         gray: {
@@ -50,11 +50,11 @@ module.exports = {
           700: '#616161',
           800: '#424242',
           900: '#161619',
-          1000: '#0e0e0e',
+          1000: '#0e0e0e'
         },
         off: {
           100: '#F9F7F1',
-          200: '#8D795B',
+          200: '#8D795B'
         },
         minHeight: {
           0: '0',
@@ -62,22 +62,22 @@ module.exports = {
           '1/2': '50vh',
           '3/4': '75vh',
           80: '80px',
-          full: '100vh',
+          full: '100vh'
         },
-        amber: colors.amber,
+        amber: colors.amber
       },
       fill: {
-        none: 'none',
-      },
-    },
+        none: 'none'
+      }
+    }
   },
   variants: {
     extend: {
       backgroundColor: ['checked', 'even'],
-      borderColor: ['checked'],
+      borderColor: ['checked']
     },
     opacity: ({ after }) => after(['disabled']),
     borderStyle: ['last', 'first'],
-    borderWidth: ['first'],
-  },
+    borderWidth: ['first']
+  }
 }

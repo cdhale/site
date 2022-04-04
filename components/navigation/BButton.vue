@@ -10,8 +10,10 @@
     @click="externalSite()"
   >
     <slot v-if="!loading" />
-    <span v-else
-      ><LoadingRings class="mx-auto w-7 h-7 text-off-100 fill-current"
+    <span
+      v-else
+    ><LoadingRings
+      class="mx-auto w-7 h-7 text-off-100 fill-current"
     /></span>
   </component>
 </template>
@@ -20,28 +22,28 @@ import { ButtonColors } from '@/validators/Button'
 import LoadingRings from '~/assets/img/loadingRings.svg?inline'
 export default {
   components: {
-    LoadingRings,
+    LoadingRings
   },
   props: {
     to: {
       type: String,
-      default: null,
+      default: null
     },
     loading: {
       type: Boolean,
-      default: false,
+      default: false
     },
     href: {
       type: String,
-      default: null,
+      default: null
     },
     block: {
       type: Boolean,
-      default: false,
+      default: false
     },
     disabled: {
       type: Boolean,
-      default: false,
+      default: false
     },
     type: {
       required: false,
@@ -49,24 +51,24 @@ export default {
       default: 'default',
       validator: (value) => {
         return Object.keys(ButtonColors).includes(value)
-      },
-    },
+      }
+    }
   },
   computed: {
-    buttonColor() {
+    buttonColor () {
       return ButtonColors[this.type]
     },
-    tag() {
+    tag () {
       return this.to ? 'nuxt-link' : 'button'
-    },
+    }
   },
   methods: {
-    externalSite() {
+    externalSite () {
       console.log('external site buytton')
       if (this.href) {
         window.location = this.href
       }
-    },
-  },
+    }
+  }
 }
 </script>

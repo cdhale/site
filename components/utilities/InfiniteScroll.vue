@@ -14,10 +14,10 @@ export default defineComponent({
     contentChangeKey: {
       type: Number,
       default: 0,
-      required: true,
-    },
+      required: true
+    }
   },
-  setup(props, { emit }) {
+  setup (props, { emit }) {
     const { contentChangeKey } = toRefs(props)
     let locked = false
     const loadGap = DEFAULT_LOAD_GAP
@@ -34,7 +34,7 @@ export default defineComponent({
       window.removeEventListener('scroll', fetchNextBlockIfNeeded)
     })
 
-    function fetchNextBlockIfNeeded(e) {
+    function fetchNextBlockIfNeeded (e) {
       const div = e.target.documentElement
       const divGap = div.scrollHeight - div.clientHeight - div.scrollTop
       if (divGap < loadGap) {
@@ -45,9 +45,9 @@ export default defineComponent({
       }
     }
     return {
-      fetchNextBlockIfNeeded,
+      fetchNextBlockIfNeeded
     }
-  },
+  }
 })
 </script>
 

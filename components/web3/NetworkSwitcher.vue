@@ -124,14 +124,14 @@ import { useWeb3 } from '@instadapp/vue-web3'
 import {
   useNetwork,
   activeNetwork,
-  activeNetworkId,
+  activeNetworkId
 } from '~/composables/useNetwork'
 import { useModal } from '~/composables/useModal'
 
 // import { useTenderly } from '~/composables/useTenderly';
 
 export default defineComponent({
-  setup() {
+  setup () {
     const show = ref(false)
     const { chainId, ethersProviders, account } = useWeb3()
     const {
@@ -139,7 +139,7 @@ export default defineComponent({
       checkForNetworkMismatch,
       networkMismatch,
       networkName,
-      setActiveNetwork,
+      setActiveNetwork
     } = useNetwork()
     const { showNetworksMismatchDialog } = useModal()
 
@@ -178,8 +178,8 @@ export default defineComponent({
       setActiveNetworkFunction,
       activeNetworkId,
       account,
-      ethersProviders,
+      ethersProviders
     }
-  },
+  }
 })
 </script>

@@ -21,8 +21,9 @@
               : ' border-transparent text-off-200 border-off-200',
           ]"
           @click.native="currentTab(link.slug)"
-          >{{ link.title }}</BButton
         >
+          {{ link.title }}
+        </BButton>
       </nav>
     </div>
     <StakedRealms v-if="activeTab === 'srealms'" type="user" />
@@ -33,18 +34,18 @@
 import { defineComponent, ref } from '@nuxtjs/composition-api'
 import { useConnect } from '~/composables/useConnect'
 export default defineComponent({
-  setup() {
+  setup () {
     const { isAddressPage } = useConnect()
 
     const menuLinks = ref([
       {
         title: 'Staked Realms',
-        slug: 'srealms',
+        slug: 'srealms'
       },
       {
         title: 'Unstaked Realms',
-        slug: 'realms',
-      },
+        slug: 'realms'
+      }
     ])
     const activeTab = ref('srealms')
     const currentTab = (tab) => {
@@ -55,8 +56,8 @@ export default defineComponent({
       menuLinks,
       currentTab,
       activeTab,
-      isAddressPage,
+      isAddressPage
     }
-  },
+  }
 })
 </script>

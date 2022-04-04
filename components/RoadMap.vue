@@ -39,8 +39,7 @@
             p-2
             px-4
           "
-          >Open Beta</span
-        >
+        >Open Beta</span>
         <span
           class="
             text-blue-800
@@ -50,8 +49,7 @@
             p-2
             px-4
           "
-          >Production</span
-        >
+        >Production</span>
       </div>
       <div
         v-for="(stage, index) in mapStages"
@@ -109,7 +107,7 @@
 import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
-  setup() {
+  setup () {
     const mapStages = [
       {
         betaTime: '',
@@ -117,7 +115,7 @@ export default defineComponent({
         title: 'Starknet Bridge & Staking',
         description:
           'The journey commences with a bridge to the Layer 2 network - Starknet. To reward early Realm Lords, a joint Staking contract is being built where Lords can earn. Once Starknet is live, the Realms will be automatically available to redeem on Starknet. You will then be able to trade freely between l1 and l2.',
-        active: 'true',
+        active: 'true'
       },
       {
         betaTime: 'Early Q2 2022 ',
@@ -125,7 +123,7 @@ export default defineComponent({
         title: 'Minigame on Starknet Alpha',
         description:
           'Mini tower defence game on Starknet Alpha will be released. This will be an entirely on-chain experience and will require Lords to play. ',
-        active: 'true',
+        active: 'true'
       },
       {
         betaTime: 'Q2 2022',
@@ -133,7 +131,7 @@ export default defineComponent({
         title: 'Starknet Bridge',
         description:
           'A complete bridge to Starknet is being built. This will allow players to transfer their Realms back and forth between l1 and l2.',
-        active: 'true',
+        active: 'true'
       },
       {
         betaTime: 'Q2 2022',
@@ -141,7 +139,7 @@ export default defineComponent({
         title: 'Trading Plaza on Starknet - NFT Marketplace using $LORDS',
         description:
           'A Starknet native NFT marketplace denominated in $LORDS is being designed and built. All trades on this marketplace will use LORDS as the currency. A % of the transaction fees will funnel directly into the Bibliotheca DAO.',
-        active: 'true',
+        active: 'true'
       },
       {
         betaTime: 'Q2 2022',
@@ -150,7 +148,7 @@ export default defineComponent({
           'Settling on Starknet - Stake your Realms and Earn LORDS and resources.',
         description:
           'Players will be able to Settle their Starknet Realms and begin to earn resources and $LORDS.',
-        active: 'true',
+        active: 'true'
       },
       {
         betaTime: 'Q2 2022',
@@ -158,7 +156,7 @@ export default defineComponent({
         title: 'Resources Automated Market Maker',
         description:
           'The Resources AMM provides the vital functionality for Adventurers to be able to trade for missing materials for upgrades - such as Wood, Diamonds and Dragonhide',
-        active: 'true',
+        active: 'true'
       },
       {
         betaTime: 'Q2 2022',
@@ -166,19 +164,19 @@ export default defineComponent({
         title: 'PvP Contracts',
         description:
           "Fight your way to resource supremacy by raiding other adventurers' Realms, and participate in other creative PvP experiences using Loot derivatives",
-        active: 'true',
+        active: 'true'
       },
       {
         betaTime: 'Beyond',
         title: 'The Realmverse economy',
         description:
           'With a thriving ecosytem on Starknet, more features and composablity across apps will emerge. Community involvement will guide this. We envision 1m+ players all working together building a functioning on-chain economy.',
-        active: 'true',
-      },
+        active: 'true'
+      }
     ]
     return {
-      mapStages,
+      mapStages
     }
-  },
+  }
 })
 </script>

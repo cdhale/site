@@ -6,7 +6,7 @@
         <div
           :style="'width:' + (cities / 21) * 100 + '%'"
           class="rounded px-4 py-2 bg-red-400 bg-opacity-75"
-        ></div>
+        />
       </div>
     </div>
     <div class="my-2">
@@ -15,7 +15,7 @@
         <div
           :style="'width:' + (harbours / 35) * 100 + '%'"
           class="rounded px-4 py-2 bg-gray-900 bg-opacity-75"
-        ></div>
+        />
       </div>
     </div>
     <div class="my-2">
@@ -24,7 +24,7 @@
         <div
           :style="'width:' + (regions / 7) * 100 + '%'"
           class="rounded px-4 py-2 bg-yellow-300 bg-opacity-75"
-        ></div>
+        />
       </div>
     </div>
     <div class="my-2">
@@ -39,7 +39,7 @@
             bg-blue-300 bg-opacity-75
             border-blue-300 border
           "
-        ></div>
+        />
       </div>
     </div>
   </div>
@@ -51,21 +51,21 @@ export default defineComponent({
   props: {
     cities: {
       type: Number,
-      required: true,
+      required: true
     },
     harbours: {
       type: Number,
-      required: true,
+      required: true
     },
     regions: {
       type: Number,
-      required: true,
+      required: true
     },
     rivers: {
       type: Number,
-      required: true,
-    },
+      required: true
+    }
   },
-  setup() {},
+  setup () {}
 })
 </script>

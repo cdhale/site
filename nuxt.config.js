@@ -10,20 +10,20 @@ EventEmitter.defaultMaxListeners = 20
 const graphqlClients = {
   realms: {
     endpoint:
-      'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms',
+      'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms'
   },
   staker: {
     endpoint: process.env.GRAPH_API_STAKER
       ? process.env.GRAPH_API_STAKER
       : 'http://localhost:1337/graphql',
-    options: {},
+    options: {}
   },
   ecosystem: {
     endpoint: process.env.GRAPH_API
       ? process.env.GRAPH_API
       : 'http://localhost:1337/graphql',
-    options: {},
-  },
+    options: {}
+  }
 }
 if (process.env.ACTIVE_NETWORKS.includes('rinkeby')) {
   graphqlClients.staker.endpoint = process.env.GRAPH_API_STAKER_RINKEBY
@@ -35,53 +35,53 @@ const meta = [
   {
     hid: 'description',
     name: 'description',
-    content: description,
+    content: description
   },
   {
     hid: 'og:type',
     property: 'og:type',
-    content: type,
+    content: type
   },
   {
     hid: 'og:url',
     property: 'og:url',
-    content: url,
+    content: url
   },
   {
     hid: 'og:title',
     property: 'og:title',
-    content: title,
+    content: title
   },
   {
     hid: 'og:description',
     property: 'og:description',
-    content: description,
+    content: description
   },
   {
     hid: 'og:image',
     property: 'og:image',
-    content: mainImage,
+    content: mainImage
   },
   {
     hid: 'twitter:url',
     name: 'twitter:url',
-    content: url,
+    content: url
   },
   {
     hid: 'twitter:title',
     name: 'twitter:title',
-    content: title,
+    content: title
   },
   {
     hid: 'twitter:description',
     name: 'twitter:description',
-    content: description,
+    content: description
   },
   {
     hid: 'twitter:image',
     name: 'twitter:image',
-    content: mainImage,
-  },
+    content: mainImage
+  }
 ]
 
 export default {
@@ -89,12 +89,12 @@ export default {
   head: {
     title: 'Bibliotheca DAO',
     htmlAttrs: {
-      lang: 'en',
+      lang: 'en'
     },
     meta: [
       ...meta,
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -102,9 +102,9 @@ export default {
       { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Inconsolata:wght@300&display=swap',
-      },
-    ],
+        href: 'https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Inconsolata:wght@300&display=swap'
+      }
+    ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -112,19 +112,19 @@ export default {
   loadingIndicator: {
     name: 'pulse',
     color: '#FFF',
-    background: 'black',
+    background: 'black'
   },
   graphql: {
     clients: graphqlClients,
     options: {},
     useFetchPolyfill: true,
-    includeNodeModules: true,
+    includeNodeModules: true
   },
   plugins: [
     '~/plugins/vue-formulate',
     '~/plugins/analytics.js',
     '~/plugins/v-click-outside.js',
-    '~/plugins/vue-awesome-countdown.js',
+    '~/plugins/vue-awesome-countdown.js'
   ],
   components: [
     '~/components/web3',
@@ -135,7 +135,7 @@ export default {
     '~/components/utilities',
     '~/components/market',
     '~/components/realms',
-    '~/components/tables',
+    '~/components/tables'
   ],
   buildModules: [
     '@nuxtjs/eslint-module',
@@ -151,28 +151,28 @@ export default {
         // Remove legacy purge option to disable the warning
         config.purge = undefined
       })
-    },
+    }
   ],
   modules: ['@nuxtjs/axios', '@nuxtjs/svg'],
   generate: {
-    fallback: true,
+    fallback: true
   },
   serverMiddleware: ['~/serverMiddleware/redirects.ts'],
   build: {
-    extend(config) {
+    extend (config) {
       config.node = {
-        fs: 'empty',
+        fs: 'empty'
       }
-    },
+    }
   },
   router: {
-    linkExactActiveClass: 'text-off-200',
+    linkExactActiveClass: 'text-off-200'
   },
   env: {
     INFURA_ID: process.env.INFURA_ID,
     NEXT_PUBLIC_ALCHEMY_API_KEY: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
     ETHER_SCAN: process.env.ETHER_SCAN,
     ACTIVE_NETWORKS: process.env.ACTIVE_NETWORKS,
-    OPENSEA: process.env.OPENSEA,
-  },
+    OPENSEA: process.env.OPENSEA
+  }
 }

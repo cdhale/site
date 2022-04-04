@@ -7,8 +7,9 @@
         <NuxtLink
           class="hover:underline"
           :to="'/adventurer/' + loot[0].currentOwner.address"
-          >{{ shortenHash(loot[0].currentOwner.address) }}</NuxtLink
         >
+          {{ shortenHash(loot[0].currentOwner.address) }}
+        </NuxtLink>
       </h3>
       <div class="sm:text-2xl w-96">
         <LootCard is-o-g :loot="loot[0]" />
@@ -25,12 +26,12 @@ import {
   defineComponent,
   ref,
   useContext,
-  useFetch,
+  useFetch
 } from '@nuxtjs/composition-api'
 import { useFormatting } from '~/composables/useFormatting'
 
 export default defineComponent({
-  setup(props, context) {
+  setup (props, context) {
     const { $graphql } = useContext()
     const search = ref()
     const { shortenHash } = useFormatting()
@@ -84,8 +85,8 @@ export default defineComponent({
       search,
       loading,
       id,
-      shortenHash,
+      shortenHash
     }
-  },
+  }
 })
 </script>

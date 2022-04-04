@@ -6,7 +6,7 @@
           src="/lords-icon.png"
           class="mx-auto rounded-full w-32 h-32 sm:w-96 sm:h-96"
           alt=""
-        />
+        >
 
         <h1 class="text-3xl sm:text-8xl my-6 text-center">
           Bibliotheca <span class="text-off-200">DAO</span>
@@ -42,9 +42,9 @@
             text-center
           "
         >
-          <span class="font-display text-2xl sm:text-5xl"
-            >Settling of The Realms</span
-          >
+          <span
+            class="font-display text-2xl sm:text-5xl"
+          >Settling of The Realms</span>
           <p class="mt-4 sm:text-2xl">
             The worlds first L2 MMOCCG resource management game.
           </p>
@@ -77,15 +77,20 @@
             Realms with varying rarity spread across the Realmverse.
           </p>
           <div class="flex mt-8 space-x-2">
-            <BButton to="/realms" class="text-sm" type="primary"
-              >Explore Realms</BButton
+            <BButton
+              to="/realms"
+              class="text-sm"
+              type="primary"
             >
+              Explore Realms
+            </BButton>
             <BButton
               href="https://opensea.io/collection/lootrealms"
               class="text-sm"
               type="primary"
-              >Buy Realms</BButton
             >
+              Buy Realms
+            </BButton>
           </div>
         </div>
         <div class="sm:w-1/2 self-center mx-auto">
@@ -93,7 +98,7 @@
             src="https://storage.opensea.io/files/1653d8a6adfa4f61abf1ebc56f63daea.svg"
             class="mx-auto rounded-full w-48 h-48 sm:w-96 sm:h-96"
             alt=""
-          />
+          >
         </div>
       </div>
       <div class="flex flex-wrap my-20">
@@ -119,14 +124,16 @@
               href="https://app.uniswap.org/#/swap"
               class="text-sm"
               type="primary"
-              >$LORDS</BButton
             >
+              $LORDS
+            </BButton>
             <BButton
               href="https://docs.bibliothecaforloot.com/economics/lords"
               class="text-sm"
               type="primary"
-              >Tokenomics</BButton
             >
+              Tokenomics
+            </BButton>
           </div>
         </div>
         <div class="sm:w-1/2 self-center mx-auto">
@@ -134,7 +141,7 @@
             src="/lords-icon.png"
             class="mx-auto rounded-full w-48 h-48 sm:w-96 sm:h-96"
             alt=""
-          />
+          >
         </div>
       </div>
       <div class="flex flex-wrap my-20">
@@ -156,9 +163,13 @@
             world.
           </p>
           <div class="flex mt-8">
-            <BButton to="/realms/resources" class="text-xs" type="primary"
-              >Resource distribution</BButton
+            <BButton
+              to="/realms/resources"
+              class="text-xs"
+              type="primary"
             >
+              Resource distribution
+            </BButton>
           </div>
         </div>
         <div class="sm:w-1/2 self-center mx-auto">
@@ -166,7 +177,7 @@
             src="https://github.com/BibliothecaForAdventurers/voxel-resources/blob/main/alchemical%20silver.gif?raw=true"
             class="mx-auto rounded-full w-48 h-48 sm:w-96 sm:h-96 object-cover"
             alt=""
-          />
+          >
         </div>
       </div>
     </div>
@@ -181,6 +192,6 @@ export default defineComponent({
   // components: {
   //   Book,
   // },
-  setup() {},
+  setup () {}
 })
 </script>

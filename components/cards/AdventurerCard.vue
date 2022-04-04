@@ -3,31 +3,23 @@
     <div>
       <h3>{{ shortenHash(adventurer.address) }}</h3>
       <div class="text-xl">
-        <span
-          >Loot Bags: {{ adventurer.bagsHeld ? adventurer.bagsHeld : 0 }}</span
-        >
-        <br />
-        <span
-          >Genesis Adventurers:
+        <span>Loot Bags: {{ adventurer.bagsHeld ? adventurer.bagsHeld : 0 }}</span>
+        <br>
+        <span>Genesis Adventurers:
           {{
             adventurer.gAdventurersHeld ? adventurer.gAdventurersHeld : 0
-          }}</span
-        >
-        <br />
-        <span
-          >Realms:
+          }}</span>
+        <br>
+        <span>Realms:
           {{
             adventurer.realmsHeld || adventurer.bridgedRealmsHeld
               ? +adventurer.realmsHeld + +adventurer.bridgedRealmsHeld
               : 0
-          }}</span
-        >
-        <br />
+          }}</span>
+        <br>
         <span>Mana: {{ adventurer.manasHeld ? adventurer.manasHeld : 0 }}</span>
-        <br />
-        <span
-          >mLoot: {{ adventurer.mLootsHeld ? adventurer.mLootsHeld : 0 }}</span
-        >
+        <br>
+        <span>mLoot: {{ adventurer.mLootsHeld ? adventurer.mLootsHeld : 0 }}</span>
       </div>
     </div>
     <div class="mt-auto flex text-gray-300">
@@ -41,15 +33,15 @@ import { useFormatting } from '~/composables/useFormatting'
 import ArrowRight from '~/assets/img/arrow-right.svg?inline'
 export default defineComponent({
   components: {
-    ArrowRight,
+    ArrowRight
   },
   props: {
     adventurer: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
-  setup(props, context) {
+  setup (props, context) {
     const { shortenHash /* , returnEns */, ensName } = useFormatting()
     const navigate = () => {
       context.root.$router.push(`/adventurer/${props.adventurer.address}`)
@@ -61,8 +53,8 @@ export default defineComponent({
     return {
       shortenHash,
       navigate,
-      ensName,
+      ensName
     }
-  },
+  }
 })
 </script>

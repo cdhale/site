@@ -4,8 +4,12 @@
       <span v-if="ensName">{{ ensName }}</span>
       <span v-else>{{ shortenHash(address) }}</span>
     </h3>
-    <h1 v-if="isAddressPage" class="mb-8">My Lord, your vast empire</h1>
-    <h1 v-else class="mb-8">Adventurer's Empire</h1>
+    <h1 v-if="isAddressPage" class="mb-8">
+      My Lord, your vast empire
+    </h1>
+    <h1 v-else class="mb-8">
+      Adventurer's Empire
+    </h1>
     <div class="flex">
       <nav class="space-x-4 mb-6 bg-gray-900 px-3 py-5 rounded-2xl">
         <NuxtLink
@@ -23,8 +27,9 @@
             text-off-200
           "
           :to="'/adventurer/' + address + '/' + link.slug"
-          >{{ link.title }}</NuxtLink
         >
+          {{ link.title }}
+        </NuxtLink>
       </nav>
     </div>
 
@@ -36,7 +41,7 @@ import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
 import { useFormatting } from '~/composables/useFormatting'
 import { useConnect } from '~/composables/useConnect'
 export default defineComponent({
-  setup(props, context) {
+  setup (props, context) {
     const { shortenHash, returnEns, ensName } = useFormatting()
     const { isAddressPage } = useConnect()
     const { address } = context.root.$route.params
@@ -45,12 +50,12 @@ export default defineComponent({
     const menuLinks = ref([
       {
         title: 'Assets',
-        slug: '',
+        slug: ''
       },
       {
         title: 'Realms',
-        slug: 'realms',
-      },
+        slug: 'realms'
+      }
     ])
     /* const displayedLinks = computed(() => {
        if (isAddressPage.value) {
@@ -72,8 +77,8 @@ export default defineComponent({
       menuLinks,
       ensName,
       shortenHash,
-      isAddressPage,
+      isAddressPage
     }
-  },
+  }
 })
 </script>

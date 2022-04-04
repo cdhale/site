@@ -37,7 +37,7 @@
               dark:bg-opacity-70
             "
             @click="close"
-          ></div>
+          />
         </transition>
 
         <transition
@@ -48,7 +48,7 @@
           leave-class="translate-y-0 opacity-100 sm:scale-100"
           leave-to-class="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-95"
         >
-          <div :is="modal" v-if="isShown" v-bind="props" class="z-30"></div>
+          <div :is="modal" v-if="isShown" v-bind="props" class="z-30" />
         </transition>
       </div>
     </div>
@@ -61,11 +61,11 @@ import { useModal } from '~/composables/useModal'
 
 export default defineComponent({
   props: {
-    show: { type: Boolean, default: false },
+    show: { type: Boolean, default: false }
   },
-  setup() {
+  setup () {
     const { isShown, props, modal, close } = useModal()
     return { isShown, props, modal, close }
-  },
+  }
 })
 </script>

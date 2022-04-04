@@ -29,10 +29,10 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import { useNotification } from '~/composables/useNotification'
 
 export default defineComponent({
-  setup() {
+  setup () {
     const { queue, close, closeAll } = useNotification()
     return { queue, close, closeAll }
-  },
+  }
 })
 </script>
 

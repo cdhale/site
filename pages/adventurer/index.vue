@@ -21,11 +21,14 @@
             sm:w-auto
           "
           type="text"
-        />
+        >
         <div class="w-full sm:w-auto self-center">
-          <BButton class="mt-2 sm:mt-0 sm:px-4 w-full" type="primary"
-            >find adventurer</BButton
+          <BButton
+            class="mt-2 sm:mt-0 sm:px-4 w-full"
+            type="primary"
           >
+            find adventurer
+          </BButton>
         </div>
       </form>
 
@@ -93,13 +96,13 @@ import {
   defineComponent,
   ref,
   useContext,
-  useFetch,
+  useFetch
 } from '@nuxtjs/composition-api'
 import AdventurerCard from '~/components/cards/AdventurerCard.vue'
 
 export default defineComponent({
   components: { AdventurerCard },
-  setup(props, context) {
+  setup (props, context) {
     const getQuery = (param) => {
       return ref(gql`
         query walletQuery($offset: Int!) {
@@ -134,24 +137,24 @@ export default defineComponent({
     const orderByButtons = [
       {
         label: 'Loot',
-        data: 'bagsHeld',
+        data: 'bagsHeld'
       },
       {
         label: 'mLoot',
-        data: 'mLootsHeld',
+        data: 'mLootsHeld'
       },
       {
         label: 'Realms',
-        data: 'realmsHeld',
+        data: 'realmsHeld'
       },
       {
         label: 'GAs ',
-        data: 'gAdventurersHeld',
+        data: 'gAdventurersHeld'
       },
       {
         label: 'Mana',
-        data: 'manasHeld',
-      },
+        data: 'manasHeld'
+      }
     ]
 
     const submitSearch = () => {
@@ -162,7 +165,7 @@ export default defineComponent({
 
     const { fetch } = useFetch(async () => {
       const response = await $graphql.ecosystem.request(query.value, {
-        offset: offset.value,
+        offset: offset.value
       })
       adventurers.value = response.wallets
     })
@@ -176,7 +179,7 @@ export default defineComponent({
 
       try {
         const response = await $graphql.ecosystem.request(query.value, {
-          offset: offset.value,
+          offset: offset.value
         })
         adventurers.value = adventurers.value.concat(response.wallets)
       } catch (e) {
@@ -201,8 +204,8 @@ export default defineComponent({
       loading,
       orderBy,
       fetch,
-      currentSortBy,
+      currentSortBy
     }
-  },
+  }
 })
 </script>

@@ -31,13 +31,14 @@
             sm:text-base
           "
           @click="filtersOpen = !filtersOpen"
-          >Open Filters +</BButton
         >
+          Open Filters +
+        </BButton>
       </div>
       <div
         v-if="
           (activeFilters.resources && activeFilters.resources.length) ||
-          (activeFilters.orders && activeFilters.orders.length)
+            (activeFilters.orders && activeFilters.orders.length)
         "
         class="flex flex-wrap sm:space-x-3 my-3"
       >
@@ -73,7 +74,7 @@
             >
               <path
                 d="M1490 1322q0 40-28 68l-136 136q-28 28-68 28t-68-28l-294-294-294 294q-28 28-68 28t-68-28l-136-136q-28-28-28-68t28-68l294-294-294-294q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 294 294-294q28-28 68-28t68 28l136 136q28 28 28 68t-28 68l-294 294 294 294q28 28 28 68z"
-              ></path>
+              />
             </svg>
           </button>
         </span>
@@ -108,7 +109,7 @@
             >
               <path
                 d="M1490 1322q0 40-28 68l-136 136q-28 28-68 28t-68-28l-294-294-294 294q-28 28-68 28t-68-28l-136-136q-28-28-28-68t28-68l294-294-294-294q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 294 294-294q28-28 68-28t68 28l136 136q28 28 28 68t-28 68l-294 294 294 294q28 28 28 68z"
-              ></path>
+              />
             </svg>
           </button>
         </span>
@@ -200,7 +201,7 @@ import {
   defineComponent,
   ref,
   useFetch,
-  computed,
+  computed
 } from '@nuxtjs/composition-api'
 import { useFormatting } from '~/composables/useFormatting'
 import { useRealms } from '~/composables/useRealms'
@@ -214,15 +215,15 @@ export default defineComponent({
   fetchOnServer: false,
   components: {
     SortAscending,
-    SortDescending,
+    SortDescending
   },
   props: {
     type: {
       type: String,
-      default: 'all',
-    },
+      default: 'all'
+    }
   },
-  setup(props, context) {
+  setup (props, context) {
     const { shortenHash } = useFormatting()
     const { userRealms, realms, loading, getRealms, getWalletRealms } =
       useRealms()
@@ -242,35 +243,35 @@ export default defineComponent({
     const orderByData = [
       {
         data: 'tokenId',
-        name: 'Token ID',
+        name: 'Token ID'
       },
       {
         data: 'rarityRank',
-        name: 'rarity',
+        name: 'rarity'
       },
       {
         data: 'regions',
-        name: 'Regions',
-      },
+        name: 'Regions'
+      }
     ]
     const filterByData = [
       {
         data: 'sale_date',
-        name: 'resource',
+        name: 'resource'
       },
       {
         data: 'sale_price',
-        name: 'wonder',
-      },
+        name: 'wonder'
+      }
     ]
     const getResource = (id) => {
-      return resourcesList.find((c) => c.id === id)
+      return resourcesList.find(c => c.id === id)
     }
     const getOrderById = (id) => {
-      return gaOrders.find((a) => id === a.id)
+      return gaOrders.find(a => id === a.id)
     }
     const getOrderByName = (name) => {
-      return gaOrders.find((a) => name === a.name)
+      return gaOrders.find(a => name === a.name)
     }
     const filters = computed(() => {
       return {
@@ -280,13 +281,13 @@ export default defineComponent({
         resources: resourcesFilter.value,
         orders: ordersFilter.value,
         orderDirection: orderDirection.value,
-        address: filterAddress.value,
+        address: filterAddress.value
       }
     })
     const activeFilters = computed(() => {
       return {
         resources: resourcesFilter.value,
-        orders: ordersFilter.value,
+        orders: ordersFilter.value
       }
     })
     // const realmOsData = compu
@@ -426,8 +427,8 @@ export default defineComponent({
       filterByData,
       orderBy,
       realms,
-      filtersOpen,
+      filtersOpen
     }
-  },
+  }
 })
 </script>

@@ -19,7 +19,9 @@
     :class="filtersOpen ? 'translate-x-0 shadow-xl' : '-translate-x-full'"
   >
     <div class="px-4 flex items-center justify-between">
-      <h3 class="text-gray-200">Filters</h3>
+      <h3 class="text-gray-200">
+        Filters
+      </h3>
       <button
         type="button"
         class="
@@ -55,11 +57,16 @@
           border-4 border-double border-off-200
         "
         type="text"
-      />
+      >
       <div class="self-center w-1/2">
-        <BButton class="mt-2 sm:mt-0 sm:px-4 w-full text-white" type="primary"
-          ><Search class="white w-6 h-6"
-        /></BButton>
+        <BButton
+          class="mt-2 sm:mt-0 sm:px-4 w-full text-white"
+          type="primary"
+        >
+          <Search
+            class="white w-6 h-6"
+          />
+        </BButton>
       </div>
     </form>
 
@@ -154,7 +161,7 @@
                   focus:outline-none
                 "
                 @change.prevent="updateResources()"
-              />
+              >
               <input
                 v-else
                 :id="'filter-' + section.id + option.id"
@@ -174,22 +181,27 @@
                   focus:outline-none
                 "
                 @change.prevent="updateResources()"
-              />
+              >
               <label
                 :for="'filter-' + section.id + option.id"
                 class="ml-3 min-w-0 flex-1 text-gray-200 text-xl cursor-pointer"
               >
                 <span v-if="section.id === 'orders'">Order of</span>
                 {{ option.name }}
-                <span v-if="option.stakedRealms" class="font-semibold"
-                  >({{ option.stakedRealms }})</span
-                >
+                <span
+                  v-if="option.stakedRealms"
+                  class="font-semibold"
+                >({{ option.stakedRealms }})</span>
               </label>
             </div>
           </div>
-          <BButton class="w-full mt-4" type="primary" @click="updateResources()"
-            >Update</BButton
+          <BButton
+            class="w-full mt-4"
+            type="primary"
+            @click="updateResources()"
           >
+            Update
+          </BButton>
         </div>
       </div>
     </div>
@@ -206,27 +218,27 @@ export default {
   name: 'Filters',
   components: {
     Close,
-    Search,
+    Search
   },
   props: {
     filtersOpen: {
       default: false,
-      type: Boolean,
+      type: Boolean
     },
     type: {
       type: String,
-      default: 'all',
+      default: 'all'
     },
     resources: {
       type: Array,
-      default: null,
+      default: null
     },
     orders: {
       type: Array,
-      default: null,
-    },
+      default: null
+    }
   },
-  setup(props, context) {
+  setup (props, context) {
     const filtersRef = ref(props.filters)
     const { getResourceList, resourceList, resourceListOrdered } =
       useResources()
@@ -235,14 +247,14 @@ export default {
         id: 'resources',
         name: 'Resources',
         open: false,
-        options: [],
+        options: []
       },
       {
         id: 'orders',
         name: 'Orders',
         open: false,
-        options: gaOrders,
-      },
+        options: gaOrders
+      }
     ])
     const openFilter = ref(null)
 
@@ -256,7 +268,7 @@ export default {
 
     const checked = ref({
       user: { resources: [], orders: [] },
-      all: { resources: [], orders: [] },
+      all: { resources: [], orders: [] }
     })
     if (props.resources) {
       checked.value.user.resources = props.resources
@@ -276,8 +288,8 @@ export default {
     const adventureLinks = [
       {
         page: '/adventurer',
-        title: 'Search All',
-      },
+        title: 'Search All'
+      }
     ]
 
     onMounted(async () => {
@@ -316,8 +328,8 @@ export default {
       updateResources,
       openFilter,
       adventureLinks,
-      checked,
+      checked
     }
-  },
+  }
 }
 </script>

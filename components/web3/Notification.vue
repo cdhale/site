@@ -67,17 +67,17 @@ import { defineComponent, onMounted } from '@nuxtjs/composition-api'
 import CloseIcon from '@/assets/img/x-square.svg?inline'
 export default defineComponent({
   components: {
-    CloseIcon,
+    CloseIcon
   },
   props: {
     title: { type: String, deafult: '' },
     body: { type: String, deafult: '' },
     href: { type: String, deafult: '' },
     icon: { type: String, deafult: '' },
-    duration: { type: Number, deafult: 7000 },
+    duration: { type: Number, deafult: 7000 }
   },
-  setup(props, ctx) {
-    function dismiss() {
+  setup (props, ctx) {
+    function dismiss () {
       ctx.emit('dismiss')
     }
     onMounted(() => {
@@ -86,6 +86,6 @@ export default defineComponent({
       }
     })
     return { dismiss }
-  },
+  }
 })
 </script>

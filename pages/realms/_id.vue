@@ -6,11 +6,10 @@
           class="pb-1"
           :href="
             'https://opensea.io/assets/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d/' +
-            openSeaData.token_id
+              openSeaData.token_id
           "
           target="_blank"
-          >View Realm on Open Sea</a
-        >
+        >View Realm on Open Sea</a>
         <RealmRarity
           class="mb-8 text-xl"
           :rarity-score="realm.rarityScore"
@@ -21,10 +20,13 @@
           <NuxtLink
             class="hover:underline"
             :to="'/adventurer/' + realm.currentOwner.address"
-            >{{ shortenHash(realm.currentOwner.address) }}</NuxtLink
           >
+            {{ shortenHash(realm.currentOwner.address) }}
+          </NuxtLink>
         </h3>
-        <h1 class="sm:text-6xl">{{ realm.name }} - #{{ realm.id }}</h1>
+        <h1 class="sm:text-6xl">
+          {{ realm.name }} - #{{ realm.id }}
+        </h1>
         <div v-if="realm.order" class="py-4">
           <OrderChip class="text-xl" :order="realm.order" />
         </div>
@@ -93,7 +95,9 @@
             'https://d23fdhqc1jb9no.cloudfront.net/_Realms/' + realm.id + '.svg'
           "
         />
-        <h4 v-else class="my-5">No image yet</h4>
+        <h4 v-else class="my-5">
+          No image yet
+        </h4>
       </div>
     </div>
     <div v-else>
@@ -106,13 +110,13 @@ import {
   computed,
   defineComponent,
   ref,
-  useFetch,
+  useFetch
 } from '@nuxtjs/composition-api'
 import axios from 'axios'
 import { useFormatting } from '~/composables/useFormatting'
 import { useRealms } from '~/composables/useRealms'
 export default defineComponent({
-  setup(props, context) {
+  setup (props, context) {
     const { shortenHash } = useFormatting()
     const { id } = context.root.$route.params
     const adventurer = ref(null)
@@ -125,8 +129,8 @@ export default defineComponent({
           '/?force_update=true',
         {
           headers: {
-            'X-API-KEY': process.env.OPENSEA,
-          },
+            'X-API-KEY': process.env.OPENSEA
+          }
         }
       )
       openSeaData.value = response.data
@@ -138,45 +142,45 @@ export default defineComponent({
     const resources = computed(() => {
       return openSeaData.value.traits.length
         ? openSeaData.value.traits.filter(
-            (resource) => resource.trait_type === 'Resource'
-          )
+          resource => resource.trait_type === 'Resource'
+        )
         : null
     })
     const cities = computed(() => {
       return openSeaData.value.traits.length
         ? openSeaData.value.traits.find(
-            (resource) => resource.trait_type === 'Cities'
-          )
+          resource => resource.trait_type === 'Cities'
+        )
         : null
     })
     const harbours = computed(() => {
       return openSeaData.value.traits.length
         ? openSeaData.value.traits.find(
-            (resource) => resource.trait_type === 'Harbors'
-          )
+          resource => resource.trait_type === 'Harbors'
+        )
         : null
     })
     const regions = computed(() => {
       return openSeaData.value.traits.length
         ? openSeaData.value.traits.find(
-            (resource) => resource.trait_type === 'Regions'
-          )
+          resource => resource.trait_type === 'Regions'
+        )
         : null
     })
     const rivers = computed(() => {
       return openSeaData.value.traits.length
         ? openSeaData.value.traits.find(
-            (resource) => resource.trait_type === 'Rivers'
-          )
+          resource => resource.trait_type === 'Rivers'
+        )
         : null
     })
     const wonder = (traits) => {
       return traits.find(
-        (resource) => resource.trait_type === 'Wonder (translated)'
+        resource => resource.trait_type === 'Wonder (translated)'
       )
     }
     const order = (traits) => {
-      return traits.find((resource) => resource.trait_type === 'Order')
+      return traits.find(resource => resource.trait_type === 'Order')
     }
     return {
       realm,
@@ -190,8 +194,8 @@ export default defineComponent({
       regions,
       rivers,
       wonder,
-      order,
+      order
     }
-  },
+  }
 })
 </script>

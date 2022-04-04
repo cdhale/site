@@ -4,7 +4,7 @@
       <div class="flex flex-col">
         <span class="text-2xl">GA: #{{ loot.id }}</span>
       </div>
-      <hr />
+      <hr>
     </div>
     <div class="my-3">
       <div
@@ -18,22 +18,21 @@
       <span :style="'color:' + rarityColor(loot.weapon)">{{
         loot.weapon
       }}</span>
-      <br />
+      <br>
       <span :style="'color:' + rarityColor(loot.chest)">{{ loot.chest }}</span>
-      <br />
+      <br>
       <span :style="'color:' + rarityColor(loot.head)">{{ loot.head }}</span>
-      <br />
+      <br>
       <span :style="'color:' + rarityColor(loot.waist)">{{ loot.waist }}</span>
-      <br />
-      <span :style="'color:' + rarityColor(loot.foot)">{{ loot.foot }}</span
-      ><br />
+      <br>
+      <span :style="'color:' + rarityColor(loot.foot)">{{ loot.foot }}</span><br>
       <span :style="'color:' + rarityColor(loot.hand)">{{ loot.hand }}</span>
-      <br />
+      <br>
       <span :style="'color:' + rarityColor(loot.neck)">{{ loot.neck }}</span>
-      <br />
+      <br>
 
       <span :style="'color:' + rarityColor(loot.ring)">{{ loot.ring }}</span>
-      <br />
+      <br>
     </div>
 
     <div class="mt-auto">
@@ -60,15 +59,15 @@ export default defineComponent({
   props: {
     loot: {
       type: Object,
-      required: true,
+      required: true
     },
     isOG: {
       type: Boolean,
       required: false,
-      default: false,
-    },
+      default: false
+    }
   },
-  setup(props, context) {
+  setup (props, context) {
     const { rarityColor } = useLootRarity()
     const { shortenHash } = useFormatting()
 
@@ -86,8 +85,8 @@ export default defineComponent({
       shortenHash,
       navigate,
       rarityColor,
-      orderGA,
+      orderGA
     }
-  },
+  }
 })
 </script>

@@ -10,10 +10,10 @@ export default defineComponent({
   props: {
     status: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
-  setup(props) {
+  setup (props) {
     const statusColour = (status) => {
       if (status === 'success') {
         return 'bg-green-200 text-green-800'
@@ -26,8 +26,8 @@ export default defineComponent({
       }
     }
     return {
-      statusColour,
+      statusColour
     }
-  },
+  }
 })
 </script>

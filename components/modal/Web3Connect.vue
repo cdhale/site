@@ -29,7 +29,9 @@
       }"
     >
       <div class="text-center">
-        <h3 id="modal-headline">Connect your wallet</h3>
+        <h3 id="modal-headline">
+          Connect your wallet
+        </h3>
       </div>
       <div class="mt-8 w-full space-y-4">
         <button
@@ -94,9 +96,12 @@
 
       <div class="mt-6 text-center text-sm hidden">
         Need help connecting a wallet?
-        <nuxt-link to="/faqs" class="font-semibold text-ocean-blue-pure"
-          >Read our FAQ</nuxt-link
+        <nuxt-link
+          to="/faqs"
+          class="font-semibold text-ocean-blue-pure"
         >
+          Read our FAQ
+        </nuxt-link>
       </div>
     </div>
 
@@ -129,10 +134,10 @@ export default defineComponent({
   props: {
     slim: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
-  setup() {
+  setup () {
     const { close } = useModal()
     const { activate } = useWeb3()
     // const { activeNetworkId } = useNetwork()
@@ -176,8 +181,8 @@ export default defineComponent({
       wallets,
       isMetamask,
       injected,
-      connecting,
+      connecting
     }
-  },
+  }
 })
 </script>

@@ -10,7 +10,7 @@
 import { defineComponent, computed } from '@nuxtjs/composition-api'
 import { useRealms } from '~/composables/useRealms'
 export default defineComponent({
-  setup() {
+  setup () {
     const { userRealms } = useRealms()
 
     const bridgedRealms = computed(() => {
@@ -18,8 +18,8 @@ export default defineComponent({
     })
 
     return {
-      bridgedRealms,
+      bridgedRealms
     }
-  },
+  }
 })
 </script>

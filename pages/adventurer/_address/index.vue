@@ -8,7 +8,9 @@
     </div>
 
     <div v-else-if="!$fetchState.pending && adventurer.l1">
-      <h4 class="mb-3">Ethereum Assets</h4>
+      <h4 class="mb-3">
+        Ethereum Assets
+      </h4>
       <div
         class="
           bg-black
@@ -28,42 +30,40 @@
           v-if="adventurer.l1.bagsHeld"
           class="hover:bg-gray-900 px-2 py-1 rounded"
           href="#loot"
-          >Loot: {{ adventurer.l1.bagsHeld }}
+        >Loot: {{ adventurer.l1.bagsHeld }}
         </a>
         <a
           v-if="adventurer.l1.gAdventurersHeld"
           class="hover:bg-gray-900 px-2 py-1 rounded"
           href="#loot"
-          >GAs: {{ adventurer.l1.gAdventurersHeld }}
+        >GAs: {{ adventurer.l1.gAdventurersHeld }}
         </a>
         <a
           v-if="adventurer.l1.realmsHeld"
           class="hover:bg-gray-900 px-2 py-1 rounded"
           href="#realms"
-          >Realms: {{ adventurer.l1.realmsHeld }}</a
-        >
+        >Realms: {{ adventurer.l1.realmsHeld }}</a>
         <a
           v-if="adventurer.l1.bridgedRealmsHeld"
           class="hover:bg-gray-900 px-2 py-1 rounded"
           href="#realms"
-          >Staked Realms: {{ adventurer.l1.bridgedRealmsHeld }}</a
-        >
+        >Staked Realms: {{ adventurer.l1.bridgedRealmsHeld }}</a>
         <a
           v-if="adventurer.l1.manasHeld"
           class="hover:bg-gray-900 px-2 py-1 rounded"
           href="#mana"
-          >mana: {{ adventurer.l1.manasHeld }}</a
-        >
+        >mana: {{ adventurer.l1.manasHeld }}</a>
         <a
           v-if="adventurer.l1.mLootsHeld"
           class="hover:bg-gray-900 px-2 py-1 rounded"
           href="#mloot"
-          >mLoot: {{ adventurer.l1.mLootsHeld }}</a
-        >
+        >mLoot: {{ adventurer.l1.mLootsHeld }}</a>
       </div>
 
       <div v-if="adventurer.l1.bags.length" id="loot">
-        <h3 class="mt-8">Loot: {{ adventurer.l1.bagsHeld }}</h3>
+        <h3 class="mt-8">
+          Loot: {{ adventurer.l1.bagsHeld }}
+        </h3>
         <div
           class="
             grid grid-cols-1
@@ -102,7 +102,9 @@
       </div>
       <div v-if="adventurer.l1.realms.length" id="realms">
         <div v-if="realms.l1.realms.length">
-          <h3 class="mt-8">Realms: {{ adventurer.l1.realmsHeld }}</h3>
+          <h3 class="mt-8">
+            Realms: {{ adventurer.l1.realmsHeld }}
+          </h3>
           <div
             class="
               grid grid-cols-1
@@ -151,8 +153,10 @@
         </div>
       </div>
       <div v-if="adventurer.l1.manas.length" id="mana">
-        <hr />
-        <h3 class="mt-8">Mana: {{ adventurer.l1.manas.length }}</h3>
+        <hr>
+        <h3 class="mt-8">
+          Mana: {{ adventurer.l1.manas.length }}
+        </h3>
         <div
           class="
             grid grid-cols-1
@@ -171,8 +175,10 @@
         </div>
       </div>
       <div v-if="adventurer.l1.mLoot.length" id="mloot">
-        <hr />
-        <h3 class="mt-8">mLoot: {{ adventurer.l1.mLootsHeld }}</h3>
+        <hr>
+        <h3 class="mt-8">
+          mLoot: {{ adventurer.l1.mLootsHeld }}
+        </h3>
         <div
           class="
             grid grid-cols-1
@@ -200,7 +206,7 @@ import {
   defineComponent,
   ref,
   useFetch,
-  computed,
+  computed
 } from '@nuxtjs/composition-api'
 
 import { useFormatting } from '~/composables/useFormatting'
@@ -209,7 +215,7 @@ import { useNetwork } from '~/composables/useNetwork'
 import { useRarity } from '~/composables'
 import { useRealms } from '~/composables/useRealms'
 export default defineComponent({
-  setup(props, context) {
+  setup (props, context) {
     const { checkRealmRarity } = useRarity()
     const { shortenHash } = useFormatting()
     const { address } = context.root.$route.params
@@ -229,21 +235,21 @@ export default defineComponent({
     const rariety = ref(null)
 
     const lootRariety = (id) => {
-      return rariety.value.find((loot) => loot.id.toString() === id)
+      return rariety.value.find(loot => loot.id.toString() === id)
     }
 
     const sortedRealms = computed(() => {
       return openSeaData.value
         ? openSeaData.value.sort((a, b) => {
-            return checkRealmRarity(b.traits) - checkRealmRarity(a.traits)
-          })
+          return checkRealmRarity(b.traits) - checkRealmRarity(a.traits)
+        })
         : null
     })
     const sortedBridgedRealms = computed(() => {
       return openSeaBridgedData.value
         ? openSeaBridgedData.value.sort((a, b) => {
-            return checkRealmRarity(b.traits) - checkRealmRarity(a.traits)
-          })
+          return checkRealmRarity(b.traits) - checkRealmRarity(a.traits)
+        })
         : null
     })
     return {
@@ -259,8 +265,8 @@ export default defineComponent({
       rariety,
       lootRariety,
       sortedRealms,
-      offset,
+      offset
     }
-  },
+  }
 })
 </script>

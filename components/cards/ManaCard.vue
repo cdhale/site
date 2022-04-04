@@ -4,8 +4,7 @@
     <span
       :style="'color:' + rarityColor(mana.itemName)"
       class="text-2xl mt-4"
-      >{{ mana.itemName }}</span
-    >
+    >{{ mana.itemName }}</span>
     <div class="mt-auto">
       <div
         class="px-3 py-1 w-full rounded text-xl"
@@ -26,10 +25,10 @@ export default defineComponent({
   props: {
     mana: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
-  setup(props, context) {
+  setup (props, context) {
     const { rarityColor } = useLootRarity()
     const { shortenHash } = useFormatting()
     const navigate = () => {
@@ -49,8 +48,8 @@ export default defineComponent({
       navigate,
       rarityColor,
       suffixArray,
-      orderGA,
+      orderGA
     }
-  },
+  }
 })
 </script>

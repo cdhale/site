@@ -27,8 +27,7 @@
             class="hover:underline my-4"
             href="https://etherscan.io/address/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d#code"
           >
-            0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d</a
-          >
+            0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d</a>
         </h5>
         <h1 class="mt-8">
           Mint Realms -
@@ -42,7 +41,9 @@
         <div class="my-12 text-center">
           <h3>Mint Realm(s)</h3>
           <div class="flex w-1/2 justify-around mx-auto">
-            <button class="mx-4" @click="singleMint--">-</button>
+            <button class="mx-4" @click="singleMint--">
+              -
+            </button>
             <input
               id="mintId"
               v-model="singleMint"
@@ -70,8 +71,10 @@
               label="Realm Id"
               placeholder="Enter Realm Id to mint"
               @input="limitLength(singleMint)"
-            />
-            <button class="mx-4" @click="singleMint++">+</button>
+            >
+            <button class="mx-4" @click="singleMint++">
+              +
+            </button>
           </div>
 
           <div class="my-4 flex justify-around">
@@ -84,14 +87,16 @@
               >
                 {{ loading.mint ? 'loading...' : 'Mint Realm(s)' }}
               </BButton>
-              <span class="self-center ml-2"
-                >{{ (singleMint * 0.1).toFixed(1) }} ETH</span
-              >
+              <span
+                class="self-center ml-2"
+              >{{ (singleMint * 0.1).toFixed(1) }} ETH</span>
             </div>
           </div>
         </div>
       </div>
-      <div class="text-center my-8 text-2xl">or</div>
+      <div class="text-center my-8 text-2xl">
+        or
+      </div>
 
       <div class="p-6 bg-black rounded-xl">
         <h2>Advanced Mint - Select Realms</h2>
@@ -112,12 +117,12 @@
               type="primary"
               class="bg-gray-900"
               @click="multiMint(multiMintIds)"
-              >{{ loading.mint ? 'loading...' : 'Mint Realms' }}</BButton
             >
+              {{ loading.mint ? 'loading...' : 'Mint Realms' }}
+            </BButton>
 
             <span class="self-center ml-2">
-              {{ (multiMintIds.length * 0.1).toFixed(1) }} ETH</span
-            >
+              {{ (multiMintIds.length * 0.1).toFixed(1) }} ETH</span>
           </div>
         </div>
         <h4>Select Realm ids to mint</h4>
@@ -164,12 +169,11 @@
             class="fixed inset-0 bg-gray-700 bg-opacity-75 transition-opacity"
             aria-hidden="true"
             @click="loadingModal = false"
-          ></div>
+          />
           <span
             class="hidden sm:inline-block sm:align-middle sm:h-screen"
             aria-hidden="true"
-            >&#8203;</span
-          >
+          >&#8203;</span>
           <div
             class="
               inline-block
@@ -210,8 +214,8 @@
                     v-if="
                       error.mint
                         ? error.mint.includes(
-                            'This token has already been minted'
-                          )
+                          'This token has already been minted'
+                        )
                         : false
                     "
                   >
@@ -226,8 +230,7 @@
                         : false
                     "
                   >
-                    Insufficient funds for gas</strong
-                  >
+                    Insufficient funds for gas</strong>
                 </div>
                 <div v-if="loading.mint">
                   <Loader class="w-24 h-24" />
@@ -237,8 +240,9 @@
                     type="primary"
                     class="text-2xl"
                     :to="'/adventurer/' + account"
-                    >See My Realms</BButton
                   >
+                    See My Realms
+                  </BButton>
                 </div>
               </div>
             </div>
@@ -248,7 +252,9 @@
     </div>
     <div v-else class="flex justify-around h-screen w-full">
       <div class="self-center mx-auto">
-        <h4 class="text-center">Loading Mintable Realms...</h4>
+        <h4 class="text-center">
+          Loading Mintable Realms...
+        </h4>
         <Loader class="w-24 h-24 mx-auto" />
       </div>
     </div>
@@ -270,7 +276,7 @@ import {
   defineComponent,
   ref,
   onMounted,
-  useFetch,
+  useFetch
 } from '@nuxtjs/composition-api'
 import axios from 'axios'
 import { useWeb3 } from '@instadapp/vue-web3'
@@ -280,9 +286,9 @@ import Cross from '~/assets/img/x-square.svg?inline'
 export default defineComponent({
   components: {
     Loader,
-    Cross,
+    Cross
   },
-  setup() {
+  setup () {
     const { account } = useWeb3()
     const singleMint = ref(1)
     const multiMintIds = ref([])
@@ -295,7 +301,7 @@ export default defineComponent({
       multiMint,
       loadingModal,
       getAvailableTokenIds,
-      availableTokenIds,
+      availableTokenIds
     } = useMint()
     const etherSingleMintCost = computed(() => {
       if (singleMint.value) {
@@ -382,8 +388,8 @@ export default defineComponent({
       openSeaData,
       cycleIds,
       selectedRealm,
-      mintRealms,
+      mintRealms
     }
-  },
+  }
 })
 </script>

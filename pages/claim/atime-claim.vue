@@ -8,8 +8,7 @@
           <a
             class="text-red-500 underline"
             href="https://genesisproject.notion.site/Adventure-Time-ATIME-cdc3ff41deb747dd9a04bd1bfc35cb3e"
-            >here</a
-          >
+          >here</a>
         </p>
       </div>
       <div class="p-6 bg-black rounded-xl shadow-lg">
@@ -34,11 +33,12 @@
             class="hover:underline my-4"
             href="https://etherscan.io/token/0x810f86eb43ccaacd401ef50dfab87945a514f9cf#writeContract"
           >
-            0x810f86eb43ccaacd401ef50dfab87945a514f9cf</a
-          >
+            0x810f86eb43ccaacd401ef50dfab87945a514f9cf</a>
         </h5>
       </div>
-      <div class="text-center my-8 text-2xl">or</div>
+      <div class="text-center my-8 text-2xl">
+        or
+      </div>
 
       <div class="p-6 bg-black rounded-xl">
         <h2>Claim For Each Realm</h2>
@@ -68,7 +68,7 @@
           type="number"
           label="Realm Id"
           placeholder="Enter Realm Id to mint"
-        />
+        >
         <div class="my-4 flex justify-around">
           <div class="flex">
             <BButton
@@ -76,8 +76,9 @@
               type="primary"
               class="bg-gray-900"
               @click="claimById(singleMint)"
-              >{{ loading.mint ? 'loading...' : 'Claim Id' }}</BButton
             >
+              {{ loading.mint ? 'loading...' : 'Claim Id' }}
+            </BButton>
           </div>
         </div>
         <!-- <h4>Select Realm ids to mint</h4>
@@ -124,12 +125,11 @@
             class="fixed inset-0 bg-gray-700 bg-opacity-75 transition-opacity"
             aria-hidden="true"
             @click="loadingModal = false"
-          ></div>
+          />
           <span
             class="hidden sm:inline-block sm:align-middle sm:h-screen"
             aria-hidden="true"
-            >&#8203;</span
-          >
+          >&#8203;</span>
           <div
             class="
               inline-block
@@ -200,8 +200,7 @@
                         : false
                     "
                   >
-                    Insufficient funds for gas</strong
-                  >
+                    Insufficient funds for gas</strong>
                 </div>
                 <div v-if="loading.claim">
                   <Loader class="w-24 h-24" />
@@ -213,7 +212,8 @@
                     type="primary"
                     class="text-2xl"
                     :to="'/adventurer/' + account"
-                    >Successful!
+                  >
+                    Successful!
                   </BButton>
                 </div>
               </div>
@@ -235,9 +235,9 @@ import Cross from '~/assets/img/x-square.svg?inline'
 export default defineComponent({
   components: {
     Loader,
-    Cross,
+    Cross
   },
-  setup() {
+  setup () {
     const { account } = useWeb3()
     const multiMintIds = ref([])
     const multiMintId = ref(null)
@@ -250,7 +250,7 @@ export default defineComponent({
       loading,
       loadingModal,
       getAvailableTokenIds,
-      availableTokenIds,
+      availableTokenIds
     } = useAtime()
 
     onMounted(async () => {
@@ -272,8 +272,8 @@ export default defineComponent({
       loading,
       loadingModal,
       account,
-      availableTokenIds,
+      availableTokenIds
     }
-  },
+  }
 })
 </script>

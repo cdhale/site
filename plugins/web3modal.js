@@ -11,25 +11,25 @@ export default ({ $config }) => {
       options: {
         infuraId: $config.INFURA_ID,
         rpc: {
-          137: 'https://rpc-mainnet.maticvigil.com',
-        },
-      },
+          137: 'https://rpc-mainnet.maticvigil.com'
+        }
+      }
     },
     portis: {
       package: Portis,
       options: {
-        id: $config.PORTIS_ID,
-      },
+        id: $config.PORTIS_ID
+      }
     },
     'custom-walletlink': {
       display: {
         logo: SVGcoinbase,
         name: 'Coinbase Wallet',
-        description: 'Scan with Coinbase Wallet to connect',
+        description: 'Scan with Coinbase Wallet to connect'
       },
       package: WalletLink,
       options: {
-        infuraId: $config.INFURA_ID,
+        infuraId: $config.INFURA_ID
       },
       connector: async (ProviderPackage, options) => {
         const ETH_JSONRPC_URL = `https://mainnet.infura.io/v3/${options.INFURA_ID}`
@@ -40,7 +40,7 @@ export default ({ $config }) => {
           appName: 'Instadapp',
           appLogoUrl:
             'https://raw.githubusercontent.com/InstaDApp/brand/master/instadapp%20logo%20only%20filled.svg',
-          darkMode: false,
+          darkMode: false
         })
 
         // Initialize a Web3 Provider object
@@ -60,7 +60,7 @@ export default ({ $config }) => {
             throw err
           })
         return provider
-      },
-    },
+      }
+    }
   })
 }

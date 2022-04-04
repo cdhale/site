@@ -6,7 +6,7 @@
         <span v-if="isOG">Rarity: {{ getRarity.rarest }}</span>
         <span v-if="isOG">Score: {{ getRarity.score }}</span>
       </div>
-      <hr />
+      <hr>
       <div>
         <div
           v-if="isOG"
@@ -31,22 +31,21 @@
       <span :style="'color:' + rarityColor(loot.weapon)">{{
         loot.weapon
       }}</span>
-      <br />
+      <br>
       <span :style="'color:' + rarityColor(loot.chest)">{{ loot.chest }}</span>
-      <br />
+      <br>
       <span :style="'color:' + rarityColor(loot.head)">{{ loot.head }}</span>
-      <br />
+      <br>
       <span :style="'color:' + rarityColor(loot.waist)">{{ loot.waist }}</span>
-      <br />
-      <span :style="'color:' + rarityColor(loot.foot)">{{ loot.foot }}</span
-      ><br />
+      <br>
+      <span :style="'color:' + rarityColor(loot.foot)">{{ loot.foot }}</span><br>
       <span :style="'color:' + rarityColor(loot.hand)">{{ loot.hand }}</span>
-      <br />
+      <br>
       <span :style="'color:' + rarityColor(loot.neck)">{{ loot.neck }}</span>
-      <br />
+      <br>
 
       <span :style="'color:' + rarityColor(loot.ring)">{{ loot.ring }}</span>
-      <br />
+      <br>
     </div>
     <div class="mt-auto">
       <span
@@ -73,15 +72,15 @@ export default defineComponent({
   props: {
     loot: {
       type: Object,
-      required: true,
+      required: true
     },
     isOG: {
       type: Boolean,
       required: false,
-      default: false,
-    },
+      default: false
+    }
   },
-  setup(props, context) {
+  setup (props, context) {
     const { rarityColor } = useLootRarity()
     const { shortenHash } = useFormatting()
     const navigate = () => {
@@ -96,7 +95,7 @@ export default defineComponent({
 
     const getRarity = computed(() => {
       return props.isOG
-        ? db.rare.find((a) => a.id === parseInt(props.loot.id))
+        ? db.rare.find(a => a.id === parseInt(props.loot.id))
         : null
     })
 
@@ -134,8 +133,8 @@ export default defineComponent({
       navigate,
       rarityColor,
       totalManasAvailable,
-      getRarity,
+      getRarity
     }
-  },
+  }
 })
 </script>

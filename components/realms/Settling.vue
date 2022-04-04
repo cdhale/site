@@ -4,9 +4,12 @@
       <h2>Unstaked Realms ({{ numberRealms || 0 }})</h2>
       <p>
         Stake your realms at
-        <nuxt-link to="/settling" class="font-semibold text-off-200"
-          >Settling</nuxt-link
+        <nuxt-link
+          to="/settling"
+          class="font-semibold text-off-200"
         >
+          Settling
+        </nuxt-link>
       </p>
     </div>
     <FilteredRealms type="user" />
@@ -16,7 +19,7 @@
 import { defineComponent, computed } from '@nuxtjs/composition-api'
 import { useRealms } from '~/composables/useRealms'
 export default defineComponent({
-  setup(props, context) {
+  setup (props, context) {
     const { userRealms } = useRealms()
 
     const numberRealms = computed(() => {
@@ -24,8 +27,8 @@ export default defineComponent({
     })
 
     return {
-      numberRealms,
+      numberRealms
     }
-  },
+  }
 })
 </script>

@@ -19,28 +19,28 @@ import { useConnect } from '~/composables/useConnect'
 import LoadingRings from '~/assets/img/loadingRings.svg?inline'
 export default defineComponent({
   components: {
-    LoadingRings,
+    LoadingRings
   },
   props: {
     to: {
       type: String,
-      default: null,
+      default: null
     },
     loading: {
       type: Boolean,
-      default: false,
+      default: false
     },
     href: {
       type: String,
-      default: null,
+      default: null
     },
     block: {
       type: Boolean,
-      default: false,
+      default: false
     },
     disabled: {
       type: Boolean,
-      default: false,
+      default: false
     },
     type: {
       required: false,
@@ -48,10 +48,10 @@ export default defineComponent({
       default: 'default',
       validator: (value) => {
         return Object.keys(ButtonColors).includes(value)
-      },
-    },
+      }
+    }
   },
-  setup(props) {
+  setup (props) {
     const { isAddressPage } = useConnect()
     const buttonColor = computed(() => {
       return ButtonColors[props.type]
@@ -63,8 +63,8 @@ export default defineComponent({
     return {
       buttonColor,
       tag,
-      isAddressPage,
+      isAddressPage
     }
-  },
+  }
 })
 </script>

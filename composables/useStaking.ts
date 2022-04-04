@@ -23,7 +23,7 @@ const claimableV2Balance = ref()
 const isApproved = ref(false)
 
 export function useStaking () {
-  const unclaimableBalance = ref([])
+  const unclaimableBalance = ref()
 
   const { gqlRequest } = useGraph()
   const { close } = useModal()
@@ -37,7 +37,8 @@ export function useStaking () {
   const loading = reactive({
     stake: false,
     lords: false,
-    approve: false
+    approve: false,
+    unclaimableBalance: false
   })
   const result = reactive({ stake: null })
 
@@ -203,14 +204,16 @@ export function useStaking () {
     }
   }
   const getUnclaimableLordsBalance = async (params) => {
+    loading.unclaimableBalance = true
     const provider = new ethers.providers.JsonRpcProvider(useL1Network.value.url)
+    const today = new Date().getTime()
     const dater = new EthDater(
       provider // Ethers provider, required.
     )
     const startingEpochBlocks = await dater.getEvery(
       'weeks', // Period, required. Valid value: years, quarters, months, weeks, days, hours, minutes
-      '2022-02-17T11:04:29Z', // Start date, required. Any valid moment.js value: string, milliseconds, Date() object, moment() object.
-      '2022-03-20T12:00:00Z', // End date, required. Any valid moment.js value: string, milliseconds, Date() object, moment() object.
+      '2022-02-24T11:04:29Z', // Start date, required. Any valid moment.js value: string, milliseconds, Date() object, moment() object.
+      today, // End date, required. Any valid moment.js value: string, milliseconds, Date() object, moment() object.
       1, // Duration, optional, integer. By default 1.
       true, // Block after, optional. Search for the nearest block before or after the given date. By default true.
       false // Refresh boundaries, optional. Recheck the latest block before request. By default false.
@@ -235,10 +238,24 @@ export function useStaking () {
     }
 
     try {
-      unclaimableBalance.value = await getData()
+      const epochData = await getData()
+      let totalClaimable = 0
+      for (let e = 1; e < epochData.length; e++) {
+        const beginEpochRealms = epochData[e - 1]
+        const endEpochRealms = epochData[e]
+
+        if (endEpochRealms >= beginEpochRealms) {
+          totalClaimable = totalClaimable + (epochData[e - 1] as number * 350)
+        } else {
+          totalClaimable = totalClaimable + (epochData[e] as number * 350)
+        }
+        console.log(totalClaimable)
+      }
+      unclaimableBalance.value = totalClaimable
     } catch (e) {
       console.log(e)
     }
+    loading.unclaimableBalance = false
   }
   const getEpoch = async (version) => {
     try {

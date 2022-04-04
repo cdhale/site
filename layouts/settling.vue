@@ -11,7 +11,9 @@
     "
   >
     <div class="sm:hidden w-full mt-12 flex justify-between px-10">
-      <NuxtLink to="/">Back</NuxtLink>
+      <NuxtLink to="/">
+        Back
+      </NuxtLink>
     </div>
     <NotificationBar />
     <div class="hidden w-full sm:flex px-4">
@@ -32,8 +34,9 @@
           text-2xl
         "
         to="/"
-        ><span class="self-center text-center w-full">Home</span></NuxtLink
       >
+        <span class="self-center text-center w-full">Home</span>
+      </NuxtLink>
       <a
         v-for="(link, index) in links"
         :key="index"
@@ -54,8 +57,7 @@
         "
         :href="link.url"
       >
-        <span class="self-center text-center w-full">{{ link.title }}</span></a
-      >
+        <span class="self-center text-center w-full">{{ link.title }}</span></a>
       <div class="ml-auto">
         <AccountButton type="settling" />
       </div>
@@ -72,36 +74,36 @@ import { defineComponent } from '@vue/composition-api'
 import { useConnect } from '~/composables/useConnect'
 
 export default defineComponent({
-  setup() {
+  setup () {
     useConnect()
 
     const links = [
       {
         title: 'Faqs',
-        url: '#faqs',
+        url: '#faqs'
       },
       {
         title: 'docs',
-        url: 'https://docs.bibliothecadao.xyz/',
+        url: 'https://docs.bibliothecadao.xyz/'
       },
       {
         title: 'stake',
-        url: '#stake',
+        url: '#stake'
       },
       {
         title: 'Roadmap',
-        url: '#roadmap',
+        url: '#roadmap'
       },
       {
         title: 'Atlas',
-        url: 'https://atlas.bibliothecadao.xyz',
-      },
+        url: 'https://atlas.bibliothecadao.xyz'
+      }
     ]
 
     return {
-      links,
+      links
     }
-  },
+  }
 })
 </script>
 

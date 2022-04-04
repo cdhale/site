@@ -24,15 +24,15 @@ export default defineComponent({
     rarityRank: {
       type: String,
       default: null,
-      required: false,
+      required: false
     },
     rarityScore: {
       type: String,
       default: null,
-      required: false,
-    },
+      required: false
+    }
   },
-  setup(props) {
+  setup (props) {
     const getColour = computed(() => {
       if (props.rarityScore > 8000) {
         return 'bg-gradient-to-r from-purple-200 via-pink-400 to-red-400'
@@ -51,9 +51,9 @@ export default defineComponent({
       }
     })
     return {
-      getColour,
+      getColour
     }
-  },
+  }
 })
 </script>
 

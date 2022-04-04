@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full"></div>
+  <div class="w-full" />
 </template>
 <script>
 import { defineComponent, computed } from '@vue/composition-api'
@@ -11,7 +11,7 @@ import { useConnect } from '~/composables/useConnect'
 // import { useWeb3Modal } from '~/composables/useWeb3Modal'
 export default defineComponent({
   fetchOnServer: false,
-  setup(props, context) {
+  setup (props, context) {
     const { address } = context.root.$route.params
     const { adventurer, loading: loadingSRealms } = useAdventurer()
     const { isAddressPage } = useConnect()
@@ -26,7 +26,7 @@ export default defineComponent({
     useFetch(async () => {})
 
     const popFromArray = (value) => {
-      const index = adventurer.l2.srealms.map((e) => e.id).indexOf(value)
+      const index = adventurer.l2.srealms.map(e => e.id).indexOf(value)
       adventurer.l2.srealms.splice(index, 1)
     }
 
@@ -38,8 +38,8 @@ export default defineComponent({
 
       sRealms,
       loadingSRealms,
-      isAddressPage,
+      isAddressPage
     }
-  },
+  }
 })
 </script>

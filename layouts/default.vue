@@ -10,10 +10,14 @@
   >
     <div class="sm:hidden w-full mt-12 flex justify-between px-10">
       <div>
-        <button class="text-xl" @click="toggleSideBar">Menu</button>
+        <button class="text-xl" @click="toggleSideBar">
+          Menu
+        </button>
       </div>
 
-      <NuxtLink to="/"><Book class="w-12 h-12 mx-auto" /></NuxtLink>
+      <NuxtLink to="/">
+        <Book class="w-12 h-12 mx-auto" />
+      </NuxtLink>
     </div>
     <NotificationBar />
     <SideBar class="fixed sm:relative w-80 min-h-screen" />
@@ -34,10 +38,10 @@ import Book from '~/assets/img/book-open.svg?inline'
 
 export default defineComponent({
   components: {
-    Book,
+    Book
   },
   fetchOnServer: false,
-  setup() {
+  setup () {
     const { account } = useWeb3()
     const { toggleSideBar, sideBarOpen } = useUiState()
     useConnect()
@@ -48,8 +52,8 @@ export default defineComponent({
 
     return {
       toggleSideBar,
-      sideBarOpen,
+      sideBarOpen
     }
-  },
+  }
 })
 </script>

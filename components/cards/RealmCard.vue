@@ -61,28 +61,28 @@
         <div
           class="bg-amber-500 h-1"
           :style="'width: ' + (realm.regions / 7) * 100 + '%'"
-        ></div>
+        />
       </div>
       <span class="pt-1 text-sm">Cities</span>
       <div class="w-full bg-gray-200 rounded">
         <div
           class="bg-amber-800 h-1"
           :style="'width: ' + (realm.cities / 21) * 100 + '%'"
-        ></div>
+        />
       </div>
       <span class="pt-1">Harbors</span>
       <div class="w-full bg-gray-200 rounded">
         <div
           class="bg-blue-600 h-1"
           :style="'width: ' + (realm.harbours / 35) * 100 + '%'"
-        ></div>
+        />
       </div>
       <span class="pt-1">Rivers</span>
       <div class="w-full bg-gray-200 rounded">
         <div
           class="bg-blue-400 h-1"
           :style="'width: ' + (realm.rivers / 60) * 100 + '%'"
-        ></div>
+        />
       </div>
     </div>
     <div v-if="!stake" class="mt-auto p-4 flex justify-between">
@@ -131,15 +131,15 @@ export default defineComponent({
   props: {
     realm: {
       type: Object,
-      required: true,
+      required: true
     },
     stake: {
       type: Boolean,
       required: false,
-      default: false,
-    },
+      default: false
+    }
   },
-  setup(props, context) {
+  setup (props, context) {
     const { shortenHash } = useFormatting()
     const { intRoundFloor } = useBigNumber()
     const { loading, stakeRealms } = useStaking()
@@ -165,9 +165,9 @@ export default defineComponent({
       stakeRealmPop,
       shortenHash,
       navigate,
-      intRoundFloor,
+      intRoundFloor
     }
-  },
+  }
 })
 </script>
 <style scoped>

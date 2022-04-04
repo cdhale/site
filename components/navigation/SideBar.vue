@@ -24,7 +24,9 @@
       </div>
 
       <h2>
-        <NuxtLink to="/"><Book class="w-16 h-16 mx-auto sm:mt-12" /></NuxtLink>
+        <NuxtLink to="/">
+          <Book class="w-16 h-16 mx-auto sm:mt-12" />
+        </NuxtLink>
       </h2>
       <span class="text-center font-semibold text-2xl">
         <span class="text-yellow-400">${{ (lordsPrice || 0).toFixed(4) }}</span>
@@ -50,8 +52,9 @@
           type="navLink"
           :to="link.page"
           @click.native="toggleSideBar"
-          >{{ link.title }}</BButton
         >
+          {{ link.title }}
+        </BButton>
         <h4 class="mt-8 uppercase text-off-200 tracking-wide pl-4">
           Utilities
         </h4>
@@ -61,8 +64,9 @@
           type="navLink"
           :to="link.page"
           @click.native="toggleSideBar"
-          >{{ link.title }}</BButton
         >
+          {{ link.title }}
+        </BButton>
         <a
           type="navLink"
           class="
@@ -80,8 +84,7 @@
           "
           href="https://atlas.bibliothecadao.xyz"
           @click.native="toggleSideBar"
-          >Atlas</a
-        >
+        >Atlas</a>
         <h4 class="mt-8 uppercase text-off-200 tracking-wide pl-4">
           Knowledge base
         </h4>
@@ -90,22 +93,25 @@
           class="text-left"
           href="https://bibliotheca-for-loot.notion.site/Bibliotheca-DAO-Foundational-Principles-1d226a06414f40bc92f85a8036c74d52"
           @click.native="toggleSideBar"
-          >DAO</BButton
         >
+          DAO
+        </BButton>
         <BButton
           type="navLink"
           class="text-left"
           to="/realms/resources"
           @click.native="toggleSideBar"
-          >Realms Resources</BButton
         >
+          Realms Resources
+        </BButton>
         <BButton
           type="navLink"
           class="text-left"
           href="https://docs.bibliothecadao.xyz/"
           @click.native="toggleSideBar"
-          >White Paper & Docs</BButton
         >
+          White Paper & Docs
+        </BButton>
         <h4 class="mt-8 uppercase text-off-200 tracking-wide pl-4">
           Governance
         </h4>
@@ -114,15 +120,17 @@
           class="text-left"
           href="https://snapshot.org/#/council.bibliotheca.eth"
           @click.native="toggleSideBar"
-          >Snapshot</BButton
         >
+          Snapshot
+        </BButton>
         <BButton
           type="navLink"
           class="text-left"
           href="https://forum.bibliothecaforloot.com/"
           @click.native="toggleSideBar"
-          >Forum</BButton
         >
+          Forum
+        </BButton>
       </nav>
 
       <div
@@ -135,19 +143,22 @@
           target="blank_"
           class="hover:bg-gracy-700 self-center"
           href="https://github.com/BibliothecaForAdventurers/main-site"
-          ><Github class="w-8 h-8"
+        ><Github
+          class="w-8 h-8"
         /></a>
         <a
           target="blank_"
           class="hover:bg-gracy-700"
           href="https://discord.gg/8NS4JxGmUC"
-          ><Discord class="w-8 h-8 fill-current"
+        ><Discord
+          class="w-8 h-8 fill-current"
         /></a>
         <a
           target="blank_"
           class="hover:bg-gracy-700"
           href="https://twitter.com/bibliothecadao"
-          ><Twitter class="w-8 h-8 fill-current"
+        ><Twitter
+          class="w-8 h-8 fill-current"
         /></a>
         <a
           target="blank_"
@@ -178,9 +189,9 @@ export default {
     Github,
     Discord,
     Medium,
-    Twitter,
+    Twitter
   },
-  setup() {
+  setup () {
     const { account } = useWeb3()
     const { toggleSideBar, sideBarOpen } = useUiState()
     const { lordsPrice, getLordsPrice } = useLordsPrice()
@@ -189,30 +200,30 @@ export default {
     const assetLinks = [
       {
         page: '/loot',
-        title: 'Loot',
+        title: 'Loot'
       },
       {
         page: '/realms',
-        title: 'Realms',
-      },
+        title: 'Realms'
+      }
     ]
 
     const utilLinks = [
       {
         page: '/settling#roadmap',
-        title: 'Road map',
+        title: 'Road map'
       },
       {
         page: '/settling',
-        title: 'Staking',
-      },
+        title: 'Staking'
+      }
     ]
 
     const adventureLinks = [
       {
         page: '/adventurer',
-        title: 'Search All',
-      },
+        title: 'Search All'
+      }
     ]
 
     onMounted(() => {
@@ -233,8 +244,8 @@ export default {
       assetLinks,
       utilLinks,
       adventureLinks,
-      account,
+      account
     }
-  },
+  }
 }
 </script>

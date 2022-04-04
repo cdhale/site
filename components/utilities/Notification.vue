@@ -1,5 +1,5 @@
 <template>
-  <span :class="type"></span>
+  <span :class="type" />
 </template>
 
 <script>
@@ -9,21 +9,21 @@ export default defineComponent({
   props: {
     statement: {
       type: String,
-      required: true,
+      required: true
     },
     notificationType: {
       type: String,
       required: false,
-      default: 'warning',
-    },
+      default: 'warning'
+    }
   },
-  setup(props) {
+  setup (props) {
     const type = computed(() => {
       return Notifications[props.notificationType]
     })
     return {
-      type,
+      type
     }
-  },
+  }
 })
 </script>

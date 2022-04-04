@@ -25,11 +25,14 @@
           sm:w-auto
         "
         type="text"
-      />
+      >
       <div class="w-full sm:w-auto self-center">
-        <BButton class="mt-2 sm:mt-0 sm:px-4 w-full" type="primary"
-          >find bags</BButton
+        <BButton
+          class="mt-2 sm:mt-0 sm:px-4 w-full"
+          type="primary"
         >
+          find bags
+        </BButton>
       </div>
     </form>
     <div v-if="!$fetchState.pending">
@@ -63,7 +66,9 @@
         <Loader v-for="(loader, index) in 4" :key="index" class="mr-3 mb-3" />
       </div>
       <div v-if="!queryLoading && !loot.length" class="my-3">
-        <div class="text-2xl">No Loot found - Try adjusting your query.</div>
+        <div class="text-2xl">
+          No Loot found - Try adjusting your query.
+        </div>
       </div>
     </div>
     <div v-else class="mt-4">
@@ -78,11 +83,11 @@ import {
   defineComponent,
   ref,
   useContext,
-  useFetch,
+  useFetch
 } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  setup(props, context) {
+  setup (props, context) {
     const { $graphql } = useContext()
     const search = ref()
     const offset = ref(1)
@@ -183,32 +188,32 @@ export default defineComponent({
 
     const lootFeatures = [
       {
-        name: 'id',
+        name: 'id'
       },
       {
-        name: 'head',
+        name: 'head'
       },
       {
-        name: 'neck',
+        name: 'neck'
       },
       {
-        name: 'chest',
+        name: 'chest'
       },
       {
-        name: 'hand',
+        name: 'hand'
       },
       {
-        name: 'ring',
+        name: 'ring'
       },
       {
-        name: 'weapon',
+        name: 'weapon'
       },
       {
-        name: 'waist',
+        name: 'waist'
       },
       {
-        name: 'foot',
-      },
+        name: 'foot'
+      }
     ]
 
     const lootQuery = ref(lootFeatures[0])
@@ -234,14 +239,14 @@ export default defineComponent({
         if (lootQuery.value.name === 'id') {
           const newQuery = getSearchQueryById(lootQuery.value.name)
           const response = await $graphql.ecosystem.request(newQuery.value, {
-            id: search.value,
+            id: search.value
           })
           loot.value = response.bags
         } else {
           const newQuery = getSearchQuery(lootQuery.value.name)
           const response = await $graphql.ecosystem.request(newQuery.value, {
             offset: offset.value,
-            search: toSentenceCase(search.value),
+            search: toSentenceCase(search.value)
           })
           loot.value = response.bags
         }
@@ -258,7 +263,7 @@ export default defineComponent({
 
     useFetch(async () => {
       const response = await $graphql.ecosystem.request(query.value, {
-        offset: offset.value,
+        offset: offset.value
       })
       loot.value = response.bags
     })
@@ -271,12 +276,12 @@ export default defineComponent({
           const newQuery = getSearchQuery(lootQuery.value.name)
           const response = await $graphql.ecosystem.request(newQuery.value, {
             offset: offset.value,
-            search: search.value,
+            search: search.value
           })
           loot.value = loot.value.concat(response.bags)
         } else {
           const response = await $graphql.ecosystem.request(query.value, {
-            offset: offset.value,
+            offset: offset.value
           })
           loot.value = loot.value.concat(response.bags)
         }
@@ -297,8 +302,8 @@ export default defineComponent({
       setQuery,
       lootQuery,
       queryLoading,
-      offset,
+      offset
     }
-  },
+  }
 })
 </script>

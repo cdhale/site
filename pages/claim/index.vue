@@ -25,18 +25,20 @@
           <h2>{{ claim.title }}</h2>
           <div class="flex flex-col text-xl">
             <span>Status: {{ claim.status }}</span>
-            <span
-              >Requirements:
+            <span>Requirements:
               <span
                 v-for="(requirement, index) in claim.requirements"
                 :key="index"
-                >{{ requirement }}</span
-              >
+              >{{ requirement }}</span>
             </span>
           </div>
-          <BButton type="primary" class="mt-auto" :to="'/claim/' + claim.slug"
-            >Claim</BButton
+          <BButton
+            type="primary"
+            class="mt-auto"
+            :to="'/claim/' + claim.slug"
           >
+            Claim
+          </BButton>
         </div>
       </div>
     </div>
@@ -47,11 +49,11 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 import { useClaims } from '~/composables/useClaims'
 export default defineComponent({
-  setup() {
+  setup () {
     const { claimsList } = useClaims()
     return {
-      claimsList,
+      claimsList
     }
-  },
+  }
 })
 </script>

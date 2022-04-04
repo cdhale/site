@@ -30,7 +30,9 @@
     />
     <div v-else-if="!isApproved" class="content-center mx-auto">
       <p>Approve your account to stake your Realms</p>
-      <BButton class="mt-5" type="settling" @click="approve">Approve</BButton>
+      <BButton class="mt-5" type="settling" @click="approve">
+        Approve
+      </BButton>
     </div>
     <div v-else-if="!loading.stake && userRealmIds && userRealmIds.length">
       <div class="flex flex-wrap">
@@ -60,18 +62,24 @@
           type="settling"
           :disabled="!multiMintIds.length"
           @click="stakeSelectedUserRealms"
-          >Stake Selected</BButton
         >
-        <BButton class="mt-5" type="settling" @click="stakeUserRealms"
-          >Stake All Realms</BButton
+          Stake Selected
+        </BButton>
+        <BButton
+          class="mt-5"
+          type="settling"
+          @click="stakeUserRealms"
         >
+          Stake All Realms
+        </BButton>
       </div>
       <div v-else>
         <div class="font-semibold">
           NOTE: Any unclaimed LORDS will be claimed when unstaking. Click
-          <span class="underline cursor-pointer" @click="isLordsAdded"
-            >here</span
-          >
+          <span
+            class="underline cursor-pointer"
+            @click="isLordsAdded"
+          >here</span>
           to add LORDS to metamask.
         </div>
         <div class="flex space-x-4">
@@ -80,15 +88,22 @@
             class="mt-5"
             type="settling"
             @click="unstakeSelectedUserRealms"
-            >Unstake Selected</BButton
           >
-          <BButton class="mt-5" type="settling" @click="unstakeUserRealms"
-            >Unstake All Realms</BButton
+            Unstake Selected
+          </BButton>
+          <BButton
+            class="mt-5"
+            type="settling"
+            @click="unstakeUserRealms"
           >
+            Unstake All Realms
+          </BButton>
         </div>
       </div>
     </div>
-    <div v-else-if="!userRealmIds.length">No Realms Available</div>
+    <div v-else-if="!userRealmIds.length">
+      No Realms Available
+    </div>
     <div v-else>
       <LoadingRings
         class="w-32 mx-auto stroke-current fill-none text-off-200"
@@ -102,7 +117,7 @@ import {
   computed,
   ref,
   reactive,
-  onMounted,
+  onMounted
 } from '@vue/composition-api'
 import { useStaking } from '~/composables/useStaking'
 import LoadingRings from '~/assets/img/loadingRings.svg?inline'
@@ -110,20 +125,20 @@ import { useRealms } from '~/composables/useRealms'
 
 export default defineComponent({
   components: {
-    LoadingRings,
+    LoadingRings
   },
   props: {
     type: {
       type: String,
-      default: 'stake',
+      default: 'stake'
     },
     version: {
       type: String,
-      default: null,
-    },
+      default: null
+    }
   },
 
-  setup(props) {
+  setup (props) {
     const multiMintIds = ref([])
     const {
       stakeRealms,
@@ -132,21 +147,21 @@ export default defineComponent({
       isApproved,
       getApproved,
       approve,
-      isLordsAdded,
+      isLordsAdded
     } = useStaking()
     const { userRealms, userRealmsl1 } = useRealms()
     const step = reactive({
       chooseRealms: true,
       approve: false,
-      stake: false,
+      stake: false
     })
     const userRealmIds = computed(() => {
       if (props.type === 'stake') {
-        return userRealms.value.l1?.realms.map((a) => a.id) || null
+        return userRealms.value.l1?.realms.map(a => a.id) || null
       } else if (props.version === 'v2') {
-        return userRealms.value.l1?.bridgedV2Realms.map((a) => a.id) || null
+        return userRealms.value.l1?.bridgedV2Realms.map(a => a.id) || null
       } else {
-        return userRealms.value.l1?.bridgedRealms.map((a) => a.id) || null
+        return userRealms.value.l1?.bridgedRealms.map(a => a.id) || null
       }
     })
     const stakeUserRealms = async () => {
@@ -188,8 +203,8 @@ export default defineComponent({
       userRealmIds,
       multiMintIds,
       loading,
-      isApproved,
+      isApproved
     }
-  },
+  }
 })
 </script>
