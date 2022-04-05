@@ -64,7 +64,7 @@
             bonus of 12%). <br />
             <span class="font-semibold">Length: </span>Epoch 16 - until StarkNet is in beta and we have bridged (ETA mid-May).<br />
             <span class="font-semibold">Claiming $LORDS:</span> Epochs 1-10:
-            claimable below. Epochs 11+: rewards are not tallied below, and
+            claimable below. Epochs 11+: Tallied below but
             you must claim directly on StarkNet once migrated (ETA mid-May).
             <br /><span class="font-semibold">Rewards Eligibility:</span> You
             will be rewarded for every full epoch staked. <br />
@@ -78,7 +78,7 @@
             </h1>
             <p>
               You need to be staked for an entire epoch to be entitled to your
-              Lords
+              $LORDS
             </p>
             <p class="my-auto text-6xl">
               {{ numberRealms || 0 }}
@@ -130,8 +130,7 @@
           <BaseBox class="h-80">
             <h1>$LORDS Earned</h1>
             <p>
-              You earn 196x $LORDS per Realm per full staked epoch from epoch 16+ until bridged to StarkNet - ETA mid-May (rewards from
-              epoch 11+ will not appear here as they will only be claimable directly on StarkNet).
+              You earn 196x $LORDS per Realm per full staked epoch from epoch 16+ until bridged to StarkNet - ETA mid-May.
             </p>
             <div class="py-8 mx-auto my-auto text-xl">
               <LoadingRings
