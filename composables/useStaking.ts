@@ -237,6 +237,14 @@ export function useStaking () {
       return Promise.all(startingEpochBlocks.map(epoch => getBridgedRealmsAtEpoch(epoch)))
     }
 
+    const lordsPerEpoch = (epoch) => {
+      if (epoch < 6) {
+        return 350
+      } else {
+        return 196
+      }
+    }
+
     try {
       const epochData = await getData()
       let totalClaimable = 0
@@ -245,9 +253,9 @@ export function useStaking () {
         const endEpochRealms = epochData[e]
 
         if (endEpochRealms >= beginEpochRealms) {
-          totalClaimable = totalClaimable + (epochData[e - 1] as number * 350)
+          totalClaimable = totalClaimable + (epochData[e - 1] as number * lordsPerEpoch(e))
         } else {
-          totalClaimable = totalClaimable + (epochData[e] as number * 350)
+          totalClaimable = totalClaimable + (epochData[e] as number * lordsPerEpoch(e))
         }
         console.log(totalClaimable)
       }
