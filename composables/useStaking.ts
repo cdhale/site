@@ -219,22 +219,26 @@ export function useStaking () {
       false // Refresh boundaries, optional. Recheck the latest block before request. By default false.
     )
     console.log(startingEpochBlocks)
-
     const getBridgedRealmsAtEpoch = async (epoch) => {
-      const { wallet } = await gqlRequest(
-        getWalletAtBlock,
-        {
-          address: params.address.toLowerCase(),
-          block: epoch.block
-        },
-        'realms'
-      )
-      return wallet.bridgedRealmsHeld
+      try {
+        const { wallet } = await gqlRequest(
+          getWalletAtBlock,
+          {
+            address: params.address.toLowerCase(),
+            block: epoch.block
+          },
+          'realms'
+        )
+        return wallet.bridgedRealmsHeld
+      } catch (e) {
+        console.log(e)
+      }
+      return 0
     }
 
     // eslint-disable-next-line require-await
     const getData = async () => {
-      return Promise.all(startingEpochBlocks.map(epoch => getBridgedRealmsAtEpoch(epoch)))
+      return Promise.all(startingEpochBlocks.map(epoch => getBridgedRealmsAtEpoch(epoch) || 0))
     }
 
     const lordsPerEpoch = (epoch) => {
@@ -247,6 +251,8 @@ export function useStaking () {
 
     try {
       const epochData = await getData()
+      console.log(epochData)
+
       let totalClaimable = 0
       for (let e = 1; e < epochData.length; e++) {
         const beginEpochRealms = epochData[e - 1]
