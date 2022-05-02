@@ -62,10 +62,10 @@
           <p class="sm:text-2xl">
             <span class="font-semibold">Rewards:</span> 196x $LORDS per epoch (a
             bonus of 12%). <br />
-            <span class="font-semibold">Length: </span>Epoch 16 - until StarkNet is in beta and we have bridged (ETA mid-May).<br />
+            <span class="font-semibold">Length: </span>Epoch 16 - until StarkNet is in beta and we have bridged (waiting for an ETA from StarkNet).<br />
             <span class="font-semibold">Claiming $LORDS:</span> Epochs 1-10:
             claimable below. Epochs 11+: Tallied below but
-            you must claim directly on StarkNet once migrated (ETA mid-May).
+            you must claim directly on StarkNet once migrated (waiting for an ETA from StarkNet).
             <br /><span class="font-semibold">Rewards Eligibility:</span> You
             will be rewarded for every full epoch staked. <br />
           </p>
@@ -130,7 +130,7 @@
           <BaseBox class="h-80">
             <h1>$LORDS Earned</h1>
             <p>
-              You earn 196x $LORDS per Realm per full staked epoch from epoch 16+ until bridged to StarkNet - ETA mid-May.
+              You earn 196x $LORDS per Realm per full staked epoch from epoch 16+ until bridged to StarkNet.
             </p>
             <div class="py-8 mx-auto my-auto text-xl">
               <LoadingRings
@@ -639,6 +639,7 @@ export default defineComponent({
       },
       {
         title: 'Why can’t I see my Realm(s) in OpenSea after staking?',
+        
         body: 'Your realms won’t appear in OS while staking as they are transferred into the contract wallet in this process. You can view your staked Realms at your Adventurers page. '
       },
       {
