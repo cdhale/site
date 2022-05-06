@@ -107,7 +107,7 @@
         <BButton
           type="navLink"
           class="text-left"
-          href="https://docs.bibliothecadao.xyz/"
+          href="https://docs.bibliothecadao.xyz/lootverse-master-scroll"
           @click.native="toggleSideBar"
         >
           White Paper & Docs
@@ -122,14 +122,6 @@
           @click.native="toggleSideBar"
         >
           Snapshot
-        </BButton>
-        <BButton
-          type="navLink"
-          class="text-left"
-          href="https://forum.bibliothecaforloot.com/"
-          @click.native="toggleSideBar"
-        >
-          Forum
         </BButton>
       </nav>
 
