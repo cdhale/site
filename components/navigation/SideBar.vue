@@ -91,14 +91,6 @@
         <BButton
           type="navLink"
           class="text-left"
-          href="https://bibliotheca-for-loot.notion.site/Bibliotheca-DAO-Foundational-Principles-1d226a06414f40bc92f85a8036c74d52"
-          @click.native="toggleSideBar"
-        >
-          DAO
-        </BButton>
-        <BButton
-          type="navLink"
-          class="text-left"
           to="/realms/resources"
           @click.native="toggleSideBar"
         >
@@ -107,7 +99,7 @@
         <BButton
           type="navLink"
           class="text-left"
-          href="https://docs.bibliothecadao.xyz/lootverse-master-scroll"
+          href="https://scroll.bibliothecadao.xyz"
           @click.native="toggleSideBar"
         >
           White Paper & Docs
@@ -129,7 +121,7 @@
         class="mt-auto flex flex-wrap py-10 justify-between px-4 text-off-200"
       >
         <div class="w-full text-center text-xl pb-5 hover:underline">
-          <a href="https://docs.bibliothecadao.xyz/lootverse-master-scroll/">White Paper & Docs</a>
+          <a href="https://scroll.bibliothecadao.xyz/">White Paper & Docs</a>
         </div>
         <a
           target="blank_"
