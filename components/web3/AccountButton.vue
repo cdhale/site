@@ -1,33 +1,24 @@
 <template>
-  <div class="hidden sm:flex justify-end px-4 py-4">
+  <div class="justify-end hidden px-4 py-4 sm:flex">
     <div v-if="active" v-click-outside="hide" class="flex w-full">
-      <div class="px-4 self-center mr-auto">
-        <NuxtLink
+      <!--<NuxtLink
           :class="
             type === 'settling'
               ? 'border-off-200 text-off-200'
               : 'border-off-200 text-off-200'
           "
           :to="'/adventurer/' + account"
-          class="w-full items-center flex font-display"
+          class="flex items-center w-full font-display"
         >
-          <Helm class="w-10 h-10 stroke-current fill-current self-center" /> My
+          <Helm class="self-center w-10 h-10 fill-current stroke-current" /> My
           Adventure
         </NuxtLink>
-      </div>
+      </div>-->
       <NetworkSwitcher v-if="type != 'settling'" />
       <BButton
         v-if="!show"
         type="button"
-        class="
-          border-double border-4
-          rounded
-          pl-3
-          py-2
-          px-10
-          text-center
-          hover:bg-off-200 hover:text-off-100
-        "
+        class="px-10 py-2 pl-3 text-center border-4 border-double rounded  hover:bg-off-200 hover:text-off-100"
         :class="
           type === 'settling'
             ? 'border-off-100 bg-off-200 text-off-100'
@@ -45,7 +36,7 @@
       <BButton
         v-else
         type="button"
-        class="border rounded pl-3 py-2 px-10 text-center hover:bg-gray-800"
+        class="px-10 py-2 pl-3 text-center border rounded hover:bg-gray-800"
         :class="
           type === 'settling'
             ? 'border-off-200 bg-off-200'
