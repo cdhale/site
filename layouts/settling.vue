@@ -1,65 +1,19 @@
 <template>
   <div
-    class="
-      img-background
-      min-h-screen
-      bg-off-100 bg-opacity-70
-      sm:flex-nowrap
-      bg-center bg-cover bg-no-repeat
-      border-8 border-off-200 border-double
-      bg-fixed
-    "
+    class="min-h-screen bg-fixed bg-center bg-no-repeat bg-cover img-background bg-off-100 bg-opacity-70 sm:flex-nowrap"
   >
-    <div class="sm:hidden w-full mt-12 flex justify-between px-10">
-      <NuxtLink to="/">
+    <div class="flex justify-between w-full px-10 mt-12 sm:hidden">
+      <NuxtLink to="https://dao-site.vercel.app">
         Back
       </NuxtLink>
     </div>
     <NotificationBar />
-    <div class="hidden w-full sm:flex px-4">
-      <NuxtLink
-        class="
-          hover:bg-off-200 hover:text-off-100
-          text-off-200
-          transform
-          duration-200
-          h-20
-          min-w-40
-          p-10
-          flex
-          font-display
-          uppercase
-          text-center
-          rounded-b-2xl
-          text-2xl
-        "
-        to="/"
-      >
-        <span class="self-center text-center w-full">Home</span>
-      </NuxtLink>
-      <a
-        v-for="(link, index) in links"
-        :key="index"
-        class="
-          hover:bg-off-200 hover:text-off-100
-          text-off-200
-          transform
-          duration-200
-          h-20
-          min-w-40
-          p-10
-          flex
-          font-display
-          uppercase
-          text-center
-          rounded-b-2xl
-          text-2xl
-        "
-        :href="link.url"
-      >
-        <span class="self-center text-center w-full">{{ link.title }}</span></a>
-      <div class="ml-auto">
-        <AccountButton type="settling" />
+    <div class="hidden w-full px-4 bg-gray-900 sm:flex">
+      <div class="container flex mx-auto">
+        <BibliothecaBook class="self-center mr-10 transition-all duration-150 cursor-pointer fill-current h-9 hover:fill-white hover:animate-bounce" @click="returnDAO()" />
+        <div class="ml-auto">
+          <AccountButton type="primary" class="!py-2" />
+        </div>
       </div>
     </div>
     <div class="w-full">
@@ -72,8 +26,12 @@
 <script>
 import { defineComponent } from '@vue/composition-api'
 import { useConnect } from '~/composables/useConnect'
+import BibliothecaBook from '~/assets/img/BibliothecaBook.svg?inline'
 
 export default defineComponent({
+  components: {
+    BibliothecaBook
+  },
   setup () {
     useConnect()
 
@@ -99,8 +57,11 @@ export default defineComponent({
         url: 'https://atlas.bibliothecadao.xyz'
       }
     ]
-
+    const returnDAO = () => {
+      window.location = 'https://bibliothecadao.xyz'
+    }
     return {
+      returnDAO,
       links
     }
   }
