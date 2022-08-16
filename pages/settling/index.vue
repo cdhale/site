@@ -60,11 +60,11 @@
             The Galleon (V1 Staking)
           </h1>
           <p class="sm:text-2xl">
-            <span class="font-semibold">Rewards:</span> 196x $LORDS per epoch (a
+            <span class="font-semibold">Rewards:</span> 49x $LORDS per epoch (a
             bonus of 12%). <br />
-            <span class="font-semibold">Length: </span>Epoch 16 - until StarkNet is in beta and we have bridged (waiting for an ETA from StarkNet).<br />
+            <span class="font-semibold">Length: </span>Epoch 35 - until StarkNet is in beta and we have bridged (waiting for an ETA from StarkNet).<br />
             <span class="font-semibold">Claiming $LORDS:</span> Epochs 1-10:
-            claimable below. Epochs 11+: Tallied below but
+            claimable below. Epochs 11-34: claimable over epochs 35-44 in batches of 10%. Epochs 35+: Tallied below but
             you must claim directly on StarkNet once migrated (waiting for an ETA from StarkNet).
             <br /><span class="font-semibold">Rewards Eligibility:</span> You
             will be rewarded for every full epoch staked. <br />
@@ -220,9 +220,9 @@
             </no-ssr>
           </div>
           <p class="sm:text-2xl">
-            <span class="font-semibold">Rewards:</span> 175x $LORDS per epoch.
+            <span class="font-semibold">Rewards:</span> 43.75 $LORDS per epoch.
             <br />
-            <span class="font-semibold">Length: </span>Epoch 16 - until StarkNet is in beta and we have bridged. <br />
+            <span class="font-semibold">Length: </span>Epoch 35 - until StarkNet is in beta and we have bridged. <br />
             <span class="font-semibold">Claiming $LORDS:</span>You can claim
             $LORDS immediately after each fully staked epoch directly on mainnet.<br /><span
               class="font-semibold"
@@ -290,7 +290,7 @@
           <BaseBox class="h-80">
             <h1>Your Lords Available To Claim</h1>
             <p>
-              You earn 175x $LORDS per Realm per full staked epoch (claimable
+              You earn 43.75x $LORDS per Realm per full staked epoch (claimable
               weekly)
             </p>
             <p class="py-8 mx-auto my-auto text-6xl">
